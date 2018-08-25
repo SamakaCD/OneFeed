@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+	<data>
+
+		<variable
+			name="viewModel"
+			type="com.ivansadovyi.onefeed.presentation.screens.feed.FeedViewModel" />
+	</data>
+
+	<ViewFlipper android:id="@+id/viewFlipper"
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:inAnimation="@anim/fade_in"
+		android:outAnimation="@anim/fade_out"
+		app:displayedChild="@{viewModel.feedState.ordinal}">
+
+		<android.support.v7.widget.RecyclerView
+			android:id="@+id/recyclerView"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			app:items="@{viewModel.items}" />
+
+		<ProgressBar
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center" />
+	</ViewFlipper>
+</layout>
