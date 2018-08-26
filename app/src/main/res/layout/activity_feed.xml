@@ -6,6 +6,10 @@
 		<variable
 			name="viewModel"
 			type="com.ivansadovyi.onefeed.presentation.screens.feed.FeedViewModel" />
+
+		<variable
+			name="feedItemsStore"
+			type="com.ivansadovyi.domain.feed.FeedItemsStore" />
 	</data>
 
 	<ViewFlipper android:id="@+id/viewFlipper"
@@ -21,7 +25,7 @@
 			android:id="@+id/recyclerView"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			app:items="@{viewModel.items}" />
+			app:items="@{feedItemsStore.items}" />
 
 		<ProgressBar
 			android:layout_width="wrap_content"
