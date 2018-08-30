@@ -1,6 +1,7 @@
 package com.ivansadovyi.onefeed.di
 
 import android.app.Application
+import com.ivansadovyi.data.di.DataDaggerModule
 import com.ivansadovyi.domain.di.DomainDaggerModule
 import com.ivansadovyi.onefeed.OneFeedApplication
 import com.ivansadovyi.onefeed.presentation.di.ActivityBindings
@@ -10,7 +11,12 @@ import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AndroidInjectionModule::class, DomainDaggerModule::class, ActivityBindings::class])
+@Component(modules = [
+	AndroidInjectionModule::class,
+	DomainDaggerModule::class,
+	DataDaggerModule::class,
+	ActivityBindings::class
+])
 interface AppComponent {
 
 	fun inject(application: OneFeedApplication)

@@ -24,7 +24,6 @@ class FeedActivity : AppCompatActivity() {
 		AndroidInjection.inject(this)
 		val binding = DataBindingUtil.setContentView<ActivityFeedBinding>(this, R.layout.activity_feed)
 		binding.viewModel = viewModel
-		binding.feedItemsStore = feedItemsStore
 		setupRecyclerView()
 	}
 

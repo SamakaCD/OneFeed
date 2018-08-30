@@ -9,4 +9,6 @@ interface FeedItemsStore : Store<FeedItemsStore> {
 
 	var loading: Boolean
 
+	fun refresh()
+
 }
