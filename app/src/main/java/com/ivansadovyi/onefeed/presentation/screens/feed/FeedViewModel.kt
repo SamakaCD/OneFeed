@@ -12,10 +12,17 @@ class FeedViewModel @Inject constructor(@Bindable val feedItemsStore: FeedItemsS
 		feedItemsStore.refresh()
 	}
 
+	@Bindable
 	fun getFeedState(): FeedState {
 		return when {
-			feedItemsStore.loading -> FeedState.LOADING
+			feedItemsStore.loading && feedItemsStore.items.isEmpty() -> FeedState.LOADING
 			else -> FeedState.READY
+		}
+	}
+
+	fun loadMore() {
+		if (!feedItemsStore.loading) {
+			feedItemsStore.loadMore()
 		}
 	}
 

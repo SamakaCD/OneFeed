@@ -11,4 +11,6 @@ interface FeedItemsStore : Store<FeedItemsStore> {
 
 	fun refresh()
 
+	fun loadMore()
+
 }
