@@ -1,10 +1,17 @@
 package com.ivansadovyi.sdk;
 
-import android.support.annotation.Nullable;
-
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 
 public abstract class OneFeedPlugin {
 
-	public abstract Observable<FeedItem> loadNextItems(@Nullable String lastItemId);
+	public abstract Observable<FeedItem> loadNextItems();
+
+	public Completable reset() {
+		return Completable.complete();
+	}
+
+	public Observable<FeedItem> refresh() {
+		return reset().andThen(loadNextItems());
+	}
 }
