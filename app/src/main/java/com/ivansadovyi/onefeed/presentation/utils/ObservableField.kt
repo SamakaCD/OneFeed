@@ -1,6 +1,6 @@
 package com.ivansadovyi.onefeed.presentation.utils
 
-import android.databinding.BaseObservable
+import androidx.databinding.BaseObservable
 import kotlin.reflect.KProperty
 
 class ObservableField<T>(private val fieldId: Int, private var value: T) {

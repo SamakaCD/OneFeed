@@ -1,7 +1,7 @@
 package com.ivansadovyi.onefeed.presentation.screens.feed
 
-import android.databinding.BaseObservable
-import android.databinding.Bindable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import com.ivansadovyi.domain.feed.FeedItemsStore
 import java.util.*
 import javax.inject.Inject
