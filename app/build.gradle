@@ -37,6 +37,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
     implementation 'com.google.dagger:dagger:2.16'
     implementation 'com.google.dagger:dagger-android-support:2.16'
+    implementation 'com.hannesdorfmann:adapterdelegates4:4.0.0'
     kapt 'com.google.dagger:dagger-compiler:2.16'
     kapt 'com.google.dagger:dagger-android-processor:2.16'
     testImplementation 'junit:junit:4.12'
