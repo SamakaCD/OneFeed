@@ -1,7 +1,7 @@
 package com.ivansadovyi.onefeed.presentation.bindingadapters
 
-import android.databinding.BindingAdapter
-import android.support.v7.widget.RecyclerView
+import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.ivansadovyi.onefeed.presentation.utils.recyclerview.BindableRecyclerViewAdapter
 
 object RecyclerViewBindingAdapters {
