@@ -17,7 +17,6 @@ class FeedRecyclerViewAdapter : AsyncListDifferDelegationAdapter<Any>(DIFF_CALLB
 	companion object {
 
 		val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Any>() {
-
 			override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
 				if (oldItem is FeedItem && newItem is FeedItem) {
 					return oldItem.id == newItem.id
