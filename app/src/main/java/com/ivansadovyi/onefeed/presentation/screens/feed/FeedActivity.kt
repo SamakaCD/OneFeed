@@ -1,10 +1,10 @@
 package com.ivansadovyi.onefeed.presentation.screens.feed
 
-import androidx.databinding.DataBindingUtil
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ivansadovyi.domain.feed.FeedItemsStore
+import androidx.recyclerview.widget.RecyclerView
 import com.ivansadovyi.onefeed.R
 import com.ivansadovyi.onefeed.databinding.ActivityFeedBinding
 import dagger.android.AndroidInjection
@@ -16,8 +16,7 @@ class FeedActivity : AppCompatActivity() {
 	@Inject
 	lateinit var viewModel: FeedViewModel
 
-	@Inject
-	lateinit var feedItemsStore: FeedItemsStore
+	private lateinit var layoutManager: LinearLayoutManager
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -28,7 +27,22 @@ class FeedActivity : AppCompatActivity() {
 	}
 
 	private fun setupRecyclerView() {
+		layoutManager = LinearLayoutManager(this)
+		recyclerView.layoutManager = layoutManager
 		recyclerView.adapter = FeedRecyclerViewAdapter()
-		recyclerView.layoutManager = LinearLayoutManager(this)
+		setupPagination()
+	}
+
+	private fun setupPagination() {
+		recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+			override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+				val visibleItemCount = layoutManager.childCount
+				val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+				val totalItemCount = layoutManager.itemCount
+				if (lastVisibleItemPosition + visibleItemCount * 2 >= totalItemCount) {
+					viewModel.loadMore()
+				}
+			}
+		})
 	}
 }

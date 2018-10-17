@@ -37,6 +37,20 @@ class FeedItemsStoreImpl @Inject constructor(
 				)
 	}
 
+	override fun loadMore() {
+		loading = true
+		Observable.fromIterable(pluginStore.plugins)
+				.flatMap { it.loadNextItems() }
+				.sorted { o1, o2 -> o2.publicationDate.compareTo(o1.publicationDate) }
+				.toList()
+				.flatMap { feedItemsDao.putFeedItems(it).toSingleDefault(it) }
+				.subscribeBy(
+						onSuccess = {
+							loading = false
+						}
+				)
+	}
+
 	private fun observeDao() {
 		feedItemsDao.getFeedItems().subscribe {
 			items = it
