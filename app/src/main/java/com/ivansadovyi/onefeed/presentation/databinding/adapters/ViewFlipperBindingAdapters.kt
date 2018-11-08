@@ -1,4 +1,4 @@
-package com.ivansadovyi.onefeed.presentation.bindingadapters
+package com.ivansadovyi.onefeed.presentation.databinding.adapters
 
 import android.widget.ViewFlipper
 import androidx.databinding.BindingAdapter
