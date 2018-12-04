@@ -7,7 +7,7 @@ import java.util.*
 
 class TestPlugin : OneFeedPlugin() {
 
-	override fun loadNextItems(lastItemId: String?): Observable<FeedItem> {
+	override fun loadNextItems(): Observable<FeedItem> {
 		return Observable.just(
 				FeedItem(uuid(), "First item", "First item description", Date(), AVATAR_URL),
 				FeedItem(uuid(), "Second item", "Second item description", Date(), AVATAR_URL),
