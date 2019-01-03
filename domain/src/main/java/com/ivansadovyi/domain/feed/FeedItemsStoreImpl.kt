@@ -6,6 +6,7 @@ import com.ivansadovyi.domain.utils.ObservableValue
 import com.ivansadovyi.sdk.FeedItem
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -26,7 +27,8 @@ class FeedItemsStoreImpl @Inject constructor(
 	override fun refresh() {
 		loading = true
 		Observable.fromIterable(pluginStore.plugins)
-				.flatMap { it.refresh() }
+				.subscribeOn(Schedulers.io())
+				.flatMapIterable { it.refresh() }
 				.sorted { o1, o2 -> o2.publicationDate.compareTo(o1.publicationDate) }
 				.toList()
 				.flatMap { feedItemsDao.putFeedItems(it).toSingleDefault(it) }
@@ -40,7 +42,8 @@ class FeedItemsStoreImpl @Inject constructor(
 	override fun loadMore() {
 		loading = true
 		Observable.fromIterable(pluginStore.plugins)
-				.flatMap { it.loadNextItems() }
+				.subscribeOn(Schedulers.io())
+				.flatMapIterable { it.loadNextItems() }
 				.sorted { o1, o2 -> o2.publicationDate.compareTo(o1.publicationDate) }
 				.toList()
 				.flatMap { feedItemsDao.putFeedItems(it).toSingleDefault(it) }

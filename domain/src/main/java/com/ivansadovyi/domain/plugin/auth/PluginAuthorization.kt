@@ -1,4 +1,4 @@
-package com.ivansadovyi.domain.auth
+package com.ivansadovyi.domain.plugin.auth
 
 class PluginAuthorization(
         val pluginName: String,
