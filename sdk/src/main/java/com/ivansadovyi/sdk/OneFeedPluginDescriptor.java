@@ -35,6 +35,12 @@ public class OneFeedPluginDescriptor implements Serializable {
 		return this == obj || this.className.equals(((OneFeedPluginDescriptor) obj).className);
 	}
 
+	@NonNull
+	@Override
+	public String toString() {
+		return getName() + " (" + getClassName() + ")";
+	}
+
 	public static class Builder {
 
 		private String className;

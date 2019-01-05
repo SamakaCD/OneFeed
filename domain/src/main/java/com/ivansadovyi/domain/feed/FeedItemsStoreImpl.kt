@@ -22,6 +22,7 @@ class FeedItemsStoreImpl @Inject constructor(
 
 	init {
 		observeDao()
+		observePluginChanges()
 	}
 
 	override fun refresh() {
@@ -57,6 +58,12 @@ class FeedItemsStoreImpl @Inject constructor(
 	private fun observeDao() {
 		feedItemsDao.getFeedItems().subscribe {
 			items = it
+		}
+	}
+
+	private fun observePluginChanges() {
+		pluginStore.observable.subscribe {
+			refresh()
 		}
 	}
 }

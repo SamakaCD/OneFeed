@@ -5,6 +5,7 @@ import com.ivansadovyi.domain.utils.ObservableStore
 import com.ivansadovyi.domain.utils.ObservableValue
 import com.ivansadovyi.sdk.OneFeedPlugin
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
+import com.ivansadovyi.sdk.OneFeedPluginParams
 import io.reactivex.Single
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -24,7 +25,8 @@ class PluginDescriptorStoreImpl @Inject constructor(
 		}
 	}
 
-	override fun instantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Single<OneFeedPlugin> {
-		return pluginLoader.instantiate(pluginDescriptor).subscribeOn(Schedulers.computation())
+	override fun instantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor, params: OneFeedPluginParams): Single<OneFeedPlugin> {
+		return pluginLoader.instantiate(pluginDescriptor)
+				.doOnSuccess { it.onInit(params) }
 	}
 }

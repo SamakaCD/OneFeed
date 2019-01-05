@@ -21,6 +21,8 @@
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".presentation.screens.pluginAuthorizaton.PluginAuthorizationActivity" />
+		<activity
+			android:name=".presentation.screens.pluginAuthorizaton.PluginAuthorizationActivity"
+			android:label="@string/plugin_authorization_screen_title" />
 	</application>
 </manifest>

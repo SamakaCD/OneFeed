@@ -1,3 +1,5 @@
 <resources>
 	<string name="app_name">OneFeed</string>
+	<string name="plugin_authorization_screen_title">Authorize</string>
+	<string name="plugin_authorization_screen_title_with_name">Authorize %1$s</string>
 </resources>
