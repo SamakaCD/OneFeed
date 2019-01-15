@@ -1,32 +1,24 @@
 package com.ivansadovyi.domain.plugin.descriptor
 
-import com.ivansadovyi.domain.plugin.PluginLoader
-import com.ivansadovyi.domain.utils.ObservableStore
-import com.ivansadovyi.domain.utils.ObservableValue
-import com.ivansadovyi.sdk.OneFeedPlugin
+import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorActions.FetchDescriptorsSucceeded
+import com.ivansadovyi.domain.utils.truba.StoreMiddleware
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
-import com.ivansadovyi.sdk.OneFeedPluginParams
-import io.reactivex.Single
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PluginDescriptorStoreImpl @Inject constructor(
-		private val pluginLoader: PluginLoader
-) : ObservableStore<PluginDescriptorStore>(), PluginDescriptorStore {
+class PluginDescriptorStoreImpl @Inject constructor() : StoreMiddleware(), PluginDescriptorStore {
 
-	override var pluginDescriptors: List<OneFeedPluginDescriptor> by ObservableValue(defaultValue = emptyList())
+	override var pluginDescriptors = emptyList<OneFeedPluginDescriptor>()
 
-	init {
-		pluginLoader.getDescriptors().subscribeBy {
-			pluginDescriptors = it
+	override fun onAction(action: Any): Boolean {
+		when (action) {
+			is FetchDescriptorsSucceeded -> {
+				pluginDescriptors = action.descriptors
+				return true
+			}
 		}
-	}
 
-	override fun instantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor, params: OneFeedPluginParams): Single<OneFeedPlugin> {
-		return pluginLoader.instantiate(pluginDescriptor)
-				.doOnSuccess { it.onInit(params) }
+		return false
 	}
 }

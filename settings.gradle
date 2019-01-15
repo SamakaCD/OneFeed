@@ -1,1 +1,1 @@
-include ':app', ':sdk', ':domain', ':data', ':twitter'
+include ':app', ':sdk', ':domain', ':data', ':twitter', ':truba', ':truba_saga'
