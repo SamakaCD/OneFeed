@@ -3,6 +3,7 @@ package com.ivansadovyi.onefeed.plugin.twitter;
 import com.ivansadovyi.onefeed.plugin.twitter.utils.MappingIterable;
 import com.ivansadovyi.sdk.FeedItem;
 import com.ivansadovyi.sdk.OneFeedPlugin;
+import com.ivansadovyi.sdk.OneFeedPluginDescriptor;
 import com.ivansadovyi.sdk.OneFeedPluginParams;
 import com.ivansadovyi.sdk.auth.AuthorizationHandler;
 import com.ivansadovyi.sdk.auth.AuthorizationState;
@@ -13,6 +14,12 @@ import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterPlugin extends OneFeedPlugin {
+
+	public static final OneFeedPluginDescriptor DESCRIPTOR = new OneFeedPluginDescriptor.Builder()
+			.setName("Twitter")
+			.setClassName(TwitterPlugin.class.getName())
+			.setIconUri("")
+			.build();
 
 	@Override
 	public void onInit(@NonNull OneFeedPluginParams params) {
