@@ -4,6 +4,7 @@ import com.ivansadovyi.domain.plugin.PluginStore
 import com.ivansadovyi.domain.utils.ObservableStore
 import com.ivansadovyi.domain.utils.ObservableValue
 import com.ivansadovyi.sdk.FeedItem
+import dagger.Lazy
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
@@ -12,7 +13,7 @@ import javax.inject.Singleton
 
 @Singleton
 class FeedItemsStoreImpl @Inject constructor(
-		private val pluginStore: PluginStore,
+		private val pluginStore: Lazy<PluginStore>,
 		private val feedItemsDao: FeedItemsDao
 ) : ObservableStore<FeedItemsStore>(), FeedItemsStore {
 
@@ -22,12 +23,11 @@ class FeedItemsStoreImpl @Inject constructor(
 
 	init {
 		observeDao()
-		observePluginChanges()
 	}
 
 	override fun refresh() {
 		loading = true
-		Observable.fromIterable(pluginStore.plugins)
+		Observable.fromIterable(pluginStore.get().plugins)
 				.subscribeOn(Schedulers.io())
 				.flatMapIterable { it.refresh() }
 				.sorted { o1, o2 -> o2.publicationDate.compareTo(o1.publicationDate) }
@@ -42,7 +42,7 @@ class FeedItemsStoreImpl @Inject constructor(
 
 	override fun loadMore() {
 		loading = true
-		Observable.fromIterable(pluginStore.plugins)
+		Observable.fromIterable(pluginStore.get().plugins)
 				.subscribeOn(Schedulers.io())
 				.flatMapIterable { it.loadNextItems() }
 				.sorted { o1, o2 -> o2.publicationDate.compareTo(o1.publicationDate) }
@@ -58,12 +58,6 @@ class FeedItemsStoreImpl @Inject constructor(
 	private fun observeDao() {
 		feedItemsDao.getFeedItems().subscribe {
 			items = it
-		}
-	}
-
-	private fun observePluginChanges() {
-		pluginStore.observable.subscribe {
-			refresh()
 		}
 	}
 }

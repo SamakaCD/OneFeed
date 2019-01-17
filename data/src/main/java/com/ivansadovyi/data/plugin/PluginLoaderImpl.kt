@@ -1,24 +1,33 @@
 package com.ivansadovyi.data.plugin
 
+import android.app.Application
+import android.content.pm.PackageManager
 import com.ivansadovyi.domain.plugin.PluginLoader
-import com.ivansadovyi.onefeed.plugin.twitter.TwitterPlugin
 import com.ivansadovyi.sdk.OneFeedPlugin
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
+import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PluginLoaderImpl @Inject constructor() : PluginLoader {
+class PluginLoaderImpl @Inject constructor(private val application: Application) : PluginLoader {
 
 	override fun getDescriptors(): Single<List<OneFeedPluginDescriptor>> {
-		return Single.just(listOf(TwitterPlugin.DESCRIPTOR))
+		val packageManager = application.packageManager
+		return Single.just(packageManager.getInstalledApplications(PackageManager.GET_META_DATA))
+				.flatMapObservable { Observable.fromIterable(it) }
+				.map {
+					OneFeedPluginDescriptor.Builder()
+							.setName(it.name)
+							.setClassName(it.packageName)
+							.setIconUri("")
+							.build()
+				}
+				.toList()
 	}
 
 	override fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): Single<OneFeedPlugin> {
-		return when (pluginDescriptor) {
-			TwitterPlugin.DESCRIPTOR -> Single.just(TwitterPlugin())
-			else -> throw IllegalArgumentException("Cannot instantiate plugin with class name ${pluginDescriptor.className}")
-		}
+		throw IllegalArgumentException("Cannot instantiate plugin with class name ${pluginDescriptor.className}")
 	}
 }

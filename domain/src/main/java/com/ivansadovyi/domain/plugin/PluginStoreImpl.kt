@@ -1,5 +1,6 @@
 package com.ivansadovyi.domain.plugin
 
+import com.ivansadovyi.domain.feed.FeedItemsStore
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorStore
 import com.ivansadovyi.domain.utils.ObservableStore
 import com.ivansadovyi.domain.utils.ObservableValue
@@ -8,6 +9,7 @@ import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.OneFeedPluginParams
 import com.ivansadovyi.sdk.auth.AuthorizationState
 import com.ivansadovyi.sdk.auth.OAuthAuthorizationHandler
+import dagger.Lazy
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -15,7 +17,8 @@ import javax.inject.Singleton
 
 @Singleton
 class PluginStoreImpl @Inject constructor(
-		private val pluginDescriptorStore: PluginDescriptorStore
+		private val pluginDescriptorStore: Lazy<PluginDescriptorStore>,
+		private val feedItemsStore: Lazy<FeedItemsStore>
 ) : ObservableStore<PluginStore>(), PluginStore {
 
 	override var plugins: MutableList<OneFeedPlugin> by ObservableValue(defaultValue = mutableListOf())
@@ -26,7 +29,7 @@ class PluginStoreImpl @Inject constructor(
 				.setDescriptor(pluginDescriptor)
 				.build()
 
-		return pluginDescriptorStore.instantiatePlugin(pluginDescriptor, pluginParams)
+		return pluginDescriptorStore.get().instantiatePlugin(pluginDescriptor, pluginParams)
 				.subscribeOn(Schedulers.computation())
 				.doOnSuccess { plugin ->
 					val authorizationHandler = plugin.authorizationHandler
@@ -68,7 +71,12 @@ class PluginStoreImpl @Inject constructor(
 					.build()
 
 			authorizingPlugin.onAuthorizationStateChanged(newParams)
+
+			// Contents of store have been changed - need notify about this.
 			notifyChange()
+
+			// We have got new feed items source, so refresh feed.
+			feedItemsStore.get().refresh()
 		}.subscribeOn(Schedulers.computation())
 	}
 }

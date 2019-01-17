@@ -1,18 +1,7 @@
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 28
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 28
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
     defaultConfig {
         def keystoreProperties = new Properties()
         keystoreProperties.load(new FileInputStream(rootProject.file('twitter/keys.properties')))
@@ -20,12 +9,15 @@ android {
         buildConfigField("String", "CONSUMER_SECRET", "\"${keystoreProperties["consumerSecret"]}\"")
         buildConfigField("String", "CALLBACK_URL", "\"${keystoreProperties["callbackUrl"]}\"")
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':sdk')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':sdk')
     implementation 'org.twitter4j:twitter4j-core:4.0.7'
     implementation 'com.brsanthu:migbase64:2.2'
     testImplementation 'junit:junit:4.12'

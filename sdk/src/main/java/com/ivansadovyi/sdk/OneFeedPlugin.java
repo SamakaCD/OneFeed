@@ -44,14 +44,14 @@ public abstract class OneFeedPlugin {
 		return params;
 	}
 
-	public abstract Iterable<FeedItem> loadNextItems();
+	public abstract Iterable<FeedItem> loadNextItems() throws Throwable;
 
 	@CallSuper
 	public void reset() {
 
 	}
 
-	public Iterable<FeedItem> refresh() {
+	public Iterable<FeedItem> refresh() throws Throwable {
 		reset();
 		return loadNextItems();
 	}

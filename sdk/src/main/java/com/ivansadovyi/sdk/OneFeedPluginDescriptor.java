@@ -11,8 +11,14 @@ public class OneFeedPluginDescriptor implements Serializable {
 	private String className;
 	private String iconUri;
 
-	private OneFeedPluginDescriptor() {
+	protected OneFeedPluginDescriptor() {
 
+	}
+
+	protected OneFeedPluginDescriptor(String name, String className, String iconUri) {
+		this.name = name;
+		this.className = className;
+		this.iconUri = iconUri;
 	}
 
 	public String getName() {
