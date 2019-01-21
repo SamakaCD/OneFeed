@@ -5,32 +5,29 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.ivansadovyi.onefeed.R
+import com.ivansadovyi.onefeed.databinding.ActivityPluginAuthorizationBinding
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_plugin_authorization.*
 import javax.inject.Inject
 
 class PluginAuthorizationActivity : AppCompatActivity(), PluginAuthorizationView {
 
 	@Inject
-	lateinit var presenter: PluginAuthorizationPresenter
+	lateinit var viewModelFactory: PluginAuthorizationViewModelFactory
 
-	private var webView: WebView? = null
+	lateinit var viewModel: PluginAuthorizationViewModel
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		AndroidInjection.inject(this)
-		setupView()
-
 		val pluginDescriptor = intent.getSerializableExtra(PLUGIN_DESCRIPTOR) as OneFeedPluginDescriptor
-		supportActionBar?.title = getString(R.string.plugin_authorization_screen_title_with_name, pluginDescriptor.name.orEmpty())
-		supportActionBar?.setDisplayHomeAsUpEnabled(true)
-		presenter.onInit(pluginDescriptor)
-	}
+		viewModel = viewModelFactory.create(pluginDescriptor)
 
-	override fun finishAuthorization() {
-		Toast.makeText(this, "YEAH", Toast.LENGTH_LONG).show()
-		finish()
+		setupView()
+		setupToolbar(pluginDescriptor)
 	}
 
 	override fun loadUrl(url: String) {
@@ -41,11 +38,15 @@ class PluginAuthorizationActivity : AppCompatActivity(), PluginAuthorizationView
 		Toast.makeText(this, "This authorization method is not supported", Toast.LENGTH_LONG).show()
 	}
 
-	private fun setupView() {
-		webView = WebView(this)
-		webView?.webViewClient = webViewClient
-		setContentView(webView)
+	private fun setupToolbar(pluginDescriptor: OneFeedPluginDescriptor) {
+		supportActionBar?.title = getString(R.string.plugin_authorization_screen_title_with_name, pluginDescriptor.name.orEmpty())
+		supportActionBar?.setDisplayHomeAsUpEnabled(true)
+	}
 
+	private fun setupView() {
+		val binding = DataBindingUtil.setContentView<ActivityPluginAuthorizationBinding>(this, R.layout.activity_plugin_authorization)
+		binding.viewModel = viewModel
+		webView.webViewClient = webViewClient
 	}
 
 	override fun onSupportNavigateUp(): Boolean {
@@ -56,13 +57,20 @@ class PluginAuthorizationActivity : AppCompatActivity(), PluginAuthorizationView
 	private val webViewClient: WebViewClient = object : WebViewClient() {
 
 		override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-			return presenter.onLoadUrl(url)
+			viewModel.onRedirect(url)
+			return !url.startsWith(HTTP_SCHEME)
+		}
+
+		override fun onPageFinished(view: WebView?, url: String?) {
+			super.onPageFinished(view, url)
+			viewModel.onFinishLoading()
 		}
 	}
 
 	companion object {
 
 		private const val PLUGIN_DESCRIPTOR = "plugin_descriptor"
+		private const val HTTP_SCHEME = "http"
 
 		fun createExtras(pluginDescriptor: OneFeedPluginDescriptor): Bundle {
 			return Bundle().apply {

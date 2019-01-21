@@ -2,7 +2,7 @@ package com.ivansadovyi.onefeed.presentation.screens.pluginAuthorizaton
 
 interface PluginAuthorizationView {
 
-	fun finishAuthorization()
+	fun finish()
 
 	fun loadUrl(url: String)
 

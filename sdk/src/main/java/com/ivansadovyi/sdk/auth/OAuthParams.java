@@ -2,7 +2,7 @@ package com.ivansadovyi.sdk.auth;
 
 import androidx.annotation.NonNull;
 
-public class OAuthParams {
+public class OAuthParams implements AuthorizationParams {
 
 	private String authUrl;
 	private String callbackUrl;
