@@ -33,9 +33,7 @@ class FeedViewModel @Inject constructor(private val feedItemsStore: FeedItemsSto
 	}
 
 	fun loadMore() {
-		if (!feedItemsStore.loading) {
-			feedItemsStore.loadMore()
-		}
+		feedItemsStore.loadMore()
 	}
 
 	private fun bindStore() {

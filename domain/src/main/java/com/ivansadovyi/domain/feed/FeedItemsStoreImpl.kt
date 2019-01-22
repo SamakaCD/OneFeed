@@ -4,6 +4,7 @@ import com.ivansadovyi.domain.plugin.PluginStore
 import com.ivansadovyi.domain.utils.ObservableStore
 import com.ivansadovyi.domain.utils.ObservableValue
 import com.ivansadovyi.sdk.FeedItem
+import com.ivansadovyi.sdk.auth.AuthorizationState
 import dagger.Lazy
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.subscribeBy
@@ -29,6 +30,7 @@ class FeedItemsStoreImpl @Inject constructor(
 		loading = true
 		Observable.fromIterable(pluginStore.get().plugins)
 				.subscribeOn(Schedulers.io())
+				.filter { it.authorizationState == AuthorizationState.AUTHORIZED }
 				.flatMapIterable { it.refresh() }
 				.sorted { o1, o2 -> o2.publicationDate.compareTo(o1.publicationDate) }
 				.toList()
@@ -41,18 +43,21 @@ class FeedItemsStoreImpl @Inject constructor(
 	}
 
 	override fun loadMore() {
-		loading = true
-		Observable.fromIterable(pluginStore.get().plugins)
-				.subscribeOn(Schedulers.io())
-				.flatMapIterable { it.loadNextItems() }
-				.sorted { o1, o2 -> o2.publicationDate.compareTo(o1.publicationDate) }
-				.toList()
-				.flatMap { feedItemsDao.putFeedItems(it).toSingleDefault(it) }
-				.subscribeBy(
-						onSuccess = {
-							loading = false
-						}
-				)
+		if (!loading) {
+			loading = true
+			Observable.fromIterable(pluginStore.get().plugins)
+					.subscribeOn(Schedulers.io())
+					.filter { it.authorizationState == AuthorizationState.AUTHORIZED }
+					.flatMapIterable { it.loadNextItems() }
+					.sorted { o1, o2 -> o2.publicationDate.compareTo(o1.publicationDate) }
+					.toList()
+					.flatMap { feedItemsDao.putFeedItems(it).toSingleDefault(it) }
+					.subscribeBy(
+							onSuccess = {
+								loading = false
+							}
+					)
+		}
 	}
 
 	private fun observeDao() {

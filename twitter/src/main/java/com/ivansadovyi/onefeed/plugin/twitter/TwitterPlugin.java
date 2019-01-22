@@ -8,7 +8,11 @@ import com.ivansadovyi.sdk.OneFeedPluginParams;
 import com.ivansadovyi.sdk.auth.AuthorizationHandler;
 import com.ivansadovyi.sdk.auth.AuthorizationState;
 
+import java.util.List;
+
 import androidx.annotation.NonNull;
+import twitter4j.Paging;
+import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
@@ -20,6 +24,10 @@ public class TwitterPlugin extends OneFeedPlugin {
 			.setClassName(TwitterPlugin.class.getName())
 			.setIconUri("")
 			.build();
+
+	private static final int NO_ID = -1;
+
+	private long lastLoadedStatusId = NO_ID;
 
 	@Override
 	public void onInit(@NonNull OneFeedPluginParams params) {
@@ -41,7 +49,26 @@ public class TwitterPlugin extends OneFeedPlugin {
 	@Override
 	public Iterable<FeedItem> loadNextItems() throws Throwable {
 		Twitter twitter = TwitterHolder.getInstance().getTwitter();
-		return new MappingIterable<>(twitter.getHomeTimeline(), TwitterStatusMapper::toFeedItem);
+		List<Status> timeline = twitter.getHomeTimeline(getNextPaging());
+		if (!timeline.isEmpty()) {
+			Status lastStatus = timeline.get(timeline.size() - 1);
+			lastLoadedStatusId = lastStatus.getId();
+		}
+		return new MappingIterable<>(timeline, TwitterStatusMapper::toFeedItem);
+	}
+
+	@Override
+	public void reset() {
+		super.reset();
+		lastLoadedStatusId = NO_ID;
+	}
+
+	private Paging getNextPaging() {
+		if (lastLoadedStatusId == NO_ID) {
+			return new Paging();
+		} else {
+			return new Paging().maxId(lastLoadedStatusId);
+		}
 	}
 
 	private void updateTwitterConfiguration() {
