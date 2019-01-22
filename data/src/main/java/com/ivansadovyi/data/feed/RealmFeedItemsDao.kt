@@ -7,6 +7,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.realm.Realm
+import io.realm.Sort
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,24 +21,25 @@ class RealmFeedItemsDao @Inject constructor(
 
 	override fun getFeedItems(): Observable<List<FeedItem>> {
 		return realm.where(RealmFeedItem::class.java)
+				.sort(FIELD_PUBLICATION_DATE, Sort.DESCENDING)
 				.findAll()
 				.asFlowable()
 				.subscribeOn(realmScheduler)
 				.toObservable()
-				.map { it.map { MAPPER.mapToDomainLayerType(it) } }
+				.map { it.map(RealmFeedItemMapper::mapFromDao) }
 	}
 
 	override fun putFeedItems(items: List<FeedItem>): Completable {
 		return Completable.fromAction {
 			realm.executeTransaction {
-				items.forEach {
-					realm.copyToRealmOrUpdate(MAPPER.mapToDaoType(it))
+				items.forEach { item ->
+					realm.copyToRealmOrUpdate(RealmFeedItemMapper.mapToDao(item))
 				}
 			}
 		}.subscribeOn(realmScheduler)
 	}
 
 	companion object {
-		private val MAPPER = RealmFeedItemsDaoMapper()
+		private const val FIELD_PUBLICATION_DATE = "publicationDate"
 	}
 }

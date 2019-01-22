@@ -1,17 +1,58 @@
 package com.ivansadovyi.sdk;
 
-import io.reactivex.Completable;
-import io.reactivex.Observable;
+import android.content.Context;
+
+import com.ivansadovyi.sdk.auth.AuthorizationHandler;
+import com.ivansadovyi.sdk.auth.AuthorizationState;
+
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
 
 public abstract class OneFeedPlugin {
 
-	public abstract Observable<FeedItem> loadNextItems();
+	private OneFeedPluginParams params;
 
-	public Completable reset() {
-		return Completable.complete();
+	@CallSuper
+	public void onInit(@NonNull OneFeedPluginParams params) {
+		this.params = params;
 	}
 
-	public Observable<FeedItem> refresh() {
-		return reset().andThen(loadNextItems());
+	@CallSuper
+	public void onAuthorizationStateChanged(@NonNull OneFeedPluginParams newParams) {
+		params = newParams;
+	}
+
+	public abstract AuthorizationHandler getAuthorizationHandler();
+
+	@NonNull
+	public AuthorizationState getAuthorizationState() {
+		return getParams().getAuthorizationState();
+	}
+
+	@NonNull
+	public Context getContext() {
+		return getParams().getContext();
+	}
+
+	@NonNull
+	public OneFeedPluginDescriptor getDescriptor() {
+		return getParams().getDescriptor();
+	}
+
+	@NonNull
+	public OneFeedPluginParams getParams() {
+		return params;
+	}
+
+	public abstract Iterable<FeedItem> loadNextItems() throws Throwable;
+
+	@CallSuper
+	public void reset() {
+
+	}
+
+	public Iterable<FeedItem> refresh() throws Throwable {
+		reset();
+		return loadNextItems();
 	}
 }

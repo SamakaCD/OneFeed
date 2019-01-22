@@ -37,4 +37,42 @@ public class FeedItem {
 	public String getAvatarImageUrl() {
 		return avatarImageUrl;
 	}
+
+	public static class Builder {
+
+		private String id;
+		private String title;
+		private String content;
+		private Date publicationDate;
+		private String avatarImageUrl;
+
+		public Builder setId(String id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder setTitle(String title) {
+			this.title = title;
+			return this;
+		}
+
+		public Builder setContent(String content) {
+			this.content = content;
+			return this;
+		}
+
+		public Builder setPublicationDate(Date publicationDate) {
+			this.publicationDate = publicationDate;
+			return this;
+		}
+
+		public Builder setAvatarImageUrl(String avatarImageUrl) {
+			this.avatarImageUrl = avatarImageUrl;
+			return this;
+		}
+
+		public FeedItem build() {
+			return new FeedItem(id, title, content, publicationDate, avatarImageUrl);
+		}
+	}
 }

@@ -7,9 +7,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -17,15 +15,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':domain')
     implementation project(':sdk')
+    implementation project(':twitter')
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.1'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'com.google.dagger:dagger:2.16'
     kapt 'com.google.dagger:dagger-compiler:2.16'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation ('io.kotlintest:kotlintest:2.0.7') {
+        exclude group: "net.bytebuddy"
+        exclude group: "org.reflections"
+    }
 }

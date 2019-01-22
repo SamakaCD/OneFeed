@@ -1,0 +1,28 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        def keystoreProperties = new Properties()
+        keystoreProperties.load(new FileInputStream(rootProject.file('twitter/keys.properties')))
+        buildConfigField("String", "CONSUMER_KEY", "\"${keystoreProperties["consumerKey"]}\"")
+        buildConfigField("String", "CONSUMER_SECRET", "\"${keystoreProperties["consumerSecret"]}\"")
+        buildConfigField("String", "CALLBACK_URL", "\"${keystoreProperties["callbackUrl"]}\"")
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    api project(':sdk')
+    implementation 'org.twitter4j:twitter4j-core:4.0.7'
+    implementation 'com.brsanthu:migbase64:2.2'
+    testImplementation 'junit:junit:4.12'
+}
+
+repositories {
+    mavenCentral()
+}
