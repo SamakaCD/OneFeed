@@ -1,4 +1,4 @@
-package com.ivansadovyi.data.plugin.app
+package com.ivansadovyi.data.plugin.descriptor.app
 
 import android.content.pm.ApplicationInfo
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
@@ -8,9 +8,4 @@ class OneFeedAppPluginDescriptor(
 		className: String,
 		iconUri: String,
 		val applicationInfo: ApplicationInfo
-) : OneFeedPluginDescriptor(name, className, iconUri) {
-
-	companion object {
-		const val META_CLASS_NAME = "oneFeedPluginClassName"
-	}
-}
+) : OneFeedPluginDescriptor(name, className, iconUri)

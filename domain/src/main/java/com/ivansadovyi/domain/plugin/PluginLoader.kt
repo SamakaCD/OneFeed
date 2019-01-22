@@ -1,7 +1,7 @@
 package com.ivansadovyi.domain.plugin
 
-import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.OneFeedPlugin
+import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import io.reactivex.Single
 
 interface PluginLoader {

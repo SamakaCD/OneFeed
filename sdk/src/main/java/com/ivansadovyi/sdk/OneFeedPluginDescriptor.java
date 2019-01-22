@@ -11,7 +11,7 @@ public class OneFeedPluginDescriptor implements Serializable {
 	private String className;
 	private String iconUri;
 
-	protected OneFeedPluginDescriptor() {
+	private OneFeedPluginDescriptor() {
 
 	}
 
