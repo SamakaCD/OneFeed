@@ -3,16 +3,16 @@ package com.ivansadovyi.data.feed
 import com.ivansadovyi.data.DaoMapper
 import com.ivansadovyi.sdk.FeedItem
 
-class RealmFeedItemsDaoMapper : DaoMapper<FeedItem, RealmFeedItem> {
+object RealmFeedItemMapper : DaoMapper<FeedItem, RealmFeedItem> {
 
-	override fun mapToDomainLayerType(o: RealmFeedItem): FeedItem {
-		with(o) {
+	override fun mapFromDao(item: RealmFeedItem): FeedItem {
+		with(item) {
 			return FeedItem(id, title, content, publicationDate, avatarImageUrl)
 		}
 	}
 
-	override fun mapToDaoType(o: FeedItem): RealmFeedItem {
-		with (o) {
+	override fun mapToDao(item: FeedItem): RealmFeedItem {
+		with (item) {
 			return RealmFeedItem(id, title, content, publicationDate, avatarImageUrl)
 		}
 	}

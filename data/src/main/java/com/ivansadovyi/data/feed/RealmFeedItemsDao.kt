@@ -26,21 +26,20 @@ class RealmFeedItemsDao @Inject constructor(
 				.asFlowable()
 				.subscribeOn(realmScheduler)
 				.toObservable()
-				.map { it.map { MAPPER.mapToDomainLayerType(it) } }
+				.map { it.map(RealmFeedItemMapper::mapFromDao) }
 	}
 
 	override fun putFeedItems(items: List<FeedItem>): Completable {
 		return Completable.fromAction {
 			realm.executeTransaction {
-				items.forEach {
-					realm.copyToRealmOrUpdate(MAPPER.mapToDaoType(it))
+				items.forEach { item ->
+					realm.copyToRealmOrUpdate(RealmFeedItemMapper.mapToDao(item))
 				}
 			}
 		}.subscribeOn(realmScheduler)
 	}
 
 	companion object {
-		private val MAPPER = RealmFeedItemsDaoMapper()
 		private const val FIELD_PUBLICATION_DATE = "publicationDate"
 	}
 }
