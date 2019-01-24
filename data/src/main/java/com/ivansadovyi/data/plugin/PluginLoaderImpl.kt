@@ -15,6 +15,10 @@ class PluginLoaderImpl @Inject constructor() : PluginLoader {
 		return Single.just(listOf(TwitterPlugin.DESCRIPTOR))
 	}
 
+	override fun canInstantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Single<Boolean> {
+		return Single.just(true)
+	}
+
 	override fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): Single<OneFeedPlugin> {
 		return when (pluginDescriptor) {
 			TwitterPlugin.DESCRIPTOR -> Single.just(TwitterPlugin())

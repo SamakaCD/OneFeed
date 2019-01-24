@@ -8,5 +8,7 @@ interface PluginLoader {
 
 	fun getDescriptors(): Single<List<OneFeedPluginDescriptor>>
 
+	fun canInstantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Single<Boolean>
+
 	fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): Single<OneFeedPlugin>
 }

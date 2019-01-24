@@ -24,6 +24,10 @@ class AppPluginLoader(private val context: Context) : PluginLoader {
 				.toList()
 	}
 
+	override fun canInstantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Single<Boolean> {
+		return Single.just(pluginDescriptor is OneFeedAppPluginDescriptor)
+	}
+
 	override fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): Single<OneFeedPlugin> {
 		return Single.fromCallable<OneFeedPlugin> {
 			val pluginDescriptor = pluginDescriptor as OneFeedAppPluginDescriptor
