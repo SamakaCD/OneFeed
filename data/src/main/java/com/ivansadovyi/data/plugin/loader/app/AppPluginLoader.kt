@@ -1,4 +1,4 @@
-package com.ivansadovyi.data.plugin.descriptor.app
+package com.ivansadovyi.data.plugin.loader.app
 
 import android.content.Context
 import android.content.pm.ApplicationInfo

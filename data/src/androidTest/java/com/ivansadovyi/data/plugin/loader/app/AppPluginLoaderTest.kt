@@ -1,4 +1,4 @@
-package com.ivansadovyi.data.plugin.descriptor.app
+package com.ivansadovyi.data.plugin.loader.app
 
 import androidx.test.platform.app.InstrumentationRegistry
 import com.ivansadovyi.sdk.OneFeedPlugin
