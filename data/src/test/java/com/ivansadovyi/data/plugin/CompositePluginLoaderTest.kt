@@ -1,5 +1,6 @@
 package com.ivansadovyi.data.plugin
 
+import com.ivansadovyi.data.plugin.loader.CompositePluginLoader
 import com.ivansadovyi.domain.plugin.PluginLoader
 import com.ivansadovyi.sdk.OneFeedPlugin
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor

@@ -9,7 +9,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PluginLoaderImpl @Inject constructor() : PluginLoader {
+class BuiltInPluginLoader @Inject constructor() : PluginLoader {
 
 	override fun getDescriptors(): Single<List<OneFeedPluginDescriptor>> {
 		return Single.just(listOf(TwitterPlugin.DESCRIPTOR))
