@@ -3,11 +3,11 @@ package com.ivansadovyi.data.plugin.loader.app
 import android.content.Context
 import android.content.pm.ApplicationInfo
 
-class OneFeedAppPluginDescriptorMapper(context: Context) {
+class OneFeedAppPluginDescriptorFactory(context: Context) {
 
 	private val packageManager = context.packageManager
 
-	fun toDescriptor(applicationInfo: ApplicationInfo): OneFeedAppPluginDescriptor {
+	fun create(applicationInfo: ApplicationInfo): OneFeedAppPluginDescriptor {
 		return OneFeedAppPluginDescriptor(
 				name = applicationInfo.loadLabel(packageManager).toString(),
 				className = applicationInfo.getPluginClassName(),

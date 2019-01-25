@@ -13,13 +13,13 @@ import io.reactivex.schedulers.Schedulers
 
 class AppPluginLoader(private val context: Context) : PluginLoader {
 
-	private val mapper = OneFeedAppPluginDescriptorMapper(context)
+	private val descriptorFactory = OneFeedAppPluginDescriptorFactory(context)
 
 	override fun getDescriptors(): Single<List<OneFeedPluginDescriptor>> {
 		val packageManager = context.packageManager
 		return Observable.fromIterable(packageManager.getInstalledApplications(PackageManager.GET_META_DATA))
 				.filter { it.hasOneFeedPlugin }
-				.map { mapper.toDescriptor(it) }
+				.map { descriptorFactory.create(it) }
 				.map { it as OneFeedPluginDescriptor }
 				.toList()
 	}
@@ -29,7 +29,7 @@ class AppPluginLoader(private val context: Context) : PluginLoader {
 	}
 
 	override fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): Single<OneFeedPlugin> {
-		return Single.fromCallable<OneFeedPlugin> {
+		return Single.fromCallable {
 			val pluginDescriptor = pluginDescriptor as OneFeedAppPluginDescriptor
 			val apkPath = pluginDescriptor.applicationInfo.sourceDir
 			val dexOptimizedPath = context.getDir(OPTIMIZED_DEX_DIR_NAME, 0).path
