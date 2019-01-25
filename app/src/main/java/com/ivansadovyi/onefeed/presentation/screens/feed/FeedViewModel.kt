@@ -3,10 +3,15 @@ package com.ivansadovyi.onefeed.presentation.screens.feed
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.ivansadovyi.domain.feed.FeedItemsStore
+import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorStore
 import java.util.*
 import javax.inject.Inject
 
-class FeedViewModel @Inject constructor(private val feedItemsStore: FeedItemsStore) : BaseObservable() {
+class FeedViewModel @Inject constructor(
+		private val feedRouter: FeedRouter,
+		private val feedItemsStore: FeedItemsStore,
+		private val pluginDescriptorStore: PluginDescriptorStore
+) : BaseObservable() {
 
 	init {
 		bindStore()
@@ -17,6 +22,7 @@ class FeedViewModel @Inject constructor(private val feedItemsStore: FeedItemsSto
 	fun getFeedState(): FeedState {
 		return when {
 			feedItemsStore.loading && feedItemsStore.items.isEmpty() -> FeedState.LOADING
+			!feedItemsStore.loading && feedItemsStore.items.isEmpty() -> FeedState.EMPTY
 			else -> FeedState.READY
 		}
 	}
@@ -30,6 +36,13 @@ class FeedViewModel @Inject constructor(private val feedItemsStore: FeedItemsSto
 		}
 
 		return items
+	}
+
+	fun authorizeTwitter() {
+		val twitterPluginDescriptor = pluginDescriptorStore.pluginDescriptors.find { it.name.contains("Twitter") }
+		if (twitterPluginDescriptor != null) {
+			feedRouter.navigateToPluginAuthorization(twitterPluginDescriptor)
+		}
 	}
 
 	fun loadMore() {
