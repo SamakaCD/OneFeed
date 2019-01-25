@@ -1,4 +1,4 @@
-package com.ivansadovyi.data.plugin
+package com.ivansadovyi.data.plugin.loader
 
 import com.ivansadovyi.domain.plugin.PluginLoader
 import com.ivansadovyi.onefeed.plugin.twitter.TwitterPlugin

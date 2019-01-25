@@ -1,7 +1,7 @@
 package com.ivansadovyi.data.plugin.di
 
 import android.app.Application
-import com.ivansadovyi.data.plugin.BuiltInPluginLoader
+import com.ivansadovyi.data.plugin.loader.BuiltInPluginLoader
 import com.ivansadovyi.data.plugin.loader.CompositePluginLoader
 import com.ivansadovyi.data.plugin.loader.app.AppPluginLoader
 import com.ivansadovyi.domain.plugin.PluginLoader
