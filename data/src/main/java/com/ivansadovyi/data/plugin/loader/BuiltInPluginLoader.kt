@@ -1,4 +1,4 @@
-package com.ivansadovyi.data.plugin
+package com.ivansadovyi.data.plugin.loader
 
 import com.ivansadovyi.domain.plugin.PluginLoader
 import com.ivansadovyi.onefeed.plugin.twitter.TwitterPlugin
@@ -9,10 +9,14 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PluginLoaderImpl @Inject constructor() : PluginLoader {
+class BuiltInPluginLoader @Inject constructor() : PluginLoader {
 
 	override fun getDescriptors(): Single<List<OneFeedPluginDescriptor>> {
 		return Single.just(listOf(TwitterPlugin.DESCRIPTOR))
+	}
+
+	override fun canInstantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Single<Boolean> {
+		return Single.just(true)
 	}
 
 	override fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): Single<OneFeedPlugin> {
