@@ -8,6 +8,8 @@ import dagger.Provides
 import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.realm.Realm
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.rx2.asCoroutineDispatcher
 import javax.inject.Singleton
 
 @Module(includes = [DataDaggerBindings::class, PluginDaggerModule::class])
@@ -18,6 +20,13 @@ class DataDaggerModule {
 	@Singleton
 	fun provideRealmRxScheduler(): Scheduler {
 		return AndroidSchedulers.mainThread()
+	}
+
+	@Provides
+	@RealmScheduler
+	@Singleton
+	fun provideRealmCoroutineDispatcher(@RealmScheduler scheduler: Scheduler): CoroutineDispatcher {
+		return scheduler.asCoroutineDispatcher()
 	}
 
 	@Provides

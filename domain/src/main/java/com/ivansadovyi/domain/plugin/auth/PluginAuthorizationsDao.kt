@@ -1,10 +1,8 @@
 package com.ivansadovyi.domain.plugin.auth
 
-import io.reactivex.Single
-
 interface PluginAuthorizationsDao {
 
-	fun getPluginAuthorizations(): Single<List<PluginAuthorization>>
+	suspend fun getPluginAuthorizations(): List<PluginAuthorization>
 
-	fun putPluginAuthorization(pluginAuthorization: PluginAuthorization)
+	suspend fun putPluginAuthorization(pluginAuthorization: PluginAuthorization)
 }
