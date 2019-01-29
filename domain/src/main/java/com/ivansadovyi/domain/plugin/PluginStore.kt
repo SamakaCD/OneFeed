@@ -4,14 +4,16 @@ import com.ivansadovyi.domain.Store
 import com.ivansadovyi.sdk.OneFeedPlugin
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.auth.AuthorizationParams
-import io.reactivex.Single
 
 interface PluginStore : Store<PluginStore> {
 
 	val plugins: List<OneFeedPlugin>
 
-	fun startAuthorization(pluginDescriptor: OneFeedPluginDescriptor): Single<AuthorizationParams>
+	fun getAuthorizingPluginByDescriptor(descriptor: OneFeedPluginDescriptor): OneFeedPlugin
 
-	fun processAuthorizationResponse(pluginDescriptor: OneFeedPluginDescriptor, response: String): Single<Boolean>
+	fun getCachedAuthorizationParams(plugin: OneFeedPlugin): AuthorizationParams
 
+	fun putAuthorizationParamsIntoCache(plugin: OneFeedPlugin, authParams: AuthorizationParams)
+
+	fun putPlugin(plugin: OneFeedPlugin)
 }

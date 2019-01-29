@@ -9,8 +9,8 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
-class PluginDaggerModule() {
+@Module(includes = [PluginDaggerBindings::class])
+class PluginDaggerModule {
 
 	@Provides
 	@Singleton

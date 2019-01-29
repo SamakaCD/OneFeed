@@ -3,11 +3,12 @@ package com.ivansadovyi.data.feed
 import com.ivansadovyi.data.di.qualifiers.RealmScheduler
 import com.ivansadovyi.domain.feed.FeedItemsDao
 import com.ivansadovyi.sdk.FeedItem
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.realm.Realm
 import io.realm.Sort
+import kotlinx.coroutines.rx2.asCoroutineDispatcher
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -19,6 +20,8 @@ class RealmFeedItemsDao @Inject constructor(
 		private val realmScheduler: Scheduler
 ) : FeedItemsDao {
 
+	private val coroutineDispatcher = realmScheduler.asCoroutineDispatcher()
+
 	override fun getFeedItems(): Observable<List<FeedItem>> {
 		return realm.where(RealmFeedItem::class.java)
 				.sort(FIELD_PUBLICATION_DATE, Sort.DESCENDING)
@@ -29,14 +32,12 @@ class RealmFeedItemsDao @Inject constructor(
 				.map { it.map(RealmFeedItemMapper::mapFromDao) }
 	}
 
-	override fun putFeedItems(items: List<FeedItem>): Completable {
-		return Completable.fromAction {
-			realm.executeTransaction {
-				items.forEach { item ->
-					realm.copyToRealmOrUpdate(RealmFeedItemMapper.mapToDao(item))
-				}
+	override suspend fun putFeedItems(items: List<FeedItem>) = withContext(coroutineDispatcher) {
+		realm.executeTransaction {
+			items.forEach { item ->
+				realm.copyToRealmOrUpdate(RealmFeedItemMapper.mapToDao(item))
 			}
-		}.subscribeOn(realmScheduler)
+		}
 	}
 
 	companion object {
