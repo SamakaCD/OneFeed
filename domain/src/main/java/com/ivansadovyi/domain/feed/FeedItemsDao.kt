@@ -1,12 +1,13 @@
 package com.ivansadovyi.domain.feed
 
 import com.ivansadovyi.sdk.FeedItem
-import io.reactivex.Completable
 import io.reactivex.Observable
 
 interface FeedItemsDao {
 
-	fun putFeedItems(items: List<FeedItem>): Completable
+	suspend fun clear()
+
+	suspend fun putFeedItems(items: List<FeedItem>)
 
 	fun getFeedItems(): Observable<List<FeedItem>>
 

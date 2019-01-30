@@ -8,9 +8,4 @@ interface FeedItemsStore : Store<FeedItemsStore> {
 	var items: List<FeedItem>
 
 	var loading: Boolean
-
-	fun refresh()
-
-	fun loadMore()
-
 }

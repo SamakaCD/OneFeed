@@ -1,45 +1,52 @@
 package com.ivansadovyi.data.plugin.loader
 
 import com.ivansadovyi.domain.plugin.PluginLoader
-import com.ivansadovyi.domain.utils.filterAsync
 import com.ivansadovyi.sdk.OneFeedPlugin
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
-import io.reactivex.Observable
-import io.reactivex.Single
-import java.util.*
 
 class CompositePluginLoader(private vararg val loaders: PluginLoader) : PluginLoader {
 
-	override fun getDescriptors(): Single<List<OneFeedPluginDescriptor>> {
-		return Observable.fromArray(*loaders)
-				.flatMapSingle { it.getDescriptors() }
-				.flatMapIterable { it }
-				.toList()
+	override suspend fun getDescriptors(): List<OneFeedPluginDescriptor> {
+		return loaders.flatMap { it.getDescriptors() }
 	}
 
-	override fun canInstantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Single<Boolean> {
-		return Observable.fromArray(*loaders)
-				.flatMapSingle { it.canInstantiatePlugin(pluginDescriptor) }
-				.any { it }
+	override suspend fun canInstantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Boolean {
+		return loaders.any { it.canInstantiatePlugin(pluginDescriptor) }
 	}
 
-	override fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): Single<OneFeedPlugin> {
+	override suspend fun canInstantiatePlugin(pluginClassName: String): Boolean {
+		return loaders.any { it.canInstantiatePlugin(pluginClassName) }
+	}
+
+	override suspend fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): OneFeedPlugin {
 		if (loaders.isEmpty()) {
-			return Single.error(IllegalStateException("Can not instantiate plugin with descriptor [$pluginDescriptor] " +
-					"because there is no any PluginLoader registered"))
+			throw IllegalStateException("Can not instantiate plugin with descriptor [$pluginDescriptor] " +
+					"because there is no any PluginLoader registered")
 		}
 
-		return Observable.fromArray(*loaders)
-				.filterAsync { it.canInstantiatePlugin(pluginDescriptor) }
-				.firstOrError()
-				.onErrorResumeNext {
-					if (it is NoSuchElementException) {
-						Single.error(IllegalStateException("Can not instantiate plugin with descriptor [$pluginDescriptor] " +
-								"because there is no any PluginLoader which can do it"))
-					} else {
-						Single.error(it)
-					}
-				}
-				.flatMap { it.instantiate(pluginDescriptor) }
+		for (loader in loaders) {
+			if (loader.canInstantiatePlugin(pluginDescriptor)) {
+				return loader.instantiate(pluginDescriptor)
+			}
+		}
+
+		throw IllegalStateException("Can not instantiate plugin with descriptor [$pluginDescriptor] " +
+				"because there is no any PluginLoader which can do it")
+	}
+
+	override suspend fun instantiate(pluginClassName: String): OneFeedPlugin {
+		if (loaders.isEmpty()) {
+			throw IllegalStateException("Can not instantiate plugin with class name ($pluginClassName) " +
+					"because there is no any PluginLoader registered")
+		}
+
+		for (loader in loaders) {
+			if (loader.canInstantiatePlugin(pluginClassName)) {
+				return loader.instantiate(pluginClassName)
+			}
+		}
+
+		throw IllegalStateException("Can not instantiate plugin with class name ($pluginClassName) " +
+				"because there is no any PluginLoader which can do it")
 	}
 }

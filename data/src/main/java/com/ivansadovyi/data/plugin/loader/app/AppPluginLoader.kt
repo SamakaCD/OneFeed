@@ -7,36 +7,61 @@ import com.ivansadovyi.domain.plugin.PluginLoader
 import com.ivansadovyi.sdk.OneFeedPlugin
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import dalvik.system.DexClassLoader
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class AppPluginLoader(private val context: Context) : PluginLoader {
 
 	private val descriptorFactory = OneFeedAppPluginDescriptorFactory(context)
+	private var descriptorsCache = emptyList<OneFeedPluginDescriptor>()
 
-	override fun getDescriptors(): Single<List<OneFeedPluginDescriptor>> {
-		val packageManager = context.packageManager
-		return Observable.fromIterable(packageManager.getInstalledApplications(PackageManager.GET_META_DATA))
+	override suspend fun getDescriptors(): List<OneFeedPluginDescriptor> {
+		refreshDescriptorsCache()
+		return descriptorsCache
+	}
+
+	override suspend fun canInstantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Boolean {
+		return pluginDescriptor is OneFeedAppPluginDescriptor || canInstantiatePlugin(pluginDescriptor.className)
+	}
+
+	override suspend fun canInstantiatePlugin(pluginClassName: String): Boolean {
+		if (descriptorsCache.isEmpty()) {
+			refreshDescriptorsCache()
+		}
+
+		return descriptorsCache.any { it.className == pluginClassName }
+	}
+
+	override suspend fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): OneFeedPlugin {
+		val pluginDescriptor = pluginDescriptor as OneFeedAppPluginDescriptor
+		return instantiate(pluginDescriptor.applicationInfo, pluginDescriptor.className)
+	}
+
+	override suspend fun instantiate(pluginClassName: String): OneFeedPlugin {
+		for (descriptor in descriptorsCache) {
+			if (descriptor.className == pluginClassName) {
+				return instantiate(descriptor)
+			}
+		}
+
+		throw IllegalArgumentException("Can not instantiate plugin with class name ($pluginClassName). " +
+				"No OneFeed plugin application found")
+	}
+
+	private suspend fun refreshDescriptorsCache() = withContext(Dispatchers.IO) {
+		descriptorsCache = context.packageManager.getInstalledApplications(PackageManager.GET_META_DATA)
+				.asSequence()
 				.filter { it.hasOneFeedPlugin }
 				.map { descriptorFactory.create(it) }
-				.map { it as OneFeedPluginDescriptor }
 				.toList()
 	}
 
-	override fun canInstantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Single<Boolean> {
-		return Single.just(pluginDescriptor is OneFeedAppPluginDescriptor)
-	}
-
-	override fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): Single<OneFeedPlugin> {
-		return Single.fromCallable {
-			val pluginDescriptor = pluginDescriptor as OneFeedAppPluginDescriptor
-			val apkPath = pluginDescriptor.applicationInfo.sourceDir
-			val dexOptimizedPath = context.getDir(OPTIMIZED_DEX_DIR_NAME, 0).path
-			val classLoader = DexClassLoader(apkPath, dexOptimizedPath, null, javaClass.classLoader)
-			val pluginClass = classLoader.loadClass(pluginDescriptor.className)
-			return@fromCallable pluginClass.newInstance() as OneFeedPlugin
-		}.subscribeOn(Schedulers.computation())
+	private fun instantiate(applicationInfo: ApplicationInfo, pluginClassName: String): OneFeedPlugin {
+		val apkPath = applicationInfo.sourceDir
+		val dexOptimizedPath = context.getDir(OPTIMIZED_DEX_DIR_NAME, 0).path
+		val classLoader = DexClassLoader(apkPath, dexOptimizedPath, null, javaClass.classLoader)
+		val pluginClass = classLoader.loadClass(pluginClassName)
+		return pluginClass.newInstance() as OneFeedPlugin
 	}
 
 	private val ApplicationInfo.hasOneFeedPlugin
