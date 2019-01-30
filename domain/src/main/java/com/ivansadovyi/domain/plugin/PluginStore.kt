@@ -9,6 +9,8 @@ interface PluginStore : Store<PluginStore> {
 
 	val plugins: List<OneFeedPlugin>
 
+	fun clear()
+
 	fun getAuthorizingPluginByDescriptor(descriptor: OneFeedPluginDescriptor): OneFeedPlugin
 
 	fun getCachedAuthorizationParams(plugin: OneFeedPlugin): AuthorizationParams

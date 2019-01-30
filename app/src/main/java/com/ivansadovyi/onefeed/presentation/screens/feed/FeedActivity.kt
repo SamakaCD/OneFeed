@@ -48,6 +48,10 @@ class FeedActivity : AppCompatActivity(), FeedRouter {
 				viewModel.authorizeTwitter()
 				return true
 			}
+			R.id.resetAuthorizations -> {
+				viewModel.resetAuthorizations()
+				return true
+			}
 			else -> super.onOptionsItemSelected(item)
 		}
 	}

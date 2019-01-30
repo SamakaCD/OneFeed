@@ -4,6 +4,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.feed.FeedItemsStore
+import com.ivansadovyi.domain.plugin.PluginInteractor
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,6 +16,7 @@ class FeedViewModel @Inject constructor(
 		private val feedRouter: FeedRouter,
 		private val feedItemsStore: FeedItemsStore,
 		private val feedItemsInteractor: FeedItemsInteractor,
+		private val pluginInteractor: PluginInteractor,
 		private val pluginDescriptorStore: PluginDescriptorStore
 ) : BaseObservable() {
 
@@ -54,6 +56,12 @@ class FeedViewModel @Inject constructor(
 	fun loadMore() {
 		coroutineScope.launch {
 			feedItemsInteractor.loadMore()
+		}
+	}
+
+	fun resetAuthorizations() {
+		coroutineScope.launch {
+			pluginInteractor.resetAuthorizations()
 		}
 	}
 

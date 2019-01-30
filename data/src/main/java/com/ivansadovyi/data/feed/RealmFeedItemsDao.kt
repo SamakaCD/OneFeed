@@ -23,6 +23,12 @@ class RealmFeedItemsDao @Inject constructor(
 		private val coroutineDispatcher: CoroutineDispatcher
 ) : FeedItemsDao {
 
+	override suspend fun clear() = withContext(coroutineDispatcher) {
+		realm.executeTransaction {
+			realm.delete(RealmFeedItem::class.java)
+		}
+	}
+
 	override fun getFeedItems(): Observable<List<FeedItem>> {
 		return realm.where(RealmFeedItem::class.java)
 				.sort(FIELD_PUBLICATION_DATE, Sort.DESCENDING)

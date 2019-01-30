@@ -1,5 +1,6 @@
 package com.ivansadovyi.domain.feed
 
+import com.ivansadovyi.domain.feed.usecase.ClearFeedUseCase
 import com.ivansadovyi.domain.feed.usecase.LoadMoreFeedUseCase
 import com.ivansadovyi.domain.feed.usecase.RefreshFeedUseCase
 import com.ivansadovyi.domain.plugin.PluginStore
@@ -14,6 +15,12 @@ class FeedItemsInteractorImpl @Inject constructor(
 		private val pluginStore: Lazy<PluginStore>,
 		private val feedItemsDao: Provider<FeedItemsDao>
 ) : FeedItemsInteractor {
+
+	override suspend fun clear() {
+		ClearFeedUseCase(
+				feedItemsDao = feedItemsDao.get()
+		).execute()
+	}
 
 	override suspend fun refresh() {
 		RefreshFeedUseCase(

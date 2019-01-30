@@ -17,6 +17,12 @@ class RealmPluginAuthorizationsDao @Inject constructor(
 		private val coroutineDispatcher: CoroutineDispatcher
 ) : PluginAuthorizationsDao {
 
+	override suspend fun clear() = withContext(coroutineDispatcher) {
+		realm.executeTransaction {
+			realm.delete(RealmPluginAuthorization::class.java)
+		}
+	}
+
 	override suspend fun getPluginAuthorizations(): List<PluginAuthorization> = withContext(coroutineDispatcher) {
 		return@withContext realm.where(RealmPluginAuthorization::class.java)
 				.findAll()

@@ -5,6 +5,8 @@ import io.reactivex.Observable
 
 interface FeedItemsDao {
 
+	suspend fun clear()
+
 	suspend fun putFeedItems(items: List<FeedItem>)
 
 	fun getFeedItems(): Observable<List<FeedItem>>

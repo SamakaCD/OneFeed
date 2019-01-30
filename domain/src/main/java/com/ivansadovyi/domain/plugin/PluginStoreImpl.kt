@@ -16,6 +16,11 @@ class PluginStoreImpl @Inject constructor() : ObservableStore<PluginStore>(), Pl
 
 	private val authorizationParamsCache = mutableMapOf<OneFeedPlugin, AuthorizationParams>()
 
+	override fun clear() {
+		plugins.clear()
+		notifyChange()
+	}
+
 	override fun getAuthorizingPluginByDescriptor(descriptor: OneFeedPluginDescriptor): OneFeedPlugin {
 		val instance = plugins.asSequence()
 				.filter { it.authorizationState == AuthorizationState.AUTHORIZING }
