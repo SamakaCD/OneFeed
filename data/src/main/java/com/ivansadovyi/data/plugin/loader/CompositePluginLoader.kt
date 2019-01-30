@@ -14,6 +14,10 @@ class CompositePluginLoader(private vararg val loaders: PluginLoader) : PluginLo
 		return loaders.any { it.canInstantiatePlugin(pluginDescriptor) }
 	}
 
+	override suspend fun canInstantiatePlugin(pluginClassName: String): Boolean {
+		return loaders.any { it.canInstantiatePlugin(pluginClassName) }
+	}
+
 	override suspend fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): OneFeedPlugin {
 		if (loaders.isEmpty()) {
 			throw IllegalStateException("Can not instantiate plugin with descriptor [$pluginDescriptor] " +
@@ -27,6 +31,22 @@ class CompositePluginLoader(private vararg val loaders: PluginLoader) : PluginLo
 		}
 
 		throw IllegalStateException("Can not instantiate plugin with descriptor [$pluginDescriptor] " +
+				"because there is no any PluginLoader which can do it")
+	}
+
+	override suspend fun instantiate(pluginClassName: String): OneFeedPlugin {
+		if (loaders.isEmpty()) {
+			throw IllegalStateException("Can not instantiate plugin with class name ($pluginClassName) " +
+					"because there is no any PluginLoader registered")
+		}
+
+		for (loader in loaders) {
+			if (loader.canInstantiatePlugin(pluginClassName)) {
+				return loader.instantiate(pluginClassName)
+			}
+		}
+
+		throw IllegalStateException("Can not instantiate plugin with class name ($pluginClassName) " +
 				"because there is no any PluginLoader which can do it")
 	}
 }

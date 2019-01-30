@@ -8,4 +8,6 @@ interface PluginInteractor {
 	suspend fun startPluginAuthorization(pluginDescriptor: OneFeedPluginDescriptor): AuthorizationParams
 
 	suspend fun processAuthorizationResponse(pluginDescriptor: OneFeedPluginDescriptor, response: String): Boolean
+
+	suspend fun restoreAuthorizations()
 }

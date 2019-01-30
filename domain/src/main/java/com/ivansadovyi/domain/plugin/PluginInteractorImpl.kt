@@ -4,6 +4,7 @@ import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationsDao
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorInteractor
 import com.ivansadovyi.domain.plugin.usecase.ProcessAuthorizationResponseUseCase
+import com.ivansadovyi.domain.plugin.usecase.RestorePluginAuthorizationsUseCase
 import com.ivansadovyi.domain.plugin.usecase.StartPluginAuthorizationUseCase
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.auth.AuthorizationParams
@@ -17,6 +18,7 @@ class PluginInteractorImpl @Inject constructor(
 		private val pluginStore: Lazy<PluginStore>,
 		private val pluginDescriptorInteractor: Lazy<PluginDescriptorInteractor>,
 		private val feedItemsInteractor: Lazy<FeedItemsInteractor>,
+		private val pluginLoader: Provider<PluginLoader>,
 		private val pluginAuthorizationsDaoProvider: Provider<PluginAuthorizationsDao>
 ) : PluginInteractor {
 
@@ -34,6 +36,14 @@ class PluginInteractorImpl @Inject constructor(
 				response = response,
 				pluginStore = pluginStore.get(),
 				feedItemsInteractor = feedItemsInteractor.get(),
+				pluginAuthorizationsDao = pluginAuthorizationsDaoProvider.get()
+		).execute()
+	}
+
+	override suspend fun restoreAuthorizations() {
+		RestorePluginAuthorizationsUseCase(
+				pluginStore = pluginStore.get(),
+				pluginLoader = pluginLoader.get(),
 				pluginAuthorizationsDao = pluginAuthorizationsDaoProvider.get()
 		).execute()
 	}

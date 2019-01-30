@@ -42,9 +42,6 @@ class FeedViewModel @Inject constructor(
 
 	init {
 		bindStore()
-		coroutineScope.launch {
-			feedItemsInteractor.refresh()
-		}
 	}
 
 	fun authorizeTwitter() {
