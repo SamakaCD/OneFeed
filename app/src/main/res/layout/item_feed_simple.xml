@@ -13,8 +13,8 @@
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="8dp"
 		android:layout_marginTop="8dp"
+		android:layout_marginBottom="8dp"
 		app:cardElevation="2dp">
 
 		<LinearLayout
@@ -61,7 +61,8 @@
 							android:id="@+id/date"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
-							android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+							android:fontFamily="sans-serif-medium"
+							android:textAppearance="@style/TextAppearance.AppCompat.Caption"
 							android:textColor="?android:textColorSecondary"
 							app:date="@{item.publicationDate}"
 							tools:text="48 minutes ago" />
@@ -72,9 +73,9 @@
 			<TextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="16dp"
-				android:layout_marginEnd="16dp"
 				android:layout_marginStart="16dp"
+				android:layout_marginEnd="16dp"
+				android:layout_marginBottom="16dp"
 				android:text="@{item.content}"
 				android:textAppearance="@style/TextAppearance.AppCompat.Body1"
 				tools:text="Lorem ipsum dolor sit amet, duo mutat nemore ex, his lucilius intellegat et, vis homero quodsi expetenda at. Ne est tritani inermis platonem. Usu commune scriptorem intellegebat an. Vivendo inciderint duo ea. Eu sensibus eloquentiam pro." />
