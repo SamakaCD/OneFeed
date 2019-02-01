@@ -11,6 +11,8 @@ interface PluginStore : Store<PluginStore> {
 
 	fun clear()
 
+	fun getAuthorizedPlugins(): List<OneFeedPlugin>
+
 	fun getAuthorizingPluginByDescriptor(descriptor: OneFeedPluginDescriptor): OneFeedPlugin
 
 	fun getCachedAuthorizationParams(plugin: OneFeedPlugin): AuthorizationParams

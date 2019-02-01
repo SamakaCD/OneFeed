@@ -21,6 +21,10 @@ class PluginStoreImpl @Inject constructor() : ObservableStore<PluginStore>(), Pl
 		notifyChange()
 	}
 
+	override fun getAuthorizedPlugins(): List<OneFeedPlugin> {
+		return plugins.filter { it.authorizationState == AuthorizationState.AUTHORIZED }
+	}
+
 	override fun getAuthorizingPluginByDescriptor(descriptor: OneFeedPluginDescriptor): OneFeedPlugin {
 		val instance = plugins.asSequence()
 				.filter { it.authorizationState == AuthorizationState.AUTHORIZING }

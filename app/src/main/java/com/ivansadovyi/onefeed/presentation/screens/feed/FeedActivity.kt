@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +17,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_feed.*
 import javax.inject.Inject
 
-class FeedActivity : AppCompatActivity(), FeedRouter {
+class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 
 	@Inject
 	lateinit var viewModel: FeedViewModel
@@ -29,6 +30,13 @@ class FeedActivity : AppCompatActivity(), FeedRouter {
 		val binding = DataBindingUtil.setContentView<ActivityFeedBinding>(this, R.layout.activity_feed)
 		binding.viewModel = viewModel
 		setupRecyclerView()
+	}
+
+	override fun showRateLimitError(pluginName: String) {
+		AlertDialog.Builder(this)
+				.setMessage(getString(R.string.feed_rate_limit_error_message, pluginName))
+				.setPositiveButton(R.string.got_it, null)
+				.show()
 	}
 
 	override fun navigateToPluginAuthorization(pluginDescriptor: OneFeedPluginDescriptor) {

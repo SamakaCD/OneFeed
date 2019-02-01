@@ -5,4 +5,7 @@
 	<string name="feed_menu_authorize_twitter">Authorize Twitter</string>
 	<string name="feed_empty_state">There are no posts to show.</string>
 	<string name="feed_menu_reset_authorizations">Reset authorizations</string>
+	<string name="feed_plugin_error_title">Something went wrong with plugin</string>
+	<string name="feed_rate_limit_error_message">%1$s plugin exceeded rate limit.</string>
+	<string name="got_it">Got it</string>
 </resources>
