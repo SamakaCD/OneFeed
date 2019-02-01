@@ -5,6 +5,7 @@ import com.ivansadovyi.sdk.FeedItem;
 import com.ivansadovyi.sdk.OneFeedPlugin;
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor;
 import com.ivansadovyi.sdk.OneFeedPluginParams;
+import com.ivansadovyi.sdk.RateLimitException;
 import com.ivansadovyi.sdk.auth.AuthorizationHandler;
 import com.ivansadovyi.sdk.auth.AuthorizationState;
 
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
+import twitter4j.TwitterException;
 import twitter4j.auth.AccessToken;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -49,7 +51,18 @@ public class TwitterPlugin extends OneFeedPlugin {
 	@Override
 	public Iterable<FeedItem> loadNextItems() throws Throwable {
 		Twitter twitter = TwitterHolder.getInstance().getTwitter();
-		List<Status> timeline = twitter.getHomeTimeline(getNextPaging());
+		List<Status> timeline;
+
+		try {
+			timeline = twitter.getHomeTimeline(getNextPaging());
+		} catch(TwitterException exception) {
+			if (exception.exceededRateLimitation()) {
+				throw new RateLimitException();
+			} else {
+				throw exception;
+			}
+		}
+
 		if (!timeline.isEmpty()) {
 			Status lastStatus = timeline.get(timeline.size() - 1);
 			lastLoadedStatusId = lastStatus.getId();
