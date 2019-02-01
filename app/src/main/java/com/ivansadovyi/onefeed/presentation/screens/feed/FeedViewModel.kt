@@ -5,8 +5,8 @@ import androidx.databinding.Bindable
 import com.ivansadovyi.domain.app.AppInteractor
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.feed.FeedItemsStore
-import com.ivansadovyi.domain.plugin.DetailedRateLimitException
 import com.ivansadovyi.domain.plugin.PluginInteractor
+import com.ivansadovyi.domain.plugin.RateLimitException
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorStore
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -52,7 +52,7 @@ class FeedViewModel @Inject constructor(
 	private val coroutineScope = CoroutineScope(Dispatchers.Main)
 	private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
 		when (throwable) {
-			is DetailedRateLimitException -> {
+			is RateLimitException -> {
 				feedView.showRateLimitError(throwable.plugin.descriptor.name)
 			}
 		}

@@ -1,9 +1,9 @@
 package com.ivansadovyi.domain.plugin.usecase
 
 import com.ivansadovyi.domain.UseCase
-import com.ivansadovyi.domain.plugin.DetailedRateLimitException
+import com.ivansadovyi.domain.plugin.RateLimitException
 import com.ivansadovyi.sdk.OneFeedPlugin
-import com.ivansadovyi.sdk.RateLimitException
+import com.ivansadovyi.sdk.RateLimitException as SdkRateLimitException
 
 abstract class PluginInvocationUseCase<T>(private val plugin: OneFeedPlugin) : UseCase<T> {
 
@@ -19,7 +19,7 @@ abstract class PluginInvocationUseCase<T>(private val plugin: OneFeedPlugin) : U
 
 	private fun mapException(throwable: Throwable): Throwable {
 		return when (throwable) {
-			is RateLimitException -> DetailedRateLimitException(plugin)
+			is SdkRateLimitException -> RateLimitException(plugin)
 			else -> throwable
 		}
 	}
