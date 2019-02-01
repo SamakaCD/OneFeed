@@ -13,8 +13,8 @@
 		xmlns:tools="http://schemas.android.com/tools"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginTop="8dp"
 		android:layout_marginBottom="8dp"
+		android:layout_marginTop="8dp"
 		app:cardElevation="2dp">
 
 		<LinearLayout
@@ -48,6 +48,7 @@
 						android:id="@+id/title"
 						android:layout_width="match_parent"
 						android:layout_height="wrap_content"
+						android:hyphenationFrequency="none"
 						android:text="@{item.title}"
 						android:textAppearance="@style/TextAppearance.AppCompat.Body2"
 						tools:text="Title" />
@@ -62,6 +63,7 @@
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:fontFamily="sans-serif-medium"
+							android:hyphenationFrequency="none"
 							android:textAppearance="@style/TextAppearance.AppCompat.Caption"
 							android:textColor="?android:textColorSecondary"
 							app:date="@{item.publicationDate}"
@@ -70,14 +72,15 @@
 				</LinearLayout>
 			</LinearLayout>
 
-			<TextView
+			<androidx.appcompat.widget.AppCompatTextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginStart="16dp"
-				android:layout_marginEnd="16dp"
 				android:layout_marginBottom="16dp"
-				android:text="@{item.content}"
+				android:layout_marginEnd="16dp"
+				android:layout_marginStart="16dp"
+				android:hyphenationFrequency="none"
 				android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+				app:asyncText="@{item.content}"
 				tools:text="Lorem ipsum dolor sit amet, duo mutat nemore ex, his lucilius intellegat et, vis homero quodsi expetenda at. Ne est tritani inermis platonem. Usu commune scriptorem intellegebat an. Vivendo inciderint duo ea. Eu sensibus eloquentiam pro." />
 
 			<ImageView

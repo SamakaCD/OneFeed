@@ -2,6 +2,9 @@ package com.ivansadovyi.onefeed.presentation.databinding.adapters
 
 import android.text.format.DateUtils
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.text.PrecomputedTextCompat
+import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import java.util.*
 
@@ -17,5 +20,12 @@ object TextViewBindingAdapters {
 			DateUtils.getRelativeDateTimeString(textView.context, date.time, DateUtils.SECOND_IN_MILLIS,
 					2 * DateUtils.DAY_IN_MILLIS, 0)
 		}
+	}
+
+	@JvmStatic
+	@BindingAdapter("asyncText")
+	fun setAsyncText(textView: AppCompatTextView, text: CharSequence) {
+		val params = TextViewCompat.getTextMetricsParams(textView)
+		textView.setTextFuture(PrecomputedTextCompat.getTextFuture(text, params, null))
 	}
 }

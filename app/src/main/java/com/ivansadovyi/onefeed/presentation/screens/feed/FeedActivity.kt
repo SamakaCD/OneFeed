@@ -66,6 +66,7 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 
 	private fun setupRecyclerView() {
 		layoutManager = LinearLayoutManager(this)
+		layoutManager.isItemPrefetchEnabled = true
 		recyclerView.layoutManager = layoutManager
 		recyclerView.adapter = FeedRecyclerViewAdapter()
 		setupPagination()
