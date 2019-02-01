@@ -20,6 +20,20 @@ class AppPluginLoader(private val context: Context) : PluginLoader {
 		return descriptorsCache
 	}
 
+	override suspend fun getDescriptorByClassName(pluginClassName: String): OneFeedPluginDescriptor {
+		if (descriptorsCache.isEmpty()) {
+			refreshDescriptorsCache()
+		}
+
+		for (descriptor in descriptorsCache) {
+			if (descriptor.className == pluginClassName) {
+				return descriptor
+			}
+		}
+
+		throw IllegalArgumentException("Can not find plugin descriptor with class name $pluginClassName")
+	}
+
 	override suspend fun canInstantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Boolean {
 		return pluginDescriptor is OneFeedAppPluginDescriptor || canInstantiatePlugin(pluginDescriptor.className)
 	}
@@ -34,18 +48,11 @@ class AppPluginLoader(private val context: Context) : PluginLoader {
 
 	override suspend fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): OneFeedPlugin {
 		val pluginDescriptor = pluginDescriptor as OneFeedAppPluginDescriptor
-		return instantiate(pluginDescriptor.applicationInfo, pluginDescriptor.className)
-	}
-
-	override suspend fun instantiate(pluginClassName: String): OneFeedPlugin {
-		for (descriptor in descriptorsCache) {
-			if (descriptor.className == pluginClassName) {
-				return instantiate(descriptor)
-			}
-		}
-
-		throw IllegalArgumentException("Can not instantiate plugin with class name ($pluginClassName). " +
-				"No OneFeed plugin application found")
+		val apkPath = pluginDescriptor.applicationInfo.sourceDir
+		val dexOptimizedPath = context.getDir(OPTIMIZED_DEX_DIR_NAME, 0).path
+		val classLoader = DexClassLoader(apkPath, dexOptimizedPath, null, javaClass.classLoader)
+		val pluginClass = classLoader.loadClass(pluginDescriptor.className)
+		return pluginClass.newInstance() as OneFeedPlugin
 	}
 
 	private suspend fun refreshDescriptorsCache() = withContext(Dispatchers.IO) {
@@ -54,14 +61,6 @@ class AppPluginLoader(private val context: Context) : PluginLoader {
 				.filter { it.hasOneFeedPlugin }
 				.map { descriptorFactory.create(it) }
 				.toList()
-	}
-
-	private fun instantiate(applicationInfo: ApplicationInfo, pluginClassName: String): OneFeedPlugin {
-		val apkPath = applicationInfo.sourceDir
-		val dexOptimizedPath = context.getDir(OPTIMIZED_DEX_DIR_NAME, 0).path
-		val classLoader = DexClassLoader(apkPath, dexOptimizedPath, null, javaClass.classLoader)
-		val pluginClass = classLoader.loadClass(pluginClassName)
-		return pluginClass.newInstance() as OneFeedPlugin
 	}
 
 	private val ApplicationInfo.hasOneFeedPlugin

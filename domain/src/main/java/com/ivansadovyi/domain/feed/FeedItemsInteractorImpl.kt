@@ -3,6 +3,7 @@ package com.ivansadovyi.domain.feed
 import com.ivansadovyi.domain.feed.usecase.ClearFeedUseCase
 import com.ivansadovyi.domain.feed.usecase.LoadMoreFeedUseCase
 import com.ivansadovyi.domain.feed.usecase.RefreshFeedUseCase
+import com.ivansadovyi.domain.plugin.PluginInteractor
 import com.ivansadovyi.domain.plugin.PluginStore
 import dagger.Lazy
 import javax.inject.Inject
@@ -13,6 +14,7 @@ import javax.inject.Singleton
 class FeedItemsInteractorImpl @Inject constructor(
 		private val feedItemsStore: Lazy<FeedItemsStore>,
 		private val pluginStore: Lazy<PluginStore>,
+		private val pluginInteractor: Lazy<PluginInteractor>,
 		private val feedItemsDao: Provider<FeedItemsDao>
 ) : FeedItemsInteractor {
 
@@ -26,6 +28,7 @@ class FeedItemsInteractorImpl @Inject constructor(
 		RefreshFeedUseCase(
 				feedItemsStore = feedItemsStore.get(),
 				pluginStore = pluginStore.get(),
+				pluginInteractor = pluginInteractor.get(),
 				feedItemsDao = feedItemsDao.get()
 		).execute()
 	}
@@ -34,6 +37,7 @@ class FeedItemsInteractorImpl @Inject constructor(
 		LoadMoreFeedUseCase(
 				feedItemsStore = feedItemsStore.get(),
 				pluginStore = pluginStore.get(),
+				pluginInteractor = pluginInteractor.get(),
 				feedItemsDao = feedItemsDao.get()
 		).execute()
 	}

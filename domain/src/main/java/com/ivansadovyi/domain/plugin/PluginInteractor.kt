@@ -1,5 +1,7 @@
 package com.ivansadovyi.domain.plugin
 
+import com.ivansadovyi.sdk.FeedItem
+import com.ivansadovyi.sdk.OneFeedPlugin
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.auth.AuthorizationParams
 
@@ -12,4 +14,8 @@ interface PluginInteractor {
 	suspend fun restoreAuthorizations()
 
 	suspend fun resetAuthorizations()
+
+	suspend fun refresh(plugin: OneFeedPlugin): Iterable<FeedItem>
+
+	suspend fun loadNextItems(plugin: OneFeedPlugin): Iterable<FeedItem>
 }

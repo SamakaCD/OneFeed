@@ -10,6 +10,20 @@ class CompositePluginLoader(private vararg val loaders: PluginLoader) : PluginLo
 		return loaders.flatMap { it.getDescriptors() }
 	}
 
+	override suspend fun getDescriptorByClassName(pluginClassName: String): OneFeedPluginDescriptor {
+		if (loaders.isEmpty()) {
+			throw IllegalStateException("Can not find any loader which has plugin descriptor with " +
+					"class name ($pluginClassName) because there is no any PluginLoader registered")
+		}
+
+		for (loader in loaders) {
+			if (loader.canInstantiatePlugin(pluginClassName)) {
+				return loader.getDescriptorByClassName(pluginClassName)
+			}
+		}
+		throw IllegalStateException("Can not find any loader which has plugin descriptor with class name ($pluginClassName)")
+	}
+
 	override suspend fun canInstantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Boolean {
 		return loaders.any { it.canInstantiatePlugin(pluginDescriptor) }
 	}
@@ -31,22 +45,6 @@ class CompositePluginLoader(private vararg val loaders: PluginLoader) : PluginLo
 		}
 
 		throw IllegalStateException("Can not instantiate plugin with descriptor [$pluginDescriptor] " +
-				"because there is no any PluginLoader which can do it")
-	}
-
-	override suspend fun instantiate(pluginClassName: String): OneFeedPlugin {
-		if (loaders.isEmpty()) {
-			throw IllegalStateException("Can not instantiate plugin with class name ($pluginClassName) " +
-					"because there is no any PluginLoader registered")
-		}
-
-		for (loader in loaders) {
-			if (loader.canInstantiatePlugin(pluginClassName)) {
-				return loader.instantiate(pluginClassName)
-			}
-		}
-
-		throw IllegalStateException("Can not instantiate plugin with class name ($pluginClassName) " +
 				"because there is no any PluginLoader which can do it")
 	}
 }

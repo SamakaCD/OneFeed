@@ -14,6 +14,13 @@ class BuiltInPluginLoader @Inject constructor() : PluginLoader {
 		return listOf(TwitterPlugin.DESCRIPTOR)
 	}
 
+	override suspend fun getDescriptorByClassName(pluginClassName: String): OneFeedPluginDescriptor {
+		return when (pluginClassName) {
+			TwitterPlugin.DESCRIPTOR.className -> TwitterPlugin.DESCRIPTOR
+			else -> throw IllegalArgumentException("Can not find plugin descriptor with class name ($pluginClassName)")
+		}
+	}
+
 	override suspend fun canInstantiatePlugin(pluginDescriptor: OneFeedPluginDescriptor): Boolean {
 		return canInstantiatePlugin(pluginDescriptor.className)
 	}
@@ -26,13 +33,9 @@ class BuiltInPluginLoader @Inject constructor() : PluginLoader {
 	}
 
 	override suspend fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): OneFeedPlugin {
-		return instantiate(pluginDescriptor.className)
-	}
-
-	override suspend fun instantiate(pluginClassName: String): OneFeedPlugin {
-		return when (pluginClassName) {
-			TwitterPlugin.DESCRIPTOR.className -> TwitterPlugin()
-			else -> throw IllegalArgumentException("Can not instantiate plugin by class name ($pluginClassName)")
+		return when (pluginDescriptor) {
+			TwitterPlugin.DESCRIPTOR -> TwitterPlugin()
+			else -> throw IllegalArgumentException("Can not instantiate plugin with descriptor [$pluginDescriptor]")
 		}
 	}
 }

@@ -3,10 +3,9 @@ package com.ivansadovyi.domain.plugin
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationsDao
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorInteractor
-import com.ivansadovyi.domain.plugin.usecase.ProcessAuthorizationResponseUseCase
-import com.ivansadovyi.domain.plugin.usecase.ResetAuthorizationsUseCase
-import com.ivansadovyi.domain.plugin.usecase.RestorePluginAuthorizationsUseCase
-import com.ivansadovyi.domain.plugin.usecase.StartPluginAuthorizationUseCase
+import com.ivansadovyi.domain.plugin.usecase.*
+import com.ivansadovyi.sdk.FeedItem
+import com.ivansadovyi.sdk.OneFeedPlugin
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.auth.AuthorizationParams
 import dagger.Lazy
@@ -44,6 +43,7 @@ class PluginInteractorImpl @Inject constructor(
 	override suspend fun restoreAuthorizations() {
 		RestorePluginAuthorizationsUseCase(
 				pluginStore = pluginStore.get(),
+				pluginDescriptorInteractor = pluginDescriptorInteractor.get(),
 				pluginLoader = pluginLoader.get(),
 				pluginAuthorizationsDao = pluginAuthorizationsDaoProvider.get()
 		).execute()
@@ -55,5 +55,13 @@ class PluginInteractorImpl @Inject constructor(
 				pluginAuthorizationsDao = pluginAuthorizationsDaoProvider.get(),
 				feedItemsInteractor = feedItemsInteractor.get()
 		).execute()
+	}
+
+	override suspend fun refresh(plugin: OneFeedPlugin): Iterable<FeedItem> {
+		return RefreshPluginUseCase(plugin).execute()
+	}
+
+	override suspend fun loadNextItems(plugin: OneFeedPlugin): Iterable<FeedItem> {
+		return LoadNextItemsPluginUseCase(plugin).execute()
 	}
 }
