@@ -2,6 +2,7 @@ package com.ivansadovyi.onefeed.presentation.screens.feed
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Debug
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
@@ -30,6 +31,9 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 		val binding = DataBindingUtil.setContentView<ActivityFeedBinding>(this, R.layout.activity_feed)
 		binding.viewModel = viewModel
 		setupRecyclerView()
+		binding.root.postDelayed({
+			Debug.stopMethodTracing()
+		}, 3333)
 	}
 
 	override fun showRateLimitError(pluginName: String) {

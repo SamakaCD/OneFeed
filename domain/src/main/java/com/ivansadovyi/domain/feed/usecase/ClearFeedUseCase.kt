@@ -1,11 +1,11 @@
 package com.ivansadovyi.domain.feed.usecase
 
 import com.ivansadovyi.domain.UseCase
-import com.ivansadovyi.domain.feed.FeedItemsDao
+import com.ivansadovyi.domain.feed.FeedItemRepository
 
-class ClearFeedUseCase(private val feedItemsDao: FeedItemsDao) : UseCase<Unit> {
+class ClearFeedUseCase(private val feedItemRepository: FeedItemRepository) : UseCase<Unit> {
 
 	override suspend fun execute() {
-		feedItemsDao.clear()
+		feedItemRepository.clear()
 	}
 }
