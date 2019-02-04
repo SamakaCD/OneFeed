@@ -2,7 +2,6 @@ package com.ivansadovyi.onefeed
 
 import android.app.Activity
 import android.app.Application
-import android.os.Debug
 import com.ivansadovyi.onefeed.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -16,7 +15,6 @@ class OneFeedApplication : Application(), HasActivityInjector {
 
 	override fun onCreate() {
 		super.onCreate()
-		Debug.startMethodTracing()
 		setupDagger()
 	}
 

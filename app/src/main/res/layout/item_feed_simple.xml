@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 
 	<data>
 
@@ -8,89 +10,91 @@
 			type="com.ivansadovyi.sdk.FeedItem" />
 	</data>
 
-	<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		xmlns:tools="http://schemas.android.com/tools"
+	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:layout_marginBottom="8dp"
-		android:layout_marginTop="8dp"
-		app:cardElevation="2dp">
+		android:orientation="vertical">
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="8dp"
+			android:background="@drawable/feed_item_top" />
 
 		<LinearLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:orientation="vertical">
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_margin="16dp"
-				android:gravity="center_vertical"
-				android:orientation="horizontal">
-
-				<ImageView
-					android:layout_width="40dp"
-					android:layout_height="40dp"
-					android:layout_marginEnd="16dp"
-					android:layout_marginRight="16dp"
-					app:srcUrl="@{item.avatarImageUrl}"
-					tools:background="#1000" />
-
-				<LinearLayout
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:orientation="vertical">
-
-					<TextView
-						android:id="@+id/title"
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:hyphenationFrequency="none"
-						android:text="@{item.title}"
-						android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-						tools:text="Title" />
-
-					<LinearLayout
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:orientation="horizontal">
-
-						<TextView
-							android:id="@+id/date"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:fontFamily="sans-serif-medium"
-							android:hyphenationFrequency="none"
-							android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-							android:textColor="?android:textColorSecondary"
-							app:date="@{item.publicationDate}"
-							tools:text="48 minutes ago" />
-					</LinearLayout>
-				</LinearLayout>
-			</LinearLayout>
-
-			<androidx.appcompat.widget.AppCompatTextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="16dp"
-				android:layout_marginEnd="16dp"
-				android:layout_marginStart="16dp"
-				android:hyphenationFrequency="none"
-				android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-				app:asyncText="@{item.content}"
-				tools:text="Lorem ipsum dolor sit amet, duo mutat nemore ex, his lucilius intellegat et, vis homero quodsi expetenda at. Ne est tritani inermis platonem. Usu commune scriptorem intellegebat an. Vivendo inciderint duo ea. Eu sensibus eloquentiam pro." />
+			android:layout_height="wrap_content"
+			android:layout_margin="16dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal">
 
 			<ImageView
-				android:layout_width="match_parent"
+				android:layout_width="40dp"
+				android:layout_height="40dp"
+				android:layout_marginEnd="16dp"
+				android:layout_marginRight="16dp"
+				app:srcUrl="@{item.avatarImageUrl}"
+				tools:background="#1000" />
+
+			<LinearLayout
+				android:layout_width="0dp"
 				android:layout_height="wrap_content"
-				android:layout_marginBottom="16dp"
-				android:contentDescription="@{item.content ?? item.title}"
-				android:visibility="gone"
-				tools:background="#1000"
-				tools:layout_height="128dp"
-				tools:visibility="visible" />
+				android:layout_weight="1"
+				android:orientation="vertical">
+
+				<TextView
+					android:id="@+id/title"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:hyphenationFrequency="none"
+					android:text="@{item.title}"
+					android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+					tools:text="Title" />
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal">
+
+					<TextView
+						android:id="@+id/date"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="sans-serif-medium"
+						android:hyphenationFrequency="none"
+						android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+						android:textColor="?android:textColorSecondary"
+						app:date="@{item.publicationDate}"
+						tools:text="48 minutes ago" />
+				</LinearLayout>
+			</LinearLayout>
 		</LinearLayout>
-	</androidx.cardview.widget.CardView>
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="16dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_marginStart="16dp"
+			android:hyphenationFrequency="none"
+			android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+			app:asyncText="@{item.content}"
+			tools:text="Lorem ipsum dolor sit amet, duo mutat nemore ex, his lucilius intellegat et, vis homero quodsi expetenda at. Ne est tritani inermis platonem. Usu commune scriptorem intellegebat an. Vivendo inciderint duo ea. Eu sensibus eloquentiam pro." />
+
+		<ImageView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="16dp"
+			android:contentDescription="@{item.content ?? item.title}"
+			android:visibility="gone"
+			tools:background="#1000"
+			tools:layout_height="128dp"
+			tools:visibility="visible" />
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="8dp"
+			android:background="@drawable/feed_item_bottom" />
+	</LinearLayout>
 </layout>
