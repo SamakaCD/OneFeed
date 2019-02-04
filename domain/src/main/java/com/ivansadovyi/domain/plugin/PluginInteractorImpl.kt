@@ -1,7 +1,7 @@
 package com.ivansadovyi.domain.plugin
 
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
-import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationsDao
+import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationRepository
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorInteractor
 import com.ivansadovyi.domain.plugin.usecase.*
 import com.ivansadovyi.sdk.FeedItem
@@ -19,7 +19,7 @@ class PluginInteractorImpl @Inject constructor(
 		private val pluginDescriptorInteractor: Lazy<PluginDescriptorInteractor>,
 		private val feedItemsInteractor: Lazy<FeedItemsInteractor>,
 		private val pluginLoader: Provider<PluginLoader>,
-		private val pluginAuthorizationsDaoProvider: Provider<PluginAuthorizationsDao>
+		private val pluginAuthorizationRepositoryProvider: Provider<PluginAuthorizationRepository>
 ) : PluginInteractor {
 
 	override suspend fun startPluginAuthorization(pluginDescriptor: OneFeedPluginDescriptor): AuthorizationParams {
@@ -36,7 +36,7 @@ class PluginInteractorImpl @Inject constructor(
 				response = response,
 				pluginStore = pluginStore.get(),
 				feedItemsInteractor = feedItemsInteractor.get(),
-				pluginAuthorizationsDao = pluginAuthorizationsDaoProvider.get()
+				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get()
 		).execute()
 	}
 
@@ -45,14 +45,14 @@ class PluginInteractorImpl @Inject constructor(
 				pluginStore = pluginStore.get(),
 				pluginDescriptorInteractor = pluginDescriptorInteractor.get(),
 				pluginLoader = pluginLoader.get(),
-				pluginAuthorizationsDao = pluginAuthorizationsDaoProvider.get()
+				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get()
 		).execute()
 	}
 
 	override suspend fun resetAuthorizations() {
 		ResetAuthorizationsUseCase(
 				pluginStore = pluginStore.get(),
-				pluginAuthorizationsDao = pluginAuthorizationsDaoProvider.get(),
+				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get(),
 				feedItemsInteractor = feedItemsInteractor.get()
 		).execute()
 	}

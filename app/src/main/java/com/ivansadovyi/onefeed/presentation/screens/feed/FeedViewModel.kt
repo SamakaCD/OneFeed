@@ -1,5 +1,7 @@
 package com.ivansadovyi.onefeed.presentation.screens.feed
 
+import android.os.Handler
+import android.os.Looper
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.ivansadovyi.domain.app.AppInteractor
@@ -12,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.android.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -49,7 +51,8 @@ class FeedViewModel @Inject constructor(
 		return items
 	}
 
-	private val coroutineScope = CoroutineScope(Dispatchers.Main)
+	private val dispatcher = Handler(Looper.getMainLooper()).asCoroutineDispatcher()
+	private val coroutineScope = CoroutineScope(dispatcher)
 	private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
 		when (throwable) {
 			is RateLimitException -> {

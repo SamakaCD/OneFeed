@@ -1,38 +1,28 @@
 package com.ivansadovyi.data.di
 
 import android.app.Application
-import com.ivansadovyi.data.di.qualifiers.RealmScheduler
+import androidx.room.Room
+import com.ivansadovyi.data.db.AppDatabase
+import com.ivansadovyi.data.feed.RoomFeedItemRepository
 import com.ivansadovyi.data.plugin.di.PluginDaggerModule
+import com.ivansadovyi.domain.feed.FeedItemRepository
 import dagger.Module
 import dagger.Provides
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.realm.Realm
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.rx2.asCoroutineDispatcher
 import javax.inject.Singleton
 
-@Module(includes = [DataDaggerBindings::class, PluginDaggerModule::class])
+@Module(includes = [PluginDaggerModule::class])
 class DataDaggerModule {
 
 	@Provides
-	@RealmScheduler
 	@Singleton
-	fun provideRealmRxScheduler(): Scheduler {
-		return AndroidSchedulers.mainThread()
-	}
-
-	@Provides
-	@RealmScheduler
-	@Singleton
-	fun provideRealmCoroutineDispatcher(@RealmScheduler scheduler: Scheduler): CoroutineDispatcher {
-		return scheduler.asCoroutineDispatcher()
+	fun provideAppDatabase(application: Application): AppDatabase {
+		return Room.databaseBuilder(application, AppDatabase::class.java, AppDatabase.NAME).build()
 	}
 
 	@Provides
 	@Singleton
-	fun provideRealm(application: Application): Realm {
-		Realm.init(application)
-		return Realm.getDefaultInstance()
+	fun provideFeedItemRepository(appDatabase: AppDatabase): FeedItemRepository {
+		val dao = appDatabase.getFeedItemDao()
+		return RoomFeedItemRepository(dao)
 	}
 }

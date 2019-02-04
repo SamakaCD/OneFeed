@@ -3,7 +3,7 @@ package com.ivansadovyi.domain.feed
 import com.ivansadovyi.sdk.FeedItem
 import io.reactivex.Observable
 
-interface FeedItemsDao {
+interface FeedItemRepository {
 
 	suspend fun clear()
 

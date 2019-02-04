@@ -5,7 +5,7 @@ import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.plugin.PluginStore
 import com.ivansadovyi.domain.plugin.auth.AuthorizationProcessorFactory
 import com.ivansadovyi.domain.plugin.auth.PluginAuthorization
-import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationsDao
+import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationRepository
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.OneFeedPluginParams
 import com.ivansadovyi.sdk.auth.AuthorizationState
@@ -17,7 +17,7 @@ class ProcessAuthorizationResponseUseCase(
 		private val response: String,
 		private val pluginStore: PluginStore,
 		private val feedItemsInteractor: FeedItemsInteractor,
-		private val pluginAuthorizationsDao: PluginAuthorizationsDao
+		private val pluginAuthorizationRepository: PluginAuthorizationRepository
 ) : UseCase<Boolean> {
 
 	override suspend fun execute(): Boolean = withContext(Dispatchers.IO) {
@@ -36,7 +36,7 @@ class ProcessAuthorizationResponseUseCase(
 
 		// Save new authorization to persistent storage
 		val pluginAuthorization = PluginAuthorization(result.authorization, pluginDescriptor.className)
-		pluginAuthorizationsDao.putPluginAuthorization(pluginAuthorization)
+		pluginAuthorizationRepository.putPluginAuthorization(pluginAuthorization)
 
 		// New plugin added, so feed should be refreshed.
 		feedItemsInteractor.refresh()

@@ -1,6 +1,6 @@
 package com.ivansadovyi.domain.plugin.auth
 
-interface PluginAuthorizationsDao {
+interface PluginAuthorizationRepository {
 
 	suspend fun clear()
 

@@ -15,12 +15,12 @@ class FeedItemsInteractorImpl @Inject constructor(
 		private val feedItemsStore: Lazy<FeedItemsStore>,
 		private val pluginStore: Lazy<PluginStore>,
 		private val pluginInteractor: Lazy<PluginInteractor>,
-		private val feedItemsDao: Provider<FeedItemsDao>
+		private val feedItemRepository: Provider<FeedItemRepository>
 ) : FeedItemsInteractor {
 
 	override suspend fun clear() {
 		ClearFeedUseCase(
-				feedItemsDao = feedItemsDao.get()
+				feedItemRepository = feedItemRepository.get()
 		).execute()
 	}
 
@@ -29,7 +29,7 @@ class FeedItemsInteractorImpl @Inject constructor(
 				feedItemsStore = feedItemsStore.get(),
 				pluginStore = pluginStore.get(),
 				pluginInteractor = pluginInteractor.get(),
-				feedItemsDao = feedItemsDao.get()
+				feedItemRepository = feedItemRepository.get()
 		).execute()
 	}
 
@@ -38,7 +38,7 @@ class FeedItemsInteractorImpl @Inject constructor(
 				feedItemsStore = feedItemsStore.get(),
 				pluginStore = pluginStore.get(),
 				pluginInteractor = pluginInteractor.get(),
-				feedItemsDao = feedItemsDao.get()
+				feedItemRepository = feedItemRepository.get()
 		).execute()
 	}
 }

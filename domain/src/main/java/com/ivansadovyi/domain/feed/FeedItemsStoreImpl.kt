@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Singleton
 class FeedItemsStoreImpl @Inject constructor(
-		private val feedItemsDao: FeedItemsDao
+		private val feedItemRepository: FeedItemRepository
 ) : ObservableStore<FeedItemsStore>(), FeedItemsStore {
 
 	override var items: List<FeedItem> by ObservableValue(defaultValue = mutableListOf())
@@ -20,7 +20,7 @@ class FeedItemsStoreImpl @Inject constructor(
 	}
 
 	private fun observeDao() {
-		feedItemsDao.getFeedItems().subscribe {
+		feedItemRepository.getFeedItems().subscribe {
 			items = it
 		}
 	}

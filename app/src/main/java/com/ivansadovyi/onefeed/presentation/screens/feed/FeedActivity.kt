@@ -8,10 +8,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ivansadovyi.onefeed.R
 import com.ivansadovyi.onefeed.databinding.ActivityFeedBinding
 import com.ivansadovyi.onefeed.presentation.screens.pluginAuthorizaton.PluginAuthorizationActivity
+import com.ivansadovyi.onefeed.presentation.utils.recyclerview.PaginationListener
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_feed.*
@@ -66,21 +66,19 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 
 	private fun setupRecyclerView() {
 		layoutManager = LinearLayoutManager(this)
+		layoutManager.isItemPrefetchEnabled = true
 		recyclerView.layoutManager = layoutManager
 		recyclerView.adapter = FeedRecyclerViewAdapter()
 		setupPagination()
 	}
 
 	private fun setupPagination() {
-		recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-			override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-				val visibleItemCount = layoutManager.childCount
-				val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-				val totalItemCount = layoutManager.itemCount
-				if (lastVisibleItemPosition + visibleItemCount * 2 >= totalItemCount) {
+		recyclerView.addOnScrollListener(PaginationListener(
+				layoutManager = layoutManager,
+				throttling = 500,
+				loadNextPageCallback = {
 					viewModel.loadMore()
 				}
-			}
-		})
+		))
 	}
 }

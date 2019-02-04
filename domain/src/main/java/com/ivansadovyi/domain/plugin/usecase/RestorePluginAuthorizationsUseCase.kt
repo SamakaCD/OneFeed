@@ -4,7 +4,7 @@ import com.ivansadovyi.domain.UseCase
 import com.ivansadovyi.domain.plugin.PluginLoader
 import com.ivansadovyi.domain.plugin.PluginStore
 import com.ivansadovyi.domain.plugin.auth.PluginAuthorization
-import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationsDao
+import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationRepository
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorInteractor
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.OneFeedPluginParams
@@ -14,11 +14,11 @@ class RestorePluginAuthorizationsUseCase(
 		private val pluginStore: PluginStore,
 		private val pluginDescriptorInteractor: PluginDescriptorInteractor,
 		private val pluginLoader: PluginLoader,
-		private var pluginAuthorizationsDao: PluginAuthorizationsDao
+		private var pluginAuthorizationRepository: PluginAuthorizationRepository
 ) : UseCase<Unit> {
 
 	override suspend fun execute() {
-		pluginAuthorizationsDao.getPluginAuthorizations().forEach {
+		pluginAuthorizationRepository.getPluginAuthorizations().forEach {
 			instantiateAndStorePlugin(it)
 		}
 	}
