@@ -22,6 +22,9 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 	@Inject
 	lateinit var viewModel: FeedViewModel
 
+	@Inject
+	lateinit var adapter: FeedRecyclerViewAdapter
+
 	private lateinit var layoutManager: LinearLayoutManager
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +71,7 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 		layoutManager = LinearLayoutManager(this)
 		layoutManager.isItemPrefetchEnabled = true
 		recyclerView.layoutManager = layoutManager
-		recyclerView.adapter = FeedRecyclerViewAdapter()
+		recyclerView.adapter = adapter
 		setupPagination()
 	}
 

@@ -12,7 +12,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [PluginDaggerBindings::class])
 class PluginDaggerModule {
 
 	@Provides

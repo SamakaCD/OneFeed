@@ -10,12 +10,16 @@ public class FeedItem {
 	private Date publicationDate;
 	private String avatarImageUrl;
 
-	public FeedItem(String id, String title, String content, Date publicationDate, String avatarImageUrl) {
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.publicationDate = publicationDate;
-		this.avatarImageUrl = avatarImageUrl;
+	private FeedItem() {
+
+	}
+
+	protected FeedItem(FeedItem source) {
+		this.id = source.id;
+		this.title = source.title;
+		this.content = source.content;
+		this.publicationDate = source.publicationDate;
+		this.avatarImageUrl = source.avatarImageUrl;
 	}
 
 	public String getId() {
@@ -72,7 +76,13 @@ public class FeedItem {
 		}
 
 		public FeedItem build() {
-			return new FeedItem(id, title, content, publicationDate, avatarImageUrl);
+			FeedItem feedItem = new FeedItem();
+			feedItem.id = id;
+			feedItem.title = title;
+			feedItem.content = content;
+			feedItem.publicationDate = publicationDate;
+			feedItem.avatarImageUrl = avatarImageUrl;
+			return feedItem;
 		}
 	}
 }

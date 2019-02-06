@@ -1,5 +1,6 @@
 package com.ivansadovyi.domain.plugin.usecase
 
+import android.app.Application
 import com.ivansadovyi.domain.UseCase
 import com.ivansadovyi.domain.plugin.PluginStore
 import com.ivansadovyi.domain.plugin.auth.AuthorizationProcessorFactory
@@ -14,7 +15,8 @@ import kotlinx.coroutines.withContext
 class StartPluginAuthorizationUseCase(
 		private val pluginDescriptor: OneFeedPluginDescriptor,
 		private val pluginStore: PluginStore,
-		private val pluginDescriptorInteractor: PluginDescriptorInteractor
+		private val pluginDescriptorInteractor: PluginDescriptorInteractor,
+		private val application: Application
 ) : UseCase<AuthorizationParams> {
 
 	override suspend fun execute(): AuthorizationParams = withContext(Dispatchers.IO) {
@@ -33,6 +35,7 @@ class StartPluginAuthorizationUseCase(
 		return OneFeedPluginParams.Builder()
 				.setAuthorizationState(AuthorizationState.AUTHORIZING)
 				.setDescriptor(pluginDescriptor)
+				.setContext(application)
 				.build()
 	}
 }

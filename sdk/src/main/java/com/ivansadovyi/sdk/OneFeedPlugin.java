@@ -1,6 +1,7 @@
 package com.ivansadovyi.sdk;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.ivansadovyi.sdk.auth.AuthorizationHandler;
 import com.ivansadovyi.sdk.auth.AuthorizationState;
@@ -38,6 +39,9 @@ public abstract class OneFeedPlugin {
 	public OneFeedPluginDescriptor getDescriptor() {
 		return getParams().getDescriptor();
 	}
+
+	@NonNull
+	public abstract Bitmap getIcon();
 
 	@NonNull
 	public OneFeedPluginParams getParams() {
