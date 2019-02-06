@@ -4,4 +4,5 @@
 	<color name="colorPrimaryDark">#D3AC41</color>
 	<color name="colorAccent">#FF3D00</color>
 	<color name="colorBackground">#FFFFFF</color>
+	<color name="colorFeedPluginIcon">#78000000</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.ivansadovyi.domain.plugin
 
+import android.app.Application
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationRepository
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorInteractor
@@ -19,14 +20,17 @@ class PluginInteractorImpl @Inject constructor(
 		private val pluginDescriptorInteractor: Lazy<PluginDescriptorInteractor>,
 		private val feedItemsInteractor: Lazy<FeedItemsInteractor>,
 		private val pluginLoader: Provider<PluginLoader>,
-		private val pluginAuthorizationRepositoryProvider: Provider<PluginAuthorizationRepository>
+		private val pluginAuthorizationRepositoryProvider: Provider<PluginAuthorizationRepository>,
+		private val applicationProvider: Provider<Application>,
+		private val pluginIconCache: Lazy<PluginIconCache>
 ) : PluginInteractor {
 
 	override suspend fun startPluginAuthorization(pluginDescriptor: OneFeedPluginDescriptor): AuthorizationParams {
 		return StartPluginAuthorizationUseCase(
 				pluginDescriptor = pluginDescriptor,
 				pluginStore = pluginStore.get(),
-				pluginDescriptorInteractor = pluginDescriptorInteractor.get()
+				pluginDescriptorInteractor = pluginDescriptorInteractor.get(),
+				application = applicationProvider.get()
 		).execute()
 	}
 
@@ -35,6 +39,7 @@ class PluginInteractorImpl @Inject constructor(
 				pluginDescriptor = pluginDescriptor,
 				response = response,
 				pluginStore = pluginStore.get(),
+				pluginInteractor = this,
 				feedItemsInteractor = feedItemsInteractor.get(),
 				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get()
 		).execute()
@@ -43,9 +48,11 @@ class PluginInteractorImpl @Inject constructor(
 	override suspend fun restoreAuthorizations() {
 		RestorePluginAuthorizationsUseCase(
 				pluginStore = pluginStore.get(),
+				pluginInteractor = this,
 				pluginDescriptorInteractor = pluginDescriptorInteractor.get(),
 				pluginLoader = pluginLoader.get(),
-				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get()
+				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get(),
+				application = applicationProvider.get()
 		).execute()
 	}
 
@@ -63,5 +70,12 @@ class PluginInteractorImpl @Inject constructor(
 
 	override suspend fun loadNextItems(plugin: OneFeedPlugin): Iterable<FeedItem> {
 		return LoadNextItemsPluginUseCase(plugin).execute()
+	}
+
+	override suspend fun cachePluginIcon(plugin: OneFeedPlugin) {
+		CachePluginIconUseCase(
+				plugin = plugin,
+				pluginIconCache = pluginIconCache.get()
+		).execute()
 	}
 }

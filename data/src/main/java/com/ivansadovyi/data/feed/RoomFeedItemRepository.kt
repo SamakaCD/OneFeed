@@ -1,7 +1,7 @@
 package com.ivansadovyi.data.feed
 
+import com.ivansadovyi.domain.feed.BundledFeedItem
 import com.ivansadovyi.domain.feed.FeedItemRepository
-import com.ivansadovyi.sdk.FeedItem
 import io.reactivex.Observable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -12,11 +12,11 @@ class RoomFeedItemRepository(private val dao: RoomFeedItemDao) : FeedItemReposit
 		dao.deleteAll()
 	}
 
-	override suspend fun putFeedItems(items: List<FeedItem>) = withContext(Dispatchers.IO) {
+	override suspend fun putFeedItems(items: List<BundledFeedItem>) = withContext(Dispatchers.IO) {
 		dao.insert(items.map(RoomFeedItemMapper::toRoom))
 	}
 
-	override fun getFeedItems(): Observable<List<FeedItem>> {
+	override fun getFeedItems(): Observable<List<BundledFeedItem>> {
 		return dao.getAll().map { it.map(RoomFeedItemMapper::fromRoom) }
 	}
 }

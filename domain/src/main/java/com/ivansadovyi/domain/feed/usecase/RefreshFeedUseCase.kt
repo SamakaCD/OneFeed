@@ -1,6 +1,7 @@
 package com.ivansadovyi.domain.feed.usecase
 
 import com.ivansadovyi.domain.UseCase
+import com.ivansadovyi.domain.feed.BundledFeedItem
 import com.ivansadovyi.domain.feed.FeedItemRepository
 import com.ivansadovyi.domain.feed.FeedItemsStore
 import com.ivansadovyi.domain.plugin.PluginInteractor
@@ -18,8 +19,11 @@ class RefreshFeedUseCase(
 	override suspend fun execute() = withContext(Dispatchers.IO) {
 		feedItemsStore.loading = true
 		for (plugin in pluginStore.getAuthorizedPlugins()) {
-			val feedItems = pluginInteractor.refresh(plugin).toList()
-			feedItemRepository.putFeedItems(feedItems)
+			val pluginClassName = plugin.descriptor.className
+			pluginInteractor.refresh(plugin)
+					.map { BundledFeedItem(it, pluginClassName) }
+					.toList()
+					.let { feedItemRepository.putFeedItems(it) }
 		}
 		feedItemsStore.loading = false
 	}

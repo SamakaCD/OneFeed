@@ -18,4 +18,6 @@ interface PluginInteractor {
 	suspend fun refresh(plugin: OneFeedPlugin): Iterable<FeedItem>
 
 	suspend fun loadNextItems(plugin: OneFeedPlugin): Iterable<FeedItem>
+
+	suspend fun cachePluginIcon(plugin: OneFeedPlugin)
 }

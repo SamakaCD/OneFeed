@@ -2,6 +2,7 @@ package com.ivansadovyi.domain.plugin.usecase
 
 import com.ivansadovyi.domain.UseCase
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
+import com.ivansadovyi.domain.plugin.PluginInteractor
 import com.ivansadovyi.domain.plugin.PluginStore
 import com.ivansadovyi.domain.plugin.auth.AuthorizationProcessorFactory
 import com.ivansadovyi.domain.plugin.auth.PluginAuthorization
@@ -16,6 +17,7 @@ class ProcessAuthorizationResponseUseCase(
 		private val pluginDescriptor: OneFeedPluginDescriptor,
 		private val response: String,
 		private val pluginStore: PluginStore,
+		private val pluginInteractor: PluginInteractor,
 		private val feedItemsInteractor: FeedItemsInteractor,
 		private val pluginAuthorizationRepository: PluginAuthorizationRepository
 ) : UseCase<Boolean> {
@@ -37,10 +39,10 @@ class ProcessAuthorizationResponseUseCase(
 		// Save new authorization to persistent storage
 		val pluginAuthorization = PluginAuthorization(result.authorization, pluginDescriptor.className)
 		pluginAuthorizationRepository.putPluginAuthorization(pluginAuthorization)
+		pluginInteractor.cachePluginIcon(plugin)
 
 		// New plugin added, so feed should be refreshed.
 		feedItemsInteractor.refresh()
-
 		return@withContext true
 	}
 

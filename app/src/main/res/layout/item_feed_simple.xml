@@ -53,6 +53,7 @@
 				<LinearLayout
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
+					android:gravity="center_vertical"
 					android:orientation="horizontal">
 
 					<TextView
@@ -65,6 +66,23 @@
 						android:textColor="?android:textColorSecondary"
 						app:date="@{item.publicationDate}"
 						tools:text="48 minutes ago" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginEnd="8dp"
+						android:layout_marginLeft="8dp"
+						android:layout_marginRight="8dp"
+						android:layout_marginStart="8dp"
+						android:text="@string/bullet"
+						android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+						android:textColor="?android:textColorSecondary" />
+
+					<ImageView
+						android:id="@+id/pluginIcon"
+						android:layout_width="16dp"
+						android:layout_height="16dp"
+						tools:background="#1000" />
 				</LinearLayout>
 			</LinearLayout>
 		</LinearLayout>
