@@ -1,5 +1,8 @@
 package com.ivansadovyi.onefeed.plugin.twitter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.ivansadovyi.onefeed.plugin.twitter.utils.MappingIterable;
 import com.ivansadovyi.sdk.FeedItem;
 import com.ivansadovyi.sdk.OneFeedPlugin;
@@ -46,6 +49,12 @@ public class TwitterPlugin extends OneFeedPlugin {
 	@Override
 	public AuthorizationHandler getAuthorizationHandler() {
 		return TwitterAuthorizationHandler.getInstance();
+	}
+
+	@NonNull
+	@Override
+	public Bitmap getIcon() {
+		return BitmapFactory.decodeResource(getContext().getResources(), R.drawable.twitter);
 	}
 
 	@Override
