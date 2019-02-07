@@ -27,6 +27,7 @@ class FeedItemsInteractorImpl @Inject constructor(
 	override suspend fun refresh() {
 		RefreshFeedUseCase(
 				feedItemsStore = feedItemsStore.get(),
+				feedItemsInteractor = this,
 				pluginStore = pluginStore.get(),
 				pluginInteractor = pluginInteractor.get(),
 				feedItemRepository = feedItemRepository.get()

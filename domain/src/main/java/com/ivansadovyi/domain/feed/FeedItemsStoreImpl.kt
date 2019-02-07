@@ -12,6 +12,7 @@ class FeedItemsStoreImpl @Inject constructor(
 
 	override var items: List<BundledFeedItem> by ObservableValue(defaultValue = mutableListOf())
 	override var loading by ObservableValue(defaultValue = false)
+	override var refreshing by ObservableValue(defaultValue = false)
 
 	init {
 		observeDao()

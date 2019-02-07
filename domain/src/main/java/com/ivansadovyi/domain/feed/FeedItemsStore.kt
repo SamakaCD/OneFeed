@@ -7,4 +7,6 @@ interface FeedItemsStore : Store<FeedItemsStore> {
 	var items: List<BundledFeedItem>
 
 	var loading: Boolean
+
+	var refreshing: Boolean
 }
