@@ -8,6 +8,8 @@
 		<variable
 			name="item"
 			type="com.ivansadovyi.sdk.FeedItem" />
+
+		<import type="android.view.View" />
 	</data>
 
 	<LinearLayout
@@ -101,11 +103,13 @@
 			tools:text="Lorem ipsum dolor sit amet, duo mutat nemore ex, his lucilius intellegat et, vis homero quodsi expetenda at. Ne est tritani inermis platonem. Usu commune scriptorem intellegebat an. Vivendo inciderint duo ea. Eu sensibus eloquentiam pro." />
 
 		<ImageView
+			android:id="@+id/image"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginBottom="16dp"
+			android:adjustViewBounds="true"
 			android:contentDescription="@{item.content ?? item.title}"
-			android:visibility="gone"
+			android:visibility="@{item.images.size() > 0 ? View.VISIBLE : View.GONE}"
 			tools:background="#1000"
 			tools:layout_height="128dp"
 			tools:visibility="visible" />

@@ -4,16 +4,12 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.reactivex.Observable
 
 @Dao
-abstract class RoomFeedItemDao {
-
-	@Query("SELECT * FROM feedItems ORDER BY publicationDate DESC")
-	abstract fun getAll(): Observable<List<FeedItemWithAttachments>>
+abstract class RoomFeedImageDao {
 
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
-	abstract fun insert(item: RoomFeedItem)
+	abstract fun insertImages(images: List<RoomFeedImage>)
 
 	@Query("DELETE FROM feedItems")
 	abstract fun deleteAll()
