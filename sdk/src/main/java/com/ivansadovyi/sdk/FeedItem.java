@@ -1,6 +1,8 @@
 package com.ivansadovyi.sdk;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 public class FeedItem {
 
@@ -9,6 +11,7 @@ public class FeedItem {
 	private String content;
 	private Date publicationDate;
 	private String avatarImageUrl;
+	private List<FeedImage> images = Collections.emptyList();
 
 	private FeedItem() {
 
@@ -20,6 +23,7 @@ public class FeedItem {
 		this.content = source.content;
 		this.publicationDate = source.publicationDate;
 		this.avatarImageUrl = source.avatarImageUrl;
+		this.images = source.images;
 	}
 
 	public String getId() {
@@ -42,6 +46,10 @@ public class FeedItem {
 		return avatarImageUrl;
 	}
 
+	public List<FeedImage> getImages() {
+		return images;
+	}
+
 	public static class Builder {
 
 		private String id;
@@ -49,6 +57,7 @@ public class FeedItem {
 		private String content;
 		private Date publicationDate;
 		private String avatarImageUrl;
+		private List<FeedImage> images;
 
 		public Builder setId(String id) {
 			this.id = id;
@@ -75,6 +84,11 @@ public class FeedItem {
 			return this;
 		}
 
+		public Builder setImages(List<FeedImage> images) {
+			this.images = images;
+			return this;
+		}
+
 		public FeedItem build() {
 			FeedItem feedItem = new FeedItem();
 			feedItem.id = id;
@@ -82,6 +96,7 @@ public class FeedItem {
 			feedItem.content = content;
 			feedItem.publicationDate = publicationDate;
 			feedItem.avatarImageUrl = avatarImageUrl;
+			feedItem.images = images;
 			return feedItem;
 		}
 	}

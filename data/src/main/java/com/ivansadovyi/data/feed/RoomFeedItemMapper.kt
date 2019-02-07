@@ -6,15 +6,16 @@ import com.ivansadovyi.sdk.FeedItem
 
 object RoomFeedItemMapper {
 
-	fun fromRoom(input: RoomFeedItem): BundledFeedItem {
+	fun fromRoom(item: RoomFeedItem, images: List<RoomFeedImage>): BundledFeedItem {
 		return FeedItem.Builder()
-				.setId(input.id)
-				.setTitle(input.title)
-				.setContent(input.content)
-				.setPublicationDate(input.publicationDate)
-				.setAvatarImageUrl(input.avatarImageUrl)
+				.setId(item.id)
+				.setTitle(item.title)
+				.setContent(item.content)
+				.setPublicationDate(item.publicationDate)
+				.setAvatarImageUrl(item.avatarImageUrl)
+				.setImages(images.map(RoomFeedImageMapper::fromRoom))
 				.build()
-				.toBundledItem(pluginClassName = input.pluginClassName)
+				.toBundledItem(pluginClassName = item.pluginClassName)
 	}
 
 	fun toRoom(input: BundledFeedItem): RoomFeedItem {

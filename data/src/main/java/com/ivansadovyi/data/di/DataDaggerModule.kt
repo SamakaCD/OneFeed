@@ -22,7 +22,6 @@ class DataDaggerModule {
 	@Provides
 	@Singleton
 	fun provideFeedItemRepository(appDatabase: AppDatabase): FeedItemRepository {
-		val dao = appDatabase.getFeedItemDao()
-		return RoomFeedItemRepository(dao)
+		return RoomFeedItemRepository(appDatabase.getFeedItemDao(), appDatabase.getFeedImageDao())
 	}
 }
