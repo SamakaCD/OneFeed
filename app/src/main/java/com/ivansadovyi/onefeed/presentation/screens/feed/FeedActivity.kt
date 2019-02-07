@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +16,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_feed.*
 import javax.inject.Inject
 
-class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
+class FeedActivity : AppCompatActivity(), FeedRouter {
 
 	@Inject
 	lateinit var viewModel: FeedViewModel
@@ -34,13 +33,6 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 		binding.viewModel = viewModel
 		swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
 		setupRecyclerView()
-	}
-
-	override fun showRateLimitError(pluginName: String) {
-		AlertDialog.Builder(this)
-				.setMessage(getString(R.string.feed_rate_limit_error_message, pluginName))
-				.setPositiveButton(R.string.got_it, null)
-				.show()
 	}
 
 	override fun navigateToPluginAuthorization(pluginDescriptor: OneFeedPluginDescriptor) {

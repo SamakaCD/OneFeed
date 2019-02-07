@@ -1,30 +1,30 @@
 package com.ivansadovyi.onefeed.presentation.screens.feed
 
-import android.os.Handler
-import android.os.Looper
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.ivansadovyi.domain.app.AppInteractor
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.feed.FeedItemsStore
 import com.ivansadovyi.domain.plugin.PluginInteractor
-import com.ivansadovyi.domain.plugin.RateLimitException
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorStore
+import com.ivansadovyi.onefeed.presentation.GenericExceptionHandler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
-import kotlinx.coroutines.*
-import kotlinx.coroutines.android.asCoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
 class FeedViewModel @Inject constructor(
-		private val feedView: FeedView,
 		private val feedRouter: FeedRouter,
 		private val feedItemsStore: FeedItemsStore,
 		private val feedItemsInteractor: FeedItemsInteractor,
 		private val appInteractor: AppInteractor,
 		private val pluginInteractor: PluginInteractor,
-		private val pluginDescriptorStore: PluginDescriptorStore
+		private val pluginDescriptorStore: PluginDescriptorStore,
+		private val exceptionHandler: GenericExceptionHandler
 ) : BaseObservable() {
 
 	private val disposable = CompositeDisposable()
@@ -55,17 +55,10 @@ class FeedViewModel @Inject constructor(
 	}
 
 	private val coroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-	private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-		when (throwable) {
-			is RateLimitException -> {
-				feedView.showRateLimitError(throwable.plugin.descriptor.name)
-			}
-		}
-	}
 
 	init {
 		bindStore()
-		coroutineScope.launch(exceptionHandler) {
+		coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
 			appInteractor.init()
 		}
 	}
@@ -78,19 +71,19 @@ class FeedViewModel @Inject constructor(
 	}
 
 	fun loadMore() {
-		coroutineScope.launch(exceptionHandler) {
+		coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
 			feedItemsInteractor.loadMore()
 		}
 	}
 
 	fun refresh() {
-		coroutineScope.launch(exceptionHandler) {
+		coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
 			feedItemsInteractor.refresh()
 		}
 	}
 
 	fun resetAuthorizations() {
-		coroutineScope.launch(exceptionHandler) {
+		coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
 			pluginInteractor.resetAuthorizations()
 		}
 	}
