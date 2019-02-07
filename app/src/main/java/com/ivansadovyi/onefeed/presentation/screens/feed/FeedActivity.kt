@@ -32,6 +32,7 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 		AndroidInjection.inject(this)
 		val binding = DataBindingUtil.setContentView<ActivityFeedBinding>(this, R.layout.activity_feed)
 		binding.viewModel = viewModel
+		swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
 		setupRecyclerView()
 	}
 
@@ -72,6 +73,7 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 		layoutManager.isItemPrefetchEnabled = true
 		recyclerView.layoutManager = layoutManager
 		recyclerView.adapter = adapter
+		recyclerView.itemAnimator = null
 		setupPagination()
 	}
 
