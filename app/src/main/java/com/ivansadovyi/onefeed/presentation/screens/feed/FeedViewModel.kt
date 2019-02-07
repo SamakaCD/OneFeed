@@ -12,10 +12,8 @@ import com.ivansadovyi.domain.plugin.RateLimitException
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorStore
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.android.asCoroutineDispatcher
-import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -51,8 +49,12 @@ class FeedViewModel @Inject constructor(
 		return items
 	}
 
-	private val dispatcher = Handler(Looper.getMainLooper()).asCoroutineDispatcher()
-	private val coroutineScope = CoroutineScope(dispatcher)
+	@Bindable
+	fun isRefreshing(): Boolean {
+		return feedItemsStore.refreshing
+	}
+
+	private val coroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 	private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
 		when (throwable) {
 			is RateLimitException -> {
@@ -78,6 +80,12 @@ class FeedViewModel @Inject constructor(
 	fun loadMore() {
 		coroutineScope.launch(exceptionHandler) {
 			feedItemsInteractor.loadMore()
+		}
+	}
+
+	fun refresh() {
+		coroutineScope.launch(exceptionHandler) {
+			feedItemsInteractor.refresh()
 		}
 	}
 
