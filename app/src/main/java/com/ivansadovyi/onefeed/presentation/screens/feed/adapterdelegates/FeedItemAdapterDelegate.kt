@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.ivansadovyi.domain.feed.BundledFeedItem
@@ -39,10 +38,15 @@ class FeedItemAdapterDelegate(
 		holder.binding.item = item
 		holder.binding.pluginIcon.setImageBitmap(pluginIconCache.get(item.pluginClassName))
 		if (item.images.isNotEmpty()) {
+			val image = item.images.first()
+			var requestOptions = RequestOptions()
+			if (image.width != null && image.height != null) {
+				requestOptions = requestOptions.override(image.width!!, image.height!!)
+			}
+
 			Glide.with(holder.binding.image)
-					.load(item.images.first().url)
-					.apply(RequestOptions.fitCenterTransform())
-					.transition(DrawableTransitionOptions.withCrossFade())
+					.load(image.url)
+					.apply(requestOptions)
 					.into(holder.binding.image)
 		}
 	}

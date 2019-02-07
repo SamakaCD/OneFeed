@@ -1,11 +1,13 @@
 package com.ivansadovyi.sdk;
 
+import androidx.annotation.Nullable;
+
 public class FeedImage {
 
 	private String id;
 	private String url;
-	private int width;
-	private int height;
+	private Integer width;
+	private Integer height;
 
 	private FeedImage() {
 
@@ -19,11 +21,13 @@ public class FeedImage {
 		return url;
 	}
 
-	public int getWidth() {
+	@Nullable
+	public Integer getWidth() {
 		return width;
 	}
 
-	public int getHeight() {
+	@Nullable
+	public Integer getHeight() {
 		return height;
 	}
 
@@ -31,8 +35,8 @@ public class FeedImage {
 
 		private String id;
 		private String url;
-		private int width;
-		private int height;
+		private Integer width;
+		private Integer height;
 
 		public Builder setId(String id) {
 			this.id = id;
@@ -44,12 +48,12 @@ public class FeedImage {
 			return this;
 		}
 
-		public Builder setWidth(int width) {
+		public Builder setWidth(@Nullable Integer width) {
 			this.width = width;
 			return this;
 		}
 
-		public Builder setHeight(int height) {
+		public Builder setHeight(@Nullable Integer height) {
 			this.height = height;
 			return this;
 		}

@@ -8,5 +8,7 @@ class RoomFeedImage(
 		@PrimaryKey
 		var id: String,
 		var itemId: String,
-		var url: String
+		var url: String,
+		var width: Int?,
+		var height: Int?
 )

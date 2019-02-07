@@ -29,9 +29,12 @@ public class TwitterStatusMapper {
 		MediaEntity[] mediaEntities = status.getMediaEntities();
 		for (MediaEntity mediaEntity : mediaEntities) {
 			if (mediaEntity.getType().equals(MEDIA_TYPE_PHOTO)) {
+				MediaEntity.Size size = mediaEntity.getSizes().get(MediaEntity.Size.MEDIUM);
 				FeedImage image = new FeedImage.Builder()
 						.setId(String.valueOf(mediaEntity.getId()))
 						.setUrl(mediaEntity.getMediaURLHttps())
+						.setWidth(size.getWidth())
+						.setHeight(size.getHeight())
 						.build();
 				images.add(image);
 			}
