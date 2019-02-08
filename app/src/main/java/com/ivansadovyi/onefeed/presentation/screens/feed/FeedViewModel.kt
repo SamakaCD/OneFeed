@@ -8,6 +8,7 @@ import com.ivansadovyi.domain.feed.FeedItemsStore
 import com.ivansadovyi.domain.plugin.PluginInteractor
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorStore
 import com.ivansadovyi.onefeed.presentation.GenericExceptionHandler
+import dagger.Lazy
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.coroutines.CoroutineScope
@@ -20,14 +21,12 @@ import javax.inject.Inject
 class FeedViewModel @Inject constructor(
 		private val feedRouter: FeedRouter,
 		private val feedItemsStore: FeedItemsStore,
-		private val feedItemsInteractor: FeedItemsInteractor,
+		private val feedItemsInteractor: Lazy<FeedItemsInteractor>,
 		private val appInteractor: AppInteractor,
-		private val pluginInteractor: PluginInteractor,
-		private val pluginDescriptorStore: PluginDescriptorStore,
+		private val pluginInteractor: Lazy<PluginInteractor>,
+		private val pluginDescriptorStore: Lazy<PluginDescriptorStore>,
 		private val exceptionHandler: GenericExceptionHandler
 ) : BaseObservable() {
-
-	private val disposable = CompositeDisposable()
 
 	@Bindable
 	fun getFeedState(): FeedState {
@@ -54,6 +53,7 @@ class FeedViewModel @Inject constructor(
 		return feedItemsStore.refreshing
 	}
 
+	private val disposable = CompositeDisposable()
 	private val coroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
 	init {
@@ -64,7 +64,7 @@ class FeedViewModel @Inject constructor(
 	}
 
 	fun authorizeTwitter() {
-		val twitterPluginDescriptor = pluginDescriptorStore.pluginDescriptors.find { it.name.contains("Twitter") }
+		val twitterPluginDescriptor = pluginDescriptorStore.get().pluginDescriptors.find { it.name.contains("Twitter") }
 		if (twitterPluginDescriptor != null) {
 			feedRouter.navigateToPluginAuthorization(twitterPluginDescriptor)
 		}
@@ -72,19 +72,19 @@ class FeedViewModel @Inject constructor(
 
 	fun loadMore() {
 		coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
-			feedItemsInteractor.loadMore()
+			feedItemsInteractor.get().loadMore()
 		}
 	}
 
 	fun refresh() {
 		coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
-			feedItemsInteractor.refresh()
+			feedItemsInteractor.get().refresh()
 		}
 	}
 
 	fun resetAuthorizations() {
 		coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
-			pluginInteractor.resetAuthorizations()
+			pluginInteractor.get().resetAuthorizations()
 		}
 	}
 
