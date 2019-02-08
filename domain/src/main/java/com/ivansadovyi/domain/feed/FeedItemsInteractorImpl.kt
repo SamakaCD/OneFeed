@@ -7,7 +7,6 @@ import com.ivansadovyi.domain.plugin.PluginInteractor
 import com.ivansadovyi.domain.plugin.PluginStore
 import dagger.Lazy
 import javax.inject.Inject
-import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
@@ -15,7 +14,7 @@ class FeedItemsInteractorImpl @Inject constructor(
 		private val feedItemsStore: Lazy<FeedItemsStore>,
 		private val pluginStore: Lazy<PluginStore>,
 		private val pluginInteractor: Lazy<PluginInteractor>,
-		private val feedItemRepository: Provider<FeedItemRepository>
+		private val feedItemRepository: Lazy<FeedItemRepository>
 ) : FeedItemsInteractor {
 
 	override suspend fun clear() {

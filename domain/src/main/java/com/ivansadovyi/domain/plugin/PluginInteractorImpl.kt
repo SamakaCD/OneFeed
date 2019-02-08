@@ -11,7 +11,6 @@ import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.auth.AuthorizationParams
 import dagger.Lazy
 import javax.inject.Inject
-import javax.inject.Provider
 import javax.inject.Singleton
 
 @Singleton
@@ -19,9 +18,9 @@ class PluginInteractorImpl @Inject constructor(
 		private val pluginStore: Lazy<PluginStore>,
 		private val pluginDescriptorInteractor: Lazy<PluginDescriptorInteractor>,
 		private val feedItemsInteractor: Lazy<FeedItemsInteractor>,
-		private val pluginLoader: Provider<PluginLoader>,
-		private val pluginAuthorizationRepositoryProvider: Provider<PluginAuthorizationRepository>,
-		private val applicationProvider: Provider<Application>,
+		private val pluginLoader: Lazy<PluginLoader>,
+		private val pluginAuthorizationRepositoryProvider: Lazy<PluginAuthorizationRepository>,
+		private val applicationProvider: Lazy<Application>,
 		private val pluginIconCache: Lazy<PluginIconCache>
 ) : PluginInteractor {
 

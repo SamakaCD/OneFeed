@@ -7,6 +7,7 @@
 	<string name="feed_menu_reset_authorizations">Reset authorizations</string>
 	<string name="feed_plugin_error_title">Something went wrong with plugin</string>
 	<string name="feed_rate_limit_error_message">%1$s plugin exceeded rate limit.</string>
+	<string name="unexpected_error_title">Unexpected error occurred 🌚</string>
 	<string name="got_it">Got it</string>
 	<string name="bullet">•</string>
 </resources>

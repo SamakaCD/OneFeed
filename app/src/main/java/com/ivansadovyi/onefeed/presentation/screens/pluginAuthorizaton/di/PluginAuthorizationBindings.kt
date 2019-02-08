@@ -5,7 +5,7 @@ import com.ivansadovyi.onefeed.presentation.screens.pluginAuthorizaton.PluginAut
 import dagger.Binds
 import dagger.Module
 
-@Module
+@Module(includes = [PluginAuthorizationModule::class])
 abstract class PluginAuthorizationBindings {
 
 	@Binds
