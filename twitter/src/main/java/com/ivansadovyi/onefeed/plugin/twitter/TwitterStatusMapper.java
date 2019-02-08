@@ -19,7 +19,7 @@ public class TwitterStatusMapper {
 				.setTitle(status.getUser().getName())
 				.setContent(status.getText())
 				.setPublicationDate(status.getCreatedAt())
-				.setAvatarImageUrl(status.getUser().getBiggerProfileImageURL())
+				.setAvatarImageUrl(status.getUser().getBiggerProfileImageURLHttps())
 				.setImages(getFeedImagesOfStatus(status))
 				.build();
 	}
