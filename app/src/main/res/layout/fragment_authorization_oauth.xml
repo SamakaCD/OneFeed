@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ViewFlipper android:id="@+id/viewFlipper"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:animateFirstView="false"
+	android:inAnimation="@anim/fade_in"
+	android:outAnimation="@anim/fade_out"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:gravity="center"
+		android:orientation="vertical">
+
+		<ProgressBar
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center" />
+
+		<TextView
+			android:id="@+id/progressDescription"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="16dp"
+			tools:text="Connecting with yet another social"
+			android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+	</LinearLayout>
+
+	<WebView
+		android:id="@+id/webView"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent" />
+</ViewFlipper>

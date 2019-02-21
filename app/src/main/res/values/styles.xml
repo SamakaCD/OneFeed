@@ -6,4 +6,10 @@
 		<item name="colorAccent">@color/colorAccent</item>
 		<item name="android:windowBackground">@color/colorBackground</item>
 	</style>
+
+	<style name="AppTheme.NonBranded" parent="AppTheme">
+		<item name="colorPrimary">@color/colorBackground</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDarkNonBranded</item>
+		<item name="actionBarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
+	</style>
 </resources>

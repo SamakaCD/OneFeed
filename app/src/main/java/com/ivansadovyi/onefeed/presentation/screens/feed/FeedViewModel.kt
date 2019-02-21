@@ -24,7 +24,7 @@ class FeedViewModel @Inject constructor(
 		private val feedItemsInteractor: Lazy<FeedItemsInteractor>,
 		private val appInteractor: AppInteractor,
 		private val pluginInteractor: Lazy<PluginInteractor>,
-		private val pluginDescriptorStore: Lazy<PluginDescriptorStore>,
+		private val pluginDescriptorStore: PluginDescriptorStore,
 		private val exceptionHandler: GenericExceptionHandler
 ) : BaseObservable() {
 
@@ -64,9 +64,16 @@ class FeedViewModel @Inject constructor(
 	}
 
 	fun authorizeTwitter() {
-		val twitterPluginDescriptor = pluginDescriptorStore.get().pluginDescriptors.find { it.name.contains("Twitter") }
+		val twitterPluginDescriptor = pluginDescriptorStore.pluginDescriptors.find { it.name.contains("Twitter") }
 		if (twitterPluginDescriptor != null) {
 			feedRouter.navigateToPluginAuthorization(twitterPluginDescriptor)
+		}
+	}
+
+	fun authorizePluginRecommendations() {
+		val pluginDescriptor = pluginDescriptorStore.pluginDescriptors.find { it.name.contains("Plugin recommendations") }
+		if (pluginDescriptor != null) {
+			feedRouter.navigateToPluginAuthorization(pluginDescriptor)
 		}
 	}
 

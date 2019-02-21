@@ -1,5 +1,7 @@
 package com.ivansadovyi.sdk.auth;
 
-public interface AuthorizationParams {
+import java.io.Serializable;
+
+public interface AuthorizationParams extends Serializable {
 
 }

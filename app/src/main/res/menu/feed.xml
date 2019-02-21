@@ -6,6 +6,10 @@
 		android:title="@string/feed_menu_authorize_twitter" />
 
 	<item
+		android:id="@+id/authorizePluginRecommendations"
+		android:title="Authorize Recommendations"/>
+
+	<item
 		android:id="@+id/resetAuthorizations"
 		android:title="@string/feed_menu_reset_authorizations" />
 </menu>
