@@ -10,7 +10,7 @@ class RoomFeedItem(
 		var id: String,
 		var title: String,
 		var content: String,
-		var publicationDate: Date,
-		var avatarImageUrl: String,
+		var publicationDate: Date?,
+		var avatarImageUrl: String?,
 		var pluginClassName: String
 )

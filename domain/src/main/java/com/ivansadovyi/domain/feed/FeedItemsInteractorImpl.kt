@@ -3,6 +3,7 @@ package com.ivansadovyi.domain.feed
 import com.ivansadovyi.domain.feed.usecase.ClearFeedUseCase
 import com.ivansadovyi.domain.feed.usecase.LoadMoreFeedUseCase
 import com.ivansadovyi.domain.feed.usecase.RefreshFeedUseCase
+import com.ivansadovyi.domain.log.LoggingInteractor
 import com.ivansadovyi.domain.plugin.PluginInteractor
 import com.ivansadovyi.domain.plugin.PluginStore
 import dagger.Lazy
@@ -14,11 +15,13 @@ class FeedItemsInteractorImpl @Inject constructor(
 		private val feedItemsStore: Lazy<FeedItemsStore>,
 		private val pluginStore: Lazy<PluginStore>,
 		private val pluginInteractor: Lazy<PluginInteractor>,
+		private val loggingInteractor: Lazy<LoggingInteractor>,
 		private val feedItemRepository: Lazy<FeedItemRepository>
 ) : FeedItemsInteractor {
 
 	override suspend fun clear() {
 		ClearFeedUseCase(
+				loggingInteractor = loggingInteractor.get(),
 				feedItemRepository = feedItemRepository.get()
 		).execute()
 	}
@@ -27,6 +30,7 @@ class FeedItemsInteractorImpl @Inject constructor(
 		RefreshFeedUseCase(
 				feedItemsStore = feedItemsStore.get(),
 				feedItemsInteractor = this,
+				loggingInteractor = loggingInteractor.get(),
 				pluginStore = pluginStore.get(),
 				pluginInteractor = pluginInteractor.get(),
 				feedItemRepository = feedItemRepository.get()
@@ -38,6 +42,7 @@ class FeedItemsInteractorImpl @Inject constructor(
 				feedItemsStore = feedItemsStore.get(),
 				pluginStore = pluginStore.get(),
 				pluginInteractor = pluginInteractor.get(),
+				loggingInteractor = loggingInteractor.get(),
 				feedItemRepository = feedItemRepository.get()
 		).execute()
 	}

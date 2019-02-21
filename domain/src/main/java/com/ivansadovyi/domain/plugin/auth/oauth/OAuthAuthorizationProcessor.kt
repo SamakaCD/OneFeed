@@ -1,5 +1,7 @@
-package com.ivansadovyi.domain.plugin.auth
+package com.ivansadovyi.domain.plugin.auth.oauth
 
+import com.ivansadovyi.domain.plugin.auth.AuthorizationProcessor
+import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationProcessingResult
 import com.ivansadovyi.sdk.auth.AuthorizationParams
 import com.ivansadovyi.sdk.auth.OAuthAuthorizationHandler
 import com.ivansadovyi.sdk.auth.OAuthParams

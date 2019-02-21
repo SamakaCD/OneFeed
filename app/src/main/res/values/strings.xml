@@ -1,7 +1,5 @@
 <resources>
 	<string name="app_name">OneFeed</string>
-	<string name="plugin_authorization_screen_title">Authorize</string>
-	<string name="plugin_authorization_screen_title_with_name">Authorize %1$s</string>
 	<string name="feed_menu_authorize_twitter">Authorize Twitter</string>
 	<string name="feed_empty_state">There are no posts to show.</string>
 	<string name="feed_menu_reset_authorizations">Reset authorizations</string>
@@ -10,4 +8,9 @@
 	<string name="unexpected_error_title">Unexpected error occurred 🌚</string>
 	<string name="got_it">Got it</string>
 	<string name="bullet">•</string>
+	<string name="plugin_authorization_not_supported">This authorization method is not supported</string>
+	<string name="plugin_authorization_loading_plugin">Loading plugin</string>
+	<string name="plugin_authorization_screen_title">Authorize</string>
+	<string name="plugin_authorization_screen_title_with_name">Authorize %1$s</string>
+	<string name="plugin_authorization_ouath_connecting">Connecting with %1$s</string>
 </resources>

@@ -5,6 +5,7 @@ import com.ivansadovyi.domain.feed.BundledFeedItem
 import com.ivansadovyi.domain.feed.FeedItemRepository
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.feed.FeedItemsStore
+import com.ivansadovyi.domain.log.LoggingInteractor
 import com.ivansadovyi.domain.plugin.PluginInteractor
 import com.ivansadovyi.domain.plugin.PluginStore
 import io.reactivex.exceptions.CompositeException
@@ -16,22 +17,27 @@ class RefreshFeedUseCase(
 		private val feedItemsInteractor: FeedItemsInteractor,
 		private val pluginStore: PluginStore,
 		private val pluginInteractor: PluginInteractor,
+		private val loggingInteractor: LoggingInteractor,
 		private val feedItemRepository: FeedItemRepository
 ) : UseCase<Unit> {
 
 	override suspend fun execute() = withContext(Dispatchers.IO) {
+		loggingInteractor.debug(this@RefreshFeedUseCase, "Refreshing feed")
 		feedItemsStore.refreshing = true
 		feedItemsStore.loading = true
 		val newItems = mutableListOf<BundledFeedItem>()
 		val caughtExceptions = mutableListOf<Throwable>()
 		for (plugin in pluginStore.getAuthorizedPlugins()) {
+			val pluginClassName = plugin.descriptor.className
 			try {
-				val pluginClassName = plugin.descriptor.className
+				loggingInteractor.debug(this@RefreshFeedUseCase, "Refreshing $pluginClassName")
 				val items = pluginInteractor.refresh(plugin)
 				for (item in items) {
 					newItems += BundledFeedItem(item, pluginClassName)
 				}
 			} catch (throwable: Throwable) {
+				loggingInteractor.warning(this@RefreshFeedUseCase,
+						"${throwable.javaClass.simpleName} when refreshing $plugin")
 				caughtExceptions += throwable
 				continue
 			}

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 
 import com.ivansadovyi.sdk.auth.AuthorizationHandler;
 import com.ivansadovyi.sdk.auth.AuthorizationState;
+import com.ivansadovyi.sdk.auth.EmptyAuthorizationHandler;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.NonNull;
@@ -23,7 +24,10 @@ public abstract class OneFeedPlugin {
 		params = newParams;
 	}
 
-	public abstract AuthorizationHandler getAuthorizationHandler();
+	@NonNull
+	public AuthorizationHandler getAuthorizationHandler() {
+		return new EmptyAuthorizationHandler();
+	}
 
 	@NonNull
 	public AuthorizationState getAuthorizationState() {

@@ -4,14 +4,20 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+
 public class FeedItem {
 
 	private String id;
 	private String title;
 	private String content;
+
+	@Nullable
 	private Date publicationDate;
+
+	@Nullable
 	private String avatarImageUrl;
-	private List<FeedImage> images = Collections.emptyList();
+	private List<FeedImage> images;
 
 	private FeedItem() {
 
@@ -38,10 +44,12 @@ public class FeedItem {
 		return content;
 	}
 
+	@Nullable
 	public Date getPublicationDate() {
 		return publicationDate;
 	}
 
+	@Nullable
 	public String getAvatarImageUrl() {
 		return avatarImageUrl;
 	}
@@ -57,7 +65,7 @@ public class FeedItem {
 		private String content;
 		private Date publicationDate;
 		private String avatarImageUrl;
-		private List<FeedImage> images;
+		private List<FeedImage> images = Collections.emptyList();
 
 		public Builder setId(String id) {
 			this.id = id;

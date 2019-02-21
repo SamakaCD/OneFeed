@@ -13,7 +13,9 @@
 		android:supportsRtl="true"
 		android:theme="@style/AppTheme">
 
-		<activity android:name=".presentation.screens.feed.FeedActivity">
+		<activity
+			android:name=".presentation.screens.feed.FeedActivity"
+			android:launchMode="singleTask">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 
@@ -23,6 +25,13 @@
 
 		<activity
 			android:name=".presentation.screens.pluginAuthorizaton.PluginAuthorizationActivity"
-			android:label="@string/plugin_authorization_screen_title" />
+			android:label="@string/plugin_authorization_screen_title"
+			android:parentActivityName=".presentation.screens.feed.FeedActivity"
+			android:theme="@style/AppTheme.NonBranded">
+
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".presentation.screens.feed.FeedActivity" />
+		</activity>
 	</application>
 </manifest>
