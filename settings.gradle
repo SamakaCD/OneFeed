@@ -1,1 +1,1 @@
-include ':app', ':sdk', ':domain', ':data', ':twitterApk', ':twitter'
+include ':app', ':sdk', ':domain', ':data', ':twitterApk', ':twitter', ':builtInPlugins'

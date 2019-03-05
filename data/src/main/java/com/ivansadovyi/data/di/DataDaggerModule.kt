@@ -22,6 +22,10 @@ class DataDaggerModule {
 	@Provides
 	@Singleton
 	fun provideFeedItemRepository(appDatabase: AppDatabase): FeedItemRepository {
-		return RoomFeedItemRepository(appDatabase.getFeedItemDao(), appDatabase.getFeedImageDao())
+		return RoomFeedItemRepository(
+				appDatabase.getFeedItemDao(),
+				appDatabase.getFeedImageDao(),
+				appDatabase.getSubItemDao()
+		)
 	}
 }

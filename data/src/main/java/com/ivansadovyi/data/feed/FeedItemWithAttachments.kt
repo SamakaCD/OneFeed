@@ -10,4 +10,7 @@ class FeedItemWithAttachments {
 
 	@Relation(parentColumn = "id", entityColumn = "itemId")
 	lateinit var images: List<RoomFeedImage>
+
+	@Relation(parentColumn = "id", entityColumn = "feedItemId")
+	lateinit var subItems: List<RoomSubItem>
 }
