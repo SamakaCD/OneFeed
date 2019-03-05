@@ -38,6 +38,12 @@
 				app:tintMode="src_in"
 				app:visible="@{subItem.iconColor != null}"
 				tools:tint="@color/colorPrimary" />
+
+			<androidx.appcompat.widget.AppCompatImageView
+				android:id="@+id/icon"
+				android:layout_width="16dp"
+				android:layout_height="16dp"
+				android:layout_gravity="center" />
 		</FrameLayout>
 
 		<LinearLayout
@@ -49,7 +55,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="@{subItem.title}"
-				android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+				android:textAppearance="@style/TextAppearance.AppCompat.Body1"
 				tools:text="Title" />
 
 			<TextView

@@ -5,6 +5,7 @@ import com.ivansadovyi.domain.UseCase
 import com.ivansadovyi.domain.plugin.PluginStore
 import com.ivansadovyi.domain.plugin.auth.AuthorizationProcessorFactory
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorInteractor
+import com.ivansadovyi.sdk.OneFeedHost
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.OneFeedPluginParams
 import com.ivansadovyi.sdk.auth.AuthorizationParams
@@ -16,6 +17,7 @@ class StartPluginAuthorizationUseCase(
 		private val pluginDescriptor: OneFeedPluginDescriptor,
 		private val pluginStore: PluginStore,
 		private val pluginDescriptorInteractor: PluginDescriptorInteractor,
+		private val oneFeedHost: OneFeedHost,
 		private val application: Application
 ) : UseCase<AuthorizationParams> {
 
@@ -36,6 +38,7 @@ class StartPluginAuthorizationUseCase(
 				.setAuthorizationState(AuthorizationState.AUTHORIZING)
 				.setDescriptor(pluginDescriptor)
 				.setContext(application)
+				.setHost(oneFeedHost)
 				.build()
 	}
 }

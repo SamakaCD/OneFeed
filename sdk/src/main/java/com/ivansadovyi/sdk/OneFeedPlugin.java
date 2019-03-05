@@ -14,7 +14,7 @@ public abstract class OneFeedPlugin {
 
 	public interface OnSubItemClickListener {
 
-		void onSubItemClick(SubItem subItem, FeedItem feedItem);
+		void onSubItemClick(@NonNull SubItem subItem, @NonNull FeedItem feedItem);
 	}
 
 	private OneFeedPluginParams params;
@@ -47,6 +47,11 @@ public abstract class OneFeedPlugin {
 	@NonNull
 	public OneFeedPluginDescriptor getDescriptor() {
 		return getParams().getDescriptor();
+	}
+
+	@NonNull
+	public OneFeedHost getHost() {
+		return getParams().getHost();
 	}
 
 	@NonNull

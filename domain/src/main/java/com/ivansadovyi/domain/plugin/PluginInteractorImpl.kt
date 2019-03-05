@@ -7,10 +7,7 @@ import com.ivansadovyi.domain.log.LoggingInteractor
 import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationRepository
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorInteractor
 import com.ivansadovyi.domain.plugin.usecase.*
-import com.ivansadovyi.sdk.FeedItem
-import com.ivansadovyi.sdk.OneFeedPlugin
-import com.ivansadovyi.sdk.OneFeedPluginDescriptor
-import com.ivansadovyi.sdk.SubItem
+import com.ivansadovyi.sdk.*
 import com.ivansadovyi.sdk.auth.AuthorizationParams
 import dagger.Lazy
 import javax.inject.Inject
@@ -24,6 +21,7 @@ class PluginInteractorImpl @Inject constructor(
 		private val loggingInteractor: Lazy<LoggingInteractor>,
 		private val pluginLoader: Lazy<PluginLoader>,
 		private val pluginAuthorizationRepositoryProvider: Lazy<PluginAuthorizationRepository>,
+		private val oneFeedHost: Lazy<OneFeedHost>,
 		private val applicationProvider: Lazy<Application>,
 		private val pluginIconCache: Lazy<PluginIconCache>
 ) : PluginInteractor {
@@ -33,6 +31,7 @@ class PluginInteractorImpl @Inject constructor(
 				pluginDescriptor = pluginDescriptor,
 				pluginStore = pluginStore.get(),
 				pluginDescriptorInteractor = pluginDescriptorInteractor.get(),
+				oneFeedHost = oneFeedHost.get(),
 				application = applicationProvider.get()
 		).execute()
 	}
@@ -55,6 +54,7 @@ class PluginInteractorImpl @Inject constructor(
 				pluginDescriptorInteractor = pluginDescriptorInteractor.get(),
 				pluginLoader = pluginLoader.get(),
 				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get(),
+				oneFeedHost = oneFeedHost.get(),
 				application = applicationProvider.get()
 		).execute()
 	}

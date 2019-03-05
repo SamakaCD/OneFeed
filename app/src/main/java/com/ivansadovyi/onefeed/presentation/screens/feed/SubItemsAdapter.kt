@@ -38,6 +38,13 @@ class SubItemsAdapter : RecyclerView.Adapter<SubItemsAdapter.ViewHolder>() {
 		holder.itemView.setOnClickListener {
 			onSubItemClickListener?.invoke(subItem)
 		}
+
+		val icon = subItem.icon
+		if (icon != null) {
+			holder.binding.icon.setImageBitmap(icon)
+		} else {
+			holder.binding.icon.setImageDrawable(null)
+		}
 	}
 
 	class ViewHolder(val binding: ItemFeedSubItemBinding) : RecyclerView.ViewHolder(binding.root)

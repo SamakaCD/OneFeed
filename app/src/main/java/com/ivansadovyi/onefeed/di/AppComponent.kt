@@ -15,6 +15,7 @@ import javax.inject.Singleton
 	AndroidInjectionModule::class,
 	DomainDaggerModule::class,
 	DataDaggerModule::class,
+	AppModule::class,
 	ActivityBindings::class
 ])
 interface AppComponent {
