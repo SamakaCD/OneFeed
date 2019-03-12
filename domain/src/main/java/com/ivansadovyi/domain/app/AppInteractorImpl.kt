@@ -11,6 +11,7 @@ import javax.inject.Singleton
 
 @Singleton
 class AppInteractorImpl @Inject constructor(
+		private val currentAppVersion: Int,
 		private val pluginInteractor: Lazy<PluginInteractor>,
 		private val feedItemsInteractor: Lazy<FeedItemsInteractor>,
 		private val loggingInteractor: Lazy<LoggingInteractor>,
@@ -29,8 +30,10 @@ class AppInteractorImpl @Inject constructor(
 
 	override suspend fun performFirstLaunchSetup() {
 		PerformFirstLaunchSetupUseCase(
+				currentAppVersion = currentAppVersion,
 				loggingInteractor = loggingInteractor.get(),
-				pluginInteractor = pluginInteractor.get()
+				pluginInteractor = pluginInteractor.get(),
+				appVersionRepository = appVersionRepository.get()
 		).execute()
 	}
 }

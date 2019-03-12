@@ -28,6 +28,8 @@ interface AppComponent {
 		@BindsInstance
 		fun application(application: Application): Builder
 
+		fun appModule(module: AppModule): Builder
+
 		fun build(): AppComponent
 	}
 }

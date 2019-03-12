@@ -15,6 +15,10 @@ class AppVersionRepositoryImpl @Inject constructor(application: Application) : A
 		return preferences.getInt(KEY_APP_VERSION, AppVersionRepository.FIRST_LAUNCH_VERSION)
 	}
 
+	override suspend fun setAppVersion(version: Int) {
+		preferences.edit().putInt(KEY_APP_VERSION, version).apply()
+	}
+
 	companion object {
 		private const val PREFERENCES_NAME = "app_version"
 		private const val KEY_APP_VERSION = "app_version"
