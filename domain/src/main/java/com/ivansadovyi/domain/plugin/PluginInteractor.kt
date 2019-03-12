@@ -24,4 +24,6 @@ interface PluginInteractor {
 	suspend fun cachePluginIcon(plugin: OneFeedPlugin)
 
 	suspend fun handleSubItemClick(subItem: SubItem, feedItem: BundledFeedItem)
+
+	suspend fun setupDefaultBuiltInPluginAuthorizations()
 }

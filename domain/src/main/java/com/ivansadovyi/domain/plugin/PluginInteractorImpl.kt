@@ -20,9 +20,10 @@ class PluginInteractorImpl @Inject constructor(
 		private val feedItemsInteractor: Lazy<FeedItemsInteractor>,
 		private val loggingInteractor: Lazy<LoggingInteractor>,
 		private val pluginLoader: Lazy<PluginLoader>,
-		private val pluginAuthorizationRepositoryProvider: Lazy<PluginAuthorizationRepository>,
+		private val builtInPluginLoader: Lazy<BuiltInPluginLoader>,
+		private val pluginAuthorizationRepository: Lazy<PluginAuthorizationRepository>,
 		private val oneFeedHost: Lazy<OneFeedHost>,
-		private val applicationProvider: Lazy<Application>,
+		private val application: Lazy<Application>,
 		private val pluginIconCache: Lazy<PluginIconCache>
 ) : PluginInteractor {
 
@@ -32,7 +33,7 @@ class PluginInteractorImpl @Inject constructor(
 				pluginStore = pluginStore.get(),
 				pluginDescriptorInteractor = pluginDescriptorInteractor.get(),
 				oneFeedHost = oneFeedHost.get(),
-				application = applicationProvider.get()
+				application = application.get()
 		).execute()
 	}
 
@@ -43,7 +44,7 @@ class PluginInteractorImpl @Inject constructor(
 				pluginStore = pluginStore.get(),
 				pluginInteractor = this,
 				feedItemsInteractor = feedItemsInteractor.get(),
-				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get()
+				pluginAuthorizationRepository = pluginAuthorizationRepository.get()
 		).execute()
 	}
 
@@ -53,16 +54,16 @@ class PluginInteractorImpl @Inject constructor(
 				pluginInteractor = this,
 				pluginDescriptorInteractor = pluginDescriptorInteractor.get(),
 				pluginLoader = pluginLoader.get(),
-				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get(),
+				pluginAuthorizationRepository = pluginAuthorizationRepository.get(),
 				oneFeedHost = oneFeedHost.get(),
-				application = applicationProvider.get()
+				application = application.get()
 		).execute()
 	}
 
 	override suspend fun resetAuthorizations() {
 		ResetAuthorizationsUseCase(
 				pluginStore = pluginStore.get(),
-				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get(),
+				pluginAuthorizationRepository = pluginAuthorizationRepository.get(),
 				feedItemsInteractor = feedItemsInteractor.get()
 		).execute()
 	}
@@ -88,6 +89,14 @@ class PluginInteractorImpl @Inject constructor(
 				feedItem = feedItem,
 				loggingInteractor = loggingInteractor.get(),
 				pluginStore = pluginStore.get()
+		).execute()
+	}
+
+	override suspend fun setupDefaultBuiltInPluginAuthorizations() {
+		SetupDefaultBuiltInPluginAuthorizationsUseCase(
+				loggingInteractor = loggingInteractor.get(),
+				builtInPluginLoader = builtInPluginLoader.get(),
+				pluginAuthorizationRepository = pluginAuthorizationRepository.get()
 		).execute()
 	}
 }

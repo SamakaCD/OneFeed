@@ -2,30 +2,43 @@ package com.ivansadovyi.data.di
 
 import android.app.Application
 import androidx.room.Room
+import com.ivansadovyi.data.app.AppVersionRepositoryImpl
 import com.ivansadovyi.data.db.AppDatabase
 import com.ivansadovyi.data.feed.RoomFeedItemRepository
 import com.ivansadovyi.data.plugin.di.PluginDaggerModule
+import com.ivansadovyi.domain.app.AppVersionRepository
 import com.ivansadovyi.domain.feed.FeedItemRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 @Module(includes = [PluginDaggerModule::class])
-class DataDaggerModule {
+abstract class DataDaggerModule {
 
-	@Provides
+	@Binds
 	@Singleton
-	fun provideAppDatabase(application: Application): AppDatabase {
-		return Room.databaseBuilder(application, AppDatabase::class.java, AppDatabase.NAME).build()
-	}
+	abstract fun bindAppVersionRepository(impl: AppVersionRepositoryImpl): AppVersionRepository
 
-	@Provides
-	@Singleton
-	fun provideFeedItemRepository(appDatabase: AppDatabase): FeedItemRepository {
-		return RoomFeedItemRepository(
-				appDatabase.getFeedItemDao(),
-				appDatabase.getFeedImageDao(),
-				appDatabase.getSubItemDao()
-		)
+	@Module
+	companion object {
+
+		@JvmStatic
+		@Provides
+		@Singleton
+		fun provideAppDatabase(application: Application): AppDatabase {
+			return Room.databaseBuilder(application, AppDatabase::class.java, AppDatabase.NAME).build()
+		}
+
+		@JvmStatic
+		@Provides
+		@Singleton
+		fun provideFeedItemRepository(appDatabase: AppDatabase): FeedItemRepository {
+			return RoomFeedItemRepository(
+					appDatabase.getFeedItemDao(),
+					appDatabase.getFeedImageDao(),
+					appDatabase.getSubItemDao()
+			)
+		}
 	}
 }
