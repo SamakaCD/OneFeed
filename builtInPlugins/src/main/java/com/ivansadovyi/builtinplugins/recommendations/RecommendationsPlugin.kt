@@ -50,8 +50,8 @@ class RecommendationsPlugin : OneFeedPlugin(), OneFeedPlugin.OnSubItemClickListe
 
 	companion object {
 
-		private const val ITEM_ID = "1afec80b-2315-49db-97c7-cbe12f31921b"
-		const val TWITTER_ID = "42324058-fa4b-473b-8ce8-04e58c5cccc9"
+		const val ITEM_ID = "com.ivansadovyi.builtinplugins.recommendations.RecommendationsItem"
+		const val TWITTER_ID = "com.ivansadovyi.builtinplugins.recommendations.RecommendationsItem.Twitter"
 
 		val DESCRIPTOR = OneFeedPluginDescriptor.Builder()
 				.setName("Plugin recommendations")
