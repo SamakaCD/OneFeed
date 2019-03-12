@@ -8,11 +8,6 @@ import androidx.annotation.Nullable;
 
 public class FeedItem {
 
-	public enum Priority {
-		NONE,
-		HIGH
-	}
-
 	private String id;
 	private String title;
 	private String content;
@@ -23,7 +18,6 @@ public class FeedItem {
 	@Nullable
 	private String avatarImageUrl;
 	private List<FeedImage> images;
-	private Priority priority;
 	private List<SubItem> subItems;
 
 	private FeedItem() {
@@ -37,7 +31,6 @@ public class FeedItem {
 		this.publicationDate = source.publicationDate;
 		this.avatarImageUrl = source.avatarImageUrl;
 		this.images = source.images;
-		this.priority = source.priority;
 		this.subItems = source.subItems;
 	}
 
@@ -68,10 +61,6 @@ public class FeedItem {
 		return images;
 	}
 
-	public Priority getPriority() {
-		return priority;
-	}
-
 	public List<SubItem> getSubItems() {
 		return subItems;
 	}
@@ -84,7 +73,6 @@ public class FeedItem {
 		private Date publicationDate;
 		private String avatarImageUrl;
 		private List<FeedImage> images = Collections.emptyList();
-		private Priority priority = Priority.NONE;
 		private List<SubItem> subItems = Collections.emptyList();
 
 		public Builder setId(String id) {
@@ -117,11 +105,6 @@ public class FeedItem {
 			return this;
 		}
 
-		public Builder setPriority(Priority priority) {
-			this.priority = priority;
-			return this;
-		}
-
 		public Builder setSubItems(List<SubItem> subItems) {
 			this.subItems = subItems;
 			return this;
@@ -135,7 +118,6 @@ public class FeedItem {
 			feedItem.publicationDate = publicationDate;
 			feedItem.avatarImageUrl = avatarImageUrl;
 			feedItem.images = images;
-			feedItem.priority = priority;
 			feedItem.subItems = subItems;
 			return feedItem;
 		}

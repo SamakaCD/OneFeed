@@ -7,7 +7,6 @@ import javax.inject.Singleton
 
 @Singleton
 class FeedItemsStoreImpl @Inject constructor(
-		private val feedBuilder: FeedBuilder,
 		private val feedItemRepository: FeedItemRepository
 ) : ObservableStore<FeedItemsStore>(), FeedItemsStore {
 
@@ -21,7 +20,7 @@ class FeedItemsStoreImpl @Inject constructor(
 
 	private fun observeDao() {
 		feedItemRepository.getFeedItems().subscribe {
-			items = feedBuilder.build(it)
+			items = it
 		}
 	}
 }

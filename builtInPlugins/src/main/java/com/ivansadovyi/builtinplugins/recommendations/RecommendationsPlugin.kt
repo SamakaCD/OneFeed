@@ -34,7 +34,6 @@ class RecommendationsPlugin : OneFeedPlugin(), OneFeedPlugin.OnSubItemClickListe
 
 		val item = FeedItem.Builder()
 				.setId(ITEM_ID)
-				.setPriority(FeedItem.Priority.HIGH)
 				.setTitle(context.getString(R.string.recommendations_item_title))
 				.setSubItems(subItems)
 				.build()

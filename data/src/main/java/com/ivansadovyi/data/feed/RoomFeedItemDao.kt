@@ -7,7 +7,7 @@ import io.reactivex.Observable
 abstract class RoomFeedItemDao {
 
 	@Transaction
-	@Query("SELECT * FROM feedItems ORDER BY publicationDate DESC")
+	@Query("SELECT * FROM feedItems")
 	abstract fun getAll(): Observable<List<FeedItemWithAttachments>>
 
 	@Transaction

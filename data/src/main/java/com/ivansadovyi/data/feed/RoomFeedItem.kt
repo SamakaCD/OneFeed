@@ -13,6 +13,5 @@ class RoomFeedItem(
 		var content: String?,
 		var publicationDate: Date?,
 		var avatarImageUrl: String?,
-		var pluginClassName: String,
-		var priority: FeedItem.Priority
+		var pluginClassName: String
 )
