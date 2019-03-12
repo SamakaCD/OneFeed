@@ -5,7 +5,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.ivansadovyi.data.db.converters.RoomDateConverter
 import com.ivansadovyi.data.db.converters.RoomFeedItemPriorityConverter
-import com.ivansadovyi.data.feed.*
+import com.ivansadovyi.data.feed.RoomFeedImage
+import com.ivansadovyi.data.feed.RoomFeedItem
+import com.ivansadovyi.data.feed.RoomFeedItemDao
+import com.ivansadovyi.data.feed.RoomSubItem
 import com.ivansadovyi.data.plugin.authorization.RoomPluginAuthorization
 import com.ivansadovyi.data.plugin.authorization.RoomPluginAuthorizationDao
 
@@ -22,10 +25,6 @@ import com.ivansadovyi.data.plugin.authorization.RoomPluginAuthorizationDao
 abstract class AppDatabase : RoomDatabase() {
 
 	abstract fun getFeedItemDao(): RoomFeedItemDao
-
-	abstract fun getFeedImageDao(): RoomFeedImageDao
-
-	abstract fun getSubItemDao(): RoomSubItemDao
 
 	abstract fun getPluginAuthorizationDao(): RoomPluginAuthorizationDao
 

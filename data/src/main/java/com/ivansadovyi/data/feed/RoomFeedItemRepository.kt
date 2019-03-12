@@ -6,24 +6,14 @@ import io.reactivex.Observable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class RoomFeedItemRepository(
-		private val feedItemDao: RoomFeedItemDao,
-		private val feedImageDao: RoomFeedImageDao,
-		private val feedSubItemDao: RoomSubItemDao
-) : FeedItemRepository {
+class RoomFeedItemRepository(private val feedItemDao: RoomFeedItemDao) : FeedItemRepository {
 
 	override suspend fun clear() = withContext(Dispatchers.IO) {
 		feedItemDao.deleteAll()
-		feedImageDao.deleteAll()
-		feedSubItemDao.deleteAll()
 	}
 
 	override suspend fun putFeedItems(items: List<BundledFeedItem>) = withContext(Dispatchers.IO) {
-		items.forEach { item ->
-			feedItemDao.insert(RoomFeedItemMapper.toRoom(item))
-			feedImageDao.insertImages(item.images.map { RoomFeedImageMapper.toRoom(it, item.id) })
-			feedSubItemDao.insertListItems(item.subItems.map { RoomSubItemMapper.toRoom(it, item.id) })
-		}
+		feedItemDao.insert(items.map(::FeedItemWithAttachments))
 	}
 
 	override fun getFeedItems(): Observable<List<BundledFeedItem>> {
