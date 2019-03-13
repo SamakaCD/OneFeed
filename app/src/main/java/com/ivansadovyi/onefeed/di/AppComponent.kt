@@ -15,6 +15,7 @@ import javax.inject.Singleton
 	AndroidInjectionModule::class,
 	DomainDaggerModule::class,
 	DataDaggerModule::class,
+	AppModule::class,
 	ActivityBindings::class
 ])
 interface AppComponent {
@@ -26,6 +27,8 @@ interface AppComponent {
 
 		@BindsInstance
 		fun application(application: Application): Builder
+
+		fun appModule(module: AppModule): Builder
 
 		fun build(): AppComponent
 	}

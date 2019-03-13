@@ -9,7 +9,13 @@
 			name="item"
 			type="com.ivansadovyi.sdk.FeedItem" />
 
-		<import type="android.view.View" />
+		<variable
+			name="isDateVisible"
+			type="boolean" />
+
+		<variable
+			name="pluginIcon"
+			type="android.graphics.Bitmap" />
 	</data>
 
 	<LinearLayout
@@ -44,21 +50,48 @@
 				android:layout_weight="1"
 				android:orientation="vertical">
 
-				<TextView
-					android:id="@+id/title"
+				<LinearLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:hyphenationFrequency="none"
-					android:text="@{item.title}"
-					android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-					tools:text="Title" />
+					android:gravity="center_vertical"
+					android:orientation="horizontal">
+
+					<TextView
+						android:id="@+id/title"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hyphenationFrequency="none"
+						android:text="@{item.title}"
+						android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+						tools:text="Title" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginEnd="8dp"
+						android:layout_marginLeft="8dp"
+						android:layout_marginRight="8dp"
+						android:layout_marginStart="8dp"
+						android:text="@string/bullet"
+						android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+						app:visible="@{!isDateVisible}" />
+
+					<androidx.appcompat.widget.AppCompatImageView
+						android:layout_width="16dp"
+						android:layout_height="16dp"
+						app:imageBitmap="@{pluginIcon}"
+						app:tint="?android:textColorPrimary"
+						app:tintMode="src_in"
+						app:visible="@{!isDateVisible}"
+						tools:background="#1000" />
+				</LinearLayout>
 
 				<LinearLayout
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:gravity="center_vertical"
 					android:orientation="horizontal"
-					app:visible="@{item.publicationDate != null}">
+					app:visible="@{isDateVisible}">
 
 					<TextView
 						android:id="@+id/date"
@@ -82,10 +115,12 @@
 						android:textAppearance="@style/TextAppearance.AppCompat.Caption"
 						android:textColor="?android:textColorSecondary" />
 
-					<ImageView
-						android:id="@+id/pluginIcon"
+					<androidx.appcompat.widget.AppCompatImageView
 						android:layout_width="16dp"
 						android:layout_height="16dp"
+						app:imageBitmap="@{pluginIcon}"
+						app:tint="@color/colorFeedPluginIcon"
+						app:tintMode="src_in"
 						tools:background="#1000" />
 				</LinearLayout>
 			</LinearLayout>
@@ -101,7 +136,8 @@
 			android:layout_marginStart="16dp"
 			android:hyphenationFrequency="none"
 			android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-			app:asyncText="@{item.content}"
+			app:asyncText="@{item.content ?? ``}"
+			app:visible="@{item.content != null}"
 			tools:text="Lorem ipsum dolor sit amet, duo mutat nemore ex, his lucilius intellegat et, vis homero quodsi expetenda at. Ne est tritani inermis platonem. Usu commune scriptorem intellegebat an. Vivendo inciderint duo ea. Eu sensibus eloquentiam pro." />
 
 		<ImageView
@@ -111,10 +147,21 @@
 			android:layout_marginBottom="16dp"
 			android:adjustViewBounds="true"
 			android:contentDescription="@{item.content ?? item.title}"
-			android:visibility="@{item.images.size() > 0 ? View.VISIBLE : View.GONE}"
+			app:visible="@{item.images.size() > 0}"
 			tools:background="#1000"
-			tools:layout_height="128dp"
+			tools:layout_height="64dp"
 			tools:visibility="visible" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/subItemsRecyclerView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="8dp"
+			android:layout_marginTop="-8dp"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+			app:visible="@{item.subItems.size() > 0}"
+			tools:layout_height="96dp"
+			tools:listitem="@layout/item_feed_sub_item" />
 
 		<View
 			android:layout_width="match_parent"

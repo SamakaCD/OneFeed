@@ -14,10 +14,12 @@ public class FeedItem {
 
 	@Nullable
 	private Date publicationDate;
+	private boolean isDateVisible;
 
 	@Nullable
 	private String avatarImageUrl;
 	private List<FeedImage> images;
+	private List<SubItem> subItems;
 
 	private FeedItem() {
 
@@ -28,8 +30,10 @@ public class FeedItem {
 		this.title = source.title;
 		this.content = source.content;
 		this.publicationDate = source.publicationDate;
+		this.isDateVisible = source.isDateVisible;
 		this.avatarImageUrl = source.avatarImageUrl;
 		this.images = source.images;
+		this.subItems = source.subItems;
 	}
 
 	public String getId() {
@@ -40,6 +44,7 @@ public class FeedItem {
 		return title;
 	}
 
+	@Nullable
 	public String getContent() {
 		return content;
 	}
@@ -47,6 +52,10 @@ public class FeedItem {
 	@Nullable
 	public Date getPublicationDate() {
 		return publicationDate;
+	}
+
+	public boolean isDateVisible() {
+		return isDateVisible;
 	}
 
 	@Nullable
@@ -58,14 +67,20 @@ public class FeedItem {
 		return images;
 	}
 
+	public List<SubItem> getSubItems() {
+		return subItems;
+	}
+
 	public static class Builder {
 
 		private String id;
 		private String title;
 		private String content;
 		private Date publicationDate;
+		private boolean isDateVisible;
 		private String avatarImageUrl;
 		private List<FeedImage> images = Collections.emptyList();
+		private List<SubItem> subItems = Collections.emptyList();
 
 		public Builder setId(String id) {
 			this.id = id;
@@ -87,6 +102,11 @@ public class FeedItem {
 			return this;
 		}
 
+		public Builder setDateVisible(boolean dateVisible) {
+			isDateVisible = dateVisible;
+			return this;
+		}
+
 		public Builder setAvatarImageUrl(String avatarImageUrl) {
 			this.avatarImageUrl = avatarImageUrl;
 			return this;
@@ -97,14 +117,21 @@ public class FeedItem {
 			return this;
 		}
 
+		public Builder setSubItems(List<SubItem> subItems) {
+			this.subItems = subItems;
+			return this;
+		}
+
 		public FeedItem build() {
 			FeedItem feedItem = new FeedItem();
 			feedItem.id = id;
 			feedItem.title = title;
 			feedItem.content = content;
 			feedItem.publicationDate = publicationDate;
+			feedItem.isDateVisible = isDateVisible;
 			feedItem.avatarImageUrl = avatarImageUrl;
 			feedItem.images = images;
+			feedItem.subItems = subItems;
 			return feedItem;
 		}
 	}

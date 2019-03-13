@@ -12,6 +12,11 @@ import androidx.annotation.NonNull;
 
 public abstract class OneFeedPlugin {
 
+	public interface OnSubItemClickListener {
+
+		void onSubItemClick(@NonNull SubItem subItem, @NonNull FeedItem feedItem);
+	}
+
 	private OneFeedPluginParams params;
 
 	@CallSuper
@@ -42,6 +47,11 @@ public abstract class OneFeedPlugin {
 	@NonNull
 	public OneFeedPluginDescriptor getDescriptor() {
 		return getParams().getDescriptor();
+	}
+
+	@NonNull
+	public OneFeedHost getHost() {
+		return getParams().getHost();
 	}
 
 	@NonNull

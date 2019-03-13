@@ -1,13 +1,13 @@
 package com.ivansadovyi.domain.plugin
 
 import android.app.Application
+import com.ivansadovyi.domain.feed.BundledFeedItem
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
+import com.ivansadovyi.domain.log.LoggingInteractor
 import com.ivansadovyi.domain.plugin.auth.PluginAuthorizationRepository
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorInteractor
 import com.ivansadovyi.domain.plugin.usecase.*
-import com.ivansadovyi.sdk.FeedItem
-import com.ivansadovyi.sdk.OneFeedPlugin
-import com.ivansadovyi.sdk.OneFeedPluginDescriptor
+import com.ivansadovyi.sdk.*
 import com.ivansadovyi.sdk.auth.AuthorizationParams
 import dagger.Lazy
 import javax.inject.Inject
@@ -18,9 +18,12 @@ class PluginInteractorImpl @Inject constructor(
 		private val pluginStore: Lazy<PluginStore>,
 		private val pluginDescriptorInteractor: Lazy<PluginDescriptorInteractor>,
 		private val feedItemsInteractor: Lazy<FeedItemsInteractor>,
+		private val loggingInteractor: Lazy<LoggingInteractor>,
 		private val pluginLoader: Lazy<PluginLoader>,
-		private val pluginAuthorizationRepositoryProvider: Lazy<PluginAuthorizationRepository>,
-		private val applicationProvider: Lazy<Application>,
+		private val builtInPluginLoader: Lazy<BuiltInPluginLoader>,
+		private val pluginAuthorizationRepository: Lazy<PluginAuthorizationRepository>,
+		private val oneFeedHost: Lazy<OneFeedHost>,
+		private val application: Lazy<Application>,
 		private val pluginIconCache: Lazy<PluginIconCache>
 ) : PluginInteractor {
 
@@ -29,7 +32,8 @@ class PluginInteractorImpl @Inject constructor(
 				pluginDescriptor = pluginDescriptor,
 				pluginStore = pluginStore.get(),
 				pluginDescriptorInteractor = pluginDescriptorInteractor.get(),
-				application = applicationProvider.get()
+				oneFeedHost = oneFeedHost.get(),
+				application = application.get()
 		).execute()
 	}
 
@@ -40,7 +44,7 @@ class PluginInteractorImpl @Inject constructor(
 				pluginStore = pluginStore.get(),
 				pluginInteractor = this,
 				feedItemsInteractor = feedItemsInteractor.get(),
-				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get()
+				pluginAuthorizationRepository = pluginAuthorizationRepository.get()
 		).execute()
 	}
 
@@ -50,15 +54,16 @@ class PluginInteractorImpl @Inject constructor(
 				pluginInteractor = this,
 				pluginDescriptorInteractor = pluginDescriptorInteractor.get(),
 				pluginLoader = pluginLoader.get(),
-				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get(),
-				application = applicationProvider.get()
+				pluginAuthorizationRepository = pluginAuthorizationRepository.get(),
+				oneFeedHost = oneFeedHost.get(),
+				application = application.get()
 		).execute()
 	}
 
 	override suspend fun resetAuthorizations() {
 		ResetAuthorizationsUseCase(
 				pluginStore = pluginStore.get(),
-				pluginAuthorizationRepository = pluginAuthorizationRepositoryProvider.get(),
+				pluginAuthorizationRepository = pluginAuthorizationRepository.get(),
 				feedItemsInteractor = feedItemsInteractor.get()
 		).execute()
 	}
@@ -75,6 +80,23 @@ class PluginInteractorImpl @Inject constructor(
 		CachePluginIconUseCase(
 				plugin = plugin,
 				pluginIconCache = pluginIconCache.get()
+		).execute()
+	}
+
+	override suspend fun handleSubItemClick(subItem: SubItem, feedItem: BundledFeedItem) {
+		HandleSubItemClickUseCase(
+				subItem = subItem,
+				feedItem = feedItem,
+				loggingInteractor = loggingInteractor.get(),
+				pluginStore = pluginStore.get()
+		).execute()
+	}
+
+	override suspend fun setupDefaultBuiltInPluginAuthorizations() {
+		SetupDefaultBuiltInPluginAuthorizationsUseCase(
+				loggingInteractor = loggingInteractor.get(),
+				builtInPluginLoader = builtInPluginLoader.get(),
+				pluginAuthorizationRepository = pluginAuthorizationRepository.get()
 		).execute()
 	}
 }

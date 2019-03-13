@@ -28,6 +28,7 @@ class GenericExceptionHandler @Inject constructor(private val context: Context) 
 	}
 
 	private fun showUnexpectedError(throwable: Throwable) {
+		throwable.printStackTrace()
 		val stackTrace = Log.getStackTraceString(throwable)
 		AlertDialog.Builder(context)
 				.setTitle(R.string.unexpected_error_title)

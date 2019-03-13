@@ -9,8 +9,9 @@ class RoomFeedItem(
 		@PrimaryKey
 		var id: String,
 		var title: String,
-		var content: String,
+		var content: String?,
 		var publicationDate: Date?,
+		var isDateVisible: Boolean,
 		var avatarImageUrl: String?,
 		var pluginClassName: String
 )

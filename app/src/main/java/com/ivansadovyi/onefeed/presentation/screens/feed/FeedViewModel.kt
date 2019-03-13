@@ -3,11 +3,13 @@ package com.ivansadovyi.onefeed.presentation.screens.feed
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.ivansadovyi.domain.app.AppInteractor
+import com.ivansadovyi.domain.feed.BundledFeedItem
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.feed.FeedItemsStore
 import com.ivansadovyi.domain.plugin.PluginInteractor
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorStore
 import com.ivansadovyi.onefeed.presentation.GenericExceptionHandler
+import com.ivansadovyi.sdk.SubItem
 import dagger.Lazy
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
@@ -60,6 +62,12 @@ class FeedViewModel @Inject constructor(
 		bindStore()
 		coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
 			appInteractor.init()
+		}
+	}
+
+	fun onSubItemClick(subItem: SubItem, feedItem: BundledFeedItem) {
+		coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
+			pluginInteractor.get().handleSubItemClick(subItem, feedItem)
 		}
 	}
 

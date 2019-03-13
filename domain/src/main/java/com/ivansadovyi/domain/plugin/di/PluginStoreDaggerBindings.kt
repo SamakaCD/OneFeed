@@ -8,11 +8,12 @@ import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorInteractor
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorInteractorImpl
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorStore
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorStoreImpl
+import com.ivansadovyi.domain.plugin.host.di.OneFeedHostModule
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [OneFeedHostModule::class])
 abstract class PluginStoreDaggerBindings {
 
 	@Binds

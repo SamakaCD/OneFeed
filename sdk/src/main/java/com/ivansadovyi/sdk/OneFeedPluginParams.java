@@ -12,6 +12,7 @@ public class OneFeedPluginParams {
 	private AuthorizationState authorizationState;
 	private Context context;
 	private OneFeedPluginDescriptor descriptor;
+	private OneFeedHost host;
 
 	private OneFeedPluginParams() {
 
@@ -34,12 +35,17 @@ public class OneFeedPluginParams {
 		return descriptor;
 	}
 
+	public OneFeedHost getHost() {
+		return host;
+	}
+
 	public Builder newBuilder() {
 		return new Builder()
 				.setAuthorization(getAuthorization())
 				.setAuthorizationState(getAuthorizationState())
 				.setContext(getContext())
-				.setDescriptor(getDescriptor());
+				.setDescriptor(getDescriptor())
+				.setHost(getHost());
 	}
 
 	public static class Builder {
@@ -48,6 +54,7 @@ public class OneFeedPluginParams {
 		private AuthorizationState authorizationState;
 		private Context context;
 		private OneFeedPluginDescriptor descriptor;
+		private OneFeedHost host;
 
 		public Builder setAuthorization(@Nullable String authorization) {
 			this.authorization = authorization;
@@ -69,12 +76,18 @@ public class OneFeedPluginParams {
 			return this;
 		}
 
+		public Builder setHost(OneFeedHost host) {
+			this.host = host;
+			return this;
+		}
+
 		public OneFeedPluginParams build() {
 			OneFeedPluginParams params = new OneFeedPluginParams();
 			params.authorization = authorization;
 			params.authorizationState = authorizationState;
 			params.context = context;
 			params.descriptor = descriptor;
+			params.host = host;
 			return params;
 		}
 	}

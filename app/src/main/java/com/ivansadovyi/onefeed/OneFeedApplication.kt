@@ -2,6 +2,7 @@ package com.ivansadovyi.onefeed
 
 import android.app.Activity
 import android.app.Application
+import com.ivansadovyi.onefeed.di.AppModule
 import com.ivansadovyi.onefeed.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -25,6 +26,7 @@ class OneFeedApplication : Application(), HasActivityInjector {
 	private fun setupDagger() {
 		DaggerAppComponent.builder()
 				.application(this)
+				.appModule(AppModule(BuildConfig.VERSION_CODE))
 				.build()
 				.inject(this)
 	}
