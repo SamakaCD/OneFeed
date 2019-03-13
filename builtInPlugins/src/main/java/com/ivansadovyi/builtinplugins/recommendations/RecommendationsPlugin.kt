@@ -8,6 +8,7 @@ import com.ivansadovyi.sdk.FeedItem
 import com.ivansadovyi.sdk.OneFeedPlugin
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.SubItem
+import java.util.*
 import java.util.Collections.emptyList
 
 class RecommendationsPlugin : OneFeedPlugin(), OneFeedPlugin.OnSubItemClickListener {
@@ -36,6 +37,8 @@ class RecommendationsPlugin : OneFeedPlugin(), OneFeedPlugin.OnSubItemClickListe
 		val item = FeedItem.Builder()
 				.setId(ITEM_ID)
 				.setTitle(context.getString(R.string.recommendations_item_title))
+				.setPublicationDate(Date())
+				.setDateVisible(false)
 				.setSubItems(subItems)
 				.build()
 
