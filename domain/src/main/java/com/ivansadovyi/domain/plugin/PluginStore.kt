@@ -1,23 +1,53 @@
 package com.ivansadovyi.domain.plugin
 
-import com.ivansadovyi.domain.Store
+import com.ivansadovyi.domain.plugin.PluginAction.ClearPluginInstancesAction
+import com.ivansadovyi.domain.plugin.PluginAction.NewPluginInstanceAction
+import com.ivansadovyi.domain.utils.truba.Action
+import com.ivansadovyi.domain.utils.truba.Store
 import com.ivansadovyi.sdk.OneFeedPlugin
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import com.ivansadovyi.sdk.auth.AuthorizationParams
+import com.ivansadovyi.sdk.auth.AuthorizationState
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface PluginStore : Store<PluginStore> {
+@Singleton
+class PluginStore @Inject constructor() : Store<Action>() {
 
-	val plugins: List<OneFeedPlugin>
+	var plugins: MutableList<OneFeedPlugin> = mutableListOf()
 
-	fun clear()
+	private val authorizationParamsCache = mutableMapOf<OneFeedPlugin, AuthorizationParams>()
 
-	fun getAuthorizedPlugins(): List<OneFeedPlugin>
+	fun clear() {
+		plugins.clear()
+		notifyChange(ClearPluginInstancesAction)
+	}
 
-	fun getAuthorizingPluginByDescriptor(descriptor: OneFeedPluginDescriptor): OneFeedPlugin
+	fun getAuthorizedPlugins(): List<OneFeedPlugin> {
+		return plugins.filter { it.authorizationState == AuthorizationState.AUTHORIZED }
+	}
 
-	fun getCachedAuthorizationParams(plugin: OneFeedPlugin): AuthorizationParams
+	fun getAuthorizingPluginByDescriptor(descriptor: OneFeedPluginDescriptor): OneFeedPlugin {
+		val instance = plugins.asSequence()
+				.filter { it.authorizationState == AuthorizationState.AUTHORIZING }
+				.filter { it.descriptor == descriptor }
+				.firstOrNull()
 
-	fun putAuthorizationParamsIntoCache(plugin: OneFeedPlugin, authParams: AuthorizationParams)
+		return instance
+				?: throw IllegalStateException("Cannot find authorizing plugin instance with descriptor [$descriptor]")
+	}
 
-	fun putPlugin(plugin: OneFeedPlugin)
+	fun getCachedAuthorizationParams(plugin: OneFeedPlugin): AuthorizationParams {
+		return authorizationParamsCache[plugin]
+				?: throw IllegalArgumentException("Cannot find plugin with descriptor [${plugin.descriptor}] in cache")
+	}
+
+	fun putAuthorizationParamsIntoCache(plugin: OneFeedPlugin, authParams: AuthorizationParams) {
+		authorizationParamsCache[plugin] = authParams
+	}
+
+	fun putPlugin(plugin: OneFeedPlugin) {
+		plugins.add(plugin)
+		notifyChange(NewPluginInstanceAction(plugin))
+	}
 }

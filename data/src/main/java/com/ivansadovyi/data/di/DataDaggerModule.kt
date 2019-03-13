@@ -27,14 +27,16 @@ abstract class DataDaggerModule {
 		@Provides
 		@Singleton
 		fun provideAppDatabase(application: Application): AppDatabase {
-			return Room.databaseBuilder(application, AppDatabase::class.java, AppDatabase.NAME).build()
+			return Room.databaseBuilder(application, AppDatabase::class.java, AppDatabase.NAME)
+					.allowMainThreadQueries()
+					.build()
 		}
 
 		@JvmStatic
 		@Provides
 		@Singleton
 		fun provideFeedItemRepository(appDatabase: AppDatabase): FeedItemRepository {
-			return RoomFeedItemRepository(appDatabase.getFeedItemDao())
+			return RoomFeedItemRepository(appDatabase, appDatabase.getFeedItemDao())
 		}
 	}
 }

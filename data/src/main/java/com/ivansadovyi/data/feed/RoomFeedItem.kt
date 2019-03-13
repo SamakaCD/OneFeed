@@ -2,9 +2,10 @@ package com.ivansadovyi.data.feed
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.ivansadovyi.data.feed.RoomFeedItem.Companion.TABLE_NAME
 import java.util.*
 
-@Entity(tableName = "feedItems")
+@Entity(tableName = TABLE_NAME)
 class RoomFeedItem(
 		@PrimaryKey
 		var id: String,
@@ -14,4 +15,10 @@ class RoomFeedItem(
 		var isDateVisible: Boolean,
 		var avatarImageUrl: String?,
 		var pluginClassName: String
-)
+) {
+
+	companion object {
+
+		const val TABLE_NAME = "feedItems"
+	}
+}
