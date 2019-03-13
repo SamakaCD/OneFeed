@@ -42,7 +42,7 @@ class FeedViewModel @Inject constructor(
 	fun getItems(): List<Any> {
 		val items = ArrayList<Any>(feedItemsStore.items)
 
-		if (feedItemsStore.loading && feedItemsStore.items.isNotEmpty()) {
+		if (feedItemsStore.loading && !feedItemsStore.refreshing && feedItemsStore.items.isNotEmpty()) {
 			items.add(PaginationLoadingItem())
 		}
 
