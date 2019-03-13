@@ -1,6 +1,7 @@
 package com.ivansadovyi.builtinplugins.recommendations
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import com.ivansadovyi.builtinplugins.R
 import com.ivansadovyi.onefeed.plugin.twitter.TwitterPlugin
 import com.ivansadovyi.sdk.FeedItem
@@ -15,7 +16,7 @@ class RecommendationsPlugin : OneFeedPlugin(), OneFeedPlugin.OnSubItemClickListe
 	private val pluginRecommendationSubItemFactory by lazy { PluginRecommendationSubItemFactory(context) }
 
 	override fun getIcon(): Bitmap {
-		return Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565)
+		return BitmapFactory.decodeResource(context.resources, R.drawable.ic_onefeed)
 	}
 
 	override fun loadNextItems(): Iterable<FeedItem> {
