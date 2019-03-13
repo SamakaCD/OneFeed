@@ -42,14 +42,41 @@
 				android:layout_weight="1"
 				android:orientation="vertical">
 
-				<TextView
-					android:id="@+id/title"
+				<LinearLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
-					android:hyphenationFrequency="none"
-					android:text="@{item.title}"
-					android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-					tools:text="Title" />
+					android:gravity="center_vertical"
+					android:orientation="horizontal">
+
+					<TextView
+						android:id="@+id/title"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hyphenationFrequency="none"
+						android:text="@{item.title}"
+						android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+						tools:text="Title" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginEnd="8dp"
+						android:layout_marginLeft="8dp"
+						android:layout_marginRight="8dp"
+						android:layout_marginStart="8dp"
+						android:text="@string/bullet"
+						android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+						app:visible="@{item.publicationDate == null}" />
+
+					<androidx.appcompat.widget.AppCompatImageView
+						android:id="@+id/pluginIconAtTitle"
+						android:layout_width="16dp"
+						android:layout_height="16dp"
+						app:tint="?android:textColorPrimary"
+						app:tintMode="src_in"
+						app:visible="@{item.publicationDate == null}"
+						tools:background="#1000" />
+				</LinearLayout>
 
 				<LinearLayout
 					android:layout_width="wrap_content"

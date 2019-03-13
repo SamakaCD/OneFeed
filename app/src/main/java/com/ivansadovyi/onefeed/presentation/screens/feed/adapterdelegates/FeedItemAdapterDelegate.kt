@@ -37,7 +37,13 @@ class FeedItemAdapterDelegate(
 
 	override fun onBindViewHolder(item: BundledFeedItem, holder: ViewHolder, payloads: MutableList<Any>) {
 		holder.binding.item = item
-		holder.binding.pluginIcon.setImageBitmap(pluginIconCache.get(item.pluginClassName))
+
+		val pluginIcon = pluginIconCache.get(item.pluginClassName)
+		if (item.publicationDate != null) {
+			holder.binding.pluginIcon.setImageBitmap(pluginIcon)
+		} else {
+			holder.binding.pluginIconAtTitle.setImageBitmap(pluginIcon)
+		}
 
 		if (item.images.isNotEmpty()) {
 			val image = item.images.first()
