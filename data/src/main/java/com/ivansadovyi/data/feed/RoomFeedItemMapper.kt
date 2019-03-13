@@ -12,6 +12,7 @@ object RoomFeedItemMapper {
 				.setTitle(item.title)
 				.setContent(item.content)
 				.setPublicationDate(item.publicationDate)
+				.setDateVisible(item.isDateVisible)
 				.setAvatarImageUrl(item.avatarImageUrl)
 				.setImages(images.map(RoomFeedImageMapper::fromRoom))
 				.setSubItems(subItems.map(RoomSubItemMapper::fromRoom))
@@ -21,7 +22,7 @@ object RoomFeedItemMapper {
 
 	fun toRoom(input: BundledFeedItem): RoomFeedItem {
 		return with(input) {
-			RoomFeedItem(id, title, content, publicationDate, avatarImageUrl, pluginClassName)
+			RoomFeedItem(id, title, content, publicationDate, isDateVisible, avatarImageUrl, pluginClassName)
 		}
 	}
 }

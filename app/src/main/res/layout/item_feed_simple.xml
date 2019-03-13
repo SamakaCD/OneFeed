@@ -8,6 +8,14 @@
 		<variable
 			name="item"
 			type="com.ivansadovyi.sdk.FeedItem" />
+
+		<variable
+			name="isDateVisible"
+			type="boolean" />
+
+		<variable
+			name="pluginIcon"
+			type="android.graphics.Bitmap" />
 	</data>
 
 	<LinearLayout
@@ -66,15 +74,15 @@
 						android:layout_marginStart="8dp"
 						android:text="@string/bullet"
 						android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-						app:visible="@{item.publicationDate == null}" />
+						app:visible="@{!isDateVisible}" />
 
 					<androidx.appcompat.widget.AppCompatImageView
-						android:id="@+id/pluginIconAtTitle"
 						android:layout_width="16dp"
 						android:layout_height="16dp"
+						app:imageBitmap="@{pluginIcon}"
 						app:tint="?android:textColorPrimary"
 						app:tintMode="src_in"
-						app:visible="@{item.publicationDate == null}"
+						app:visible="@{!isDateVisible}"
 						tools:background="#1000" />
 				</LinearLayout>
 
@@ -83,7 +91,7 @@
 					android:layout_height="wrap_content"
 					android:gravity="center_vertical"
 					android:orientation="horizontal"
-					app:visible="@{item.publicationDate != null}">
+					app:visible="@{isDateVisible}">
 
 					<TextView
 						android:id="@+id/date"
@@ -108,9 +116,9 @@
 						android:textColor="?android:textColorSecondary" />
 
 					<androidx.appcompat.widget.AppCompatImageView
-						android:id="@+id/pluginIcon"
 						android:layout_width="16dp"
 						android:layout_height="16dp"
+						app:imageBitmap="@{pluginIcon}"
 						app:tint="@color/colorFeedPluginIcon"
 						app:tintMode="src_in"
 						tools:background="#1000" />

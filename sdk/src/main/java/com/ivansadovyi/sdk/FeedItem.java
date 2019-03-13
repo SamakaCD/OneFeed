@@ -14,6 +14,7 @@ public class FeedItem {
 
 	@Nullable
 	private Date publicationDate;
+	private boolean isDateVisible;
 
 	@Nullable
 	private String avatarImageUrl;
@@ -29,6 +30,7 @@ public class FeedItem {
 		this.title = source.title;
 		this.content = source.content;
 		this.publicationDate = source.publicationDate;
+		this.isDateVisible = source.isDateVisible;
 		this.avatarImageUrl = source.avatarImageUrl;
 		this.images = source.images;
 		this.subItems = source.subItems;
@@ -52,6 +54,10 @@ public class FeedItem {
 		return publicationDate;
 	}
 
+	public boolean isDateVisible() {
+		return isDateVisible;
+	}
+
 	@Nullable
 	public String getAvatarImageUrl() {
 		return avatarImageUrl;
@@ -71,6 +77,7 @@ public class FeedItem {
 		private String title;
 		private String content;
 		private Date publicationDate;
+		private boolean isDateVisible;
 		private String avatarImageUrl;
 		private List<FeedImage> images = Collections.emptyList();
 		private List<SubItem> subItems = Collections.emptyList();
@@ -95,6 +102,11 @@ public class FeedItem {
 			return this;
 		}
 
+		public Builder setDateVisible(boolean dateVisible) {
+			isDateVisible = dateVisible;
+			return this;
+		}
+
 		public Builder setAvatarImageUrl(String avatarImageUrl) {
 			this.avatarImageUrl = avatarImageUrl;
 			return this;
@@ -116,6 +128,7 @@ public class FeedItem {
 			feedItem.title = title;
 			feedItem.content = content;
 			feedItem.publicationDate = publicationDate;
+			feedItem.isDateVisible = isDateVisible;
 			feedItem.avatarImageUrl = avatarImageUrl;
 			feedItem.images = images;
 			feedItem.subItems = subItems;
