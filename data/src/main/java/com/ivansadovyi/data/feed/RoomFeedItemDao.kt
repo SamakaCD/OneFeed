@@ -1,14 +1,19 @@
 package com.ivansadovyi.data.feed
 
 import androidx.room.*
-import io.reactivex.Observable
 
 @Dao
 abstract class RoomFeedItemDao {
 
 	@Transaction
 	@Query("SELECT * FROM feedItems")
-	abstract fun getAll(): Observable<List<FeedItemWithAttachments>>
+	abstract fun getAll(): List<FeedItemWithAttachments>
+
+	@Transaction
+	open fun deleteAllAndInsert(itemsWithAttachments: List<FeedItemWithAttachments>) {
+		deleteAll()
+		insert(itemsWithAttachments)
+	}
 
 	@Transaction
 	open fun insert(itemsWithAttachments: List<FeedItemWithAttachments>) {

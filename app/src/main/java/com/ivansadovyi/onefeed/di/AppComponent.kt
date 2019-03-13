@@ -2,7 +2,7 @@ package com.ivansadovyi.onefeed.di
 
 import android.app.Application
 import com.ivansadovyi.data.di.DataDaggerModule
-import com.ivansadovyi.domain.di.DomainDaggerModule
+import com.ivansadovyi.domain.plugin.host.di.OneFeedHostModule
 import com.ivansadovyi.onefeed.OneFeedApplication
 import com.ivansadovyi.onefeed.presentation.di.ActivityBindings
 import dagger.BindsInstance
@@ -13,8 +13,8 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [
 	AndroidInjectionModule::class,
-	DomainDaggerModule::class,
 	DataDaggerModule::class,
+	OneFeedHostModule::class,
 	AppModule::class,
 	ActivityBindings::class
 ])

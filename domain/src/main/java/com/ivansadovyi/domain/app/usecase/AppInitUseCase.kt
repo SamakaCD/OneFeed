@@ -6,12 +6,14 @@ import com.ivansadovyi.domain.app.AppVersionRepository
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.log.LoggingInteractor
 import com.ivansadovyi.domain.plugin.PluginInteractor
+import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorInteractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class AppInitUseCase(
 		private val appInteractor: AppInteractor,
 		private val pluginInteractor: PluginInteractor,
+		private val pluginDescriptorInteractor: PluginDescriptorInteractor,
 		private val loggingInteractor: LoggingInteractor,
 		private val appVersionRepository: AppVersionRepository,
 		private val feedItemsInteractor: FeedItemsInteractor
@@ -23,7 +25,8 @@ class AppInitUseCase(
 		}
 
 		loggingInteractor.debug(this@AppInitUseCase, "Performing app init")
+		pluginDescriptorInteractor.loadPluginDescriptors()
 		pluginInteractor.restoreAuthorizations()
-		feedItemsInteractor.refresh()
+		//feedItemsInteractor.refresh()
 	}
 }

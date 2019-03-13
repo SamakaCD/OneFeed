@@ -8,7 +8,6 @@ import com.ivansadovyi.domain.feed.FeedItemsStore
 import com.ivansadovyi.domain.log.LoggingInteractor
 import com.ivansadovyi.domain.plugin.PluginInteractor
 import com.ivansadovyi.domain.plugin.PluginStore
-import io.reactivex.exceptions.CompositeException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -23,8 +22,7 @@ class RefreshFeedUseCase(
 
 	override suspend fun execute() = withContext(Dispatchers.IO) {
 		loggingInteractor.debug(this@RefreshFeedUseCase, "Refreshing feed")
-		feedItemsStore.refreshing = true
-		feedItemsStore.loading = true
+		feedItemsStore.startRefreshing()
 		val newItems = mutableListOf<BundledFeedItem>()
 		val caughtExceptions = mutableListOf<Throwable>()
 		for (plugin in pluginStore.getAuthorizedPlugins()) {
@@ -32,9 +30,12 @@ class RefreshFeedUseCase(
 			try {
 				loggingInteractor.debug(this@RefreshFeedUseCase, "Refreshing $pluginClassName")
 				val items = pluginInteractor.refresh(plugin)
+				var itemsCounter = 0
 				for (item in items) {
 					newItems += BundledFeedItem(item, pluginClassName)
+					itemsCounter++
 				}
+				loggingInteractor.debug(this@RefreshFeedUseCase, "Got $itemsCounter items from $pluginClassName")
 			} catch (throwable: Throwable) {
 				loggingInteractor.warning(this@RefreshFeedUseCase,
 						"${throwable.javaClass.simpleName} when refreshing $plugin")
@@ -46,18 +47,17 @@ class RefreshFeedUseCase(
 		// Clear feed only when it was loaded successfully
 		// TODO: clear all feeds except failed
 		if (caughtExceptions.isEmpty()) {
-			feedItemsInteractor.clear()
+			feedItemRepository.clearAndPutItems(newItems)
+		} else {
+			feedItemRepository.putFeedItems(newItems)
 		}
 
-		feedItemRepository.putFeedItems(newItems)
-		feedItemsStore.loading = false
-		feedItemsStore.refreshing = false
+		feedItemsStore.finishRefreshing()
 
 		// Throw caught exceptions if they have occurred
-		if (caughtExceptions.size == 1) {
+		// TODO: add throwing multiple exceptions using CompositeException
+		if (caughtExceptions.isNotEmpty()) {
 			throw caughtExceptions.first()
-		} else if (caughtExceptions.size >= 1) {
-			throw CompositeException(caughtExceptions)
 		}
 	}
 }

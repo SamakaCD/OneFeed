@@ -8,11 +8,10 @@ import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.feed.FeedItemsStore
 import com.ivansadovyi.domain.plugin.PluginInteractor
 import com.ivansadovyi.domain.plugin.descriptor.PluginDescriptorStore
+import com.ivansadovyi.domain.utils.Disposable
 import com.ivansadovyi.onefeed.presentation.GenericExceptionHandler
 import com.ivansadovyi.sdk.SubItem
 import dagger.Lazy
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.rxkotlin.plusAssign
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -55,7 +54,7 @@ class FeedViewModel @Inject constructor(
 		return feedItemsStore.refreshing
 	}
 
-	private val disposable = CompositeDisposable()
+	private var disposable: Disposable? = null
 	private val coroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
 	init {
@@ -104,7 +103,7 @@ class FeedViewModel @Inject constructor(
 	}
 
 	private fun bindStore() {
-		disposable += feedItemsStore.observable.subscribe {
+		disposable = feedItemsStore.observe {
 			notifyChange()
 		}
 	}

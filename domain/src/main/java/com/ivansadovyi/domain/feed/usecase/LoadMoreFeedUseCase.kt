@@ -20,7 +20,7 @@ class LoadMoreFeedUseCase(
 
 	override suspend fun execute() = withContext(Dispatchers.IO) {
 		loggingInteractor.debug(this@LoadMoreFeedUseCase, "Loading more feed")
-		feedItemsStore.loading = true
+		feedItemsStore.startLoading()
 		for (plugin in pluginStore.getAuthorizedPlugins()) {
 			val pluginClassName = plugin.descriptor.className
 			loggingInteractor.debug(this@LoadMoreFeedUseCase, "Loading from $pluginClassName")
@@ -29,6 +29,6 @@ class LoadMoreFeedUseCase(
 					.toList()
 					.let { feedItemRepository.putFeedItems(it) }
 		}
-		feedItemsStore.loading = false
+		feedItemsStore.finishLoading()
 	}
 }
