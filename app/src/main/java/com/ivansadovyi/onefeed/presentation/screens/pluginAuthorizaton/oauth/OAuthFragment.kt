@@ -59,7 +59,7 @@ class OAuthFragment : PluginAuthorizationFragment(), OAuthView {
 		override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
 			presenter.onRedirect(url)
 			val authParams = authParams as OAuthParams
-			return !url.startsWith(authParams.callbackUrl)
+			return url.startsWith(authParams.callbackUrl)
 		}
 
 		override fun onPageFinished(view: WebView?, url: String?) {
