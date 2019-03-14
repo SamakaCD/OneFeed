@@ -77,7 +77,7 @@ public class FeedItem {
 		private String title;
 		private String content;
 		private Date publicationDate;
-		private boolean isDateVisible;
+		private boolean isDateVisible = true;
 		private String avatarImageUrl;
 		private List<FeedImage> images = Collections.emptyList();
 		private List<SubItem> subItems = Collections.emptyList();
