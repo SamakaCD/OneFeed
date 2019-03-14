@@ -4,6 +4,7 @@ import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
 import com.ivansadovyi.domain.app.AppInteractor
 import com.ivansadovyi.domain.feed.BundledFeedItem
+import com.ivansadovyi.domain.feed.FeedAction
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.feed.FeedItemsStore
 import com.ivansadovyi.domain.plugin.PluginInteractor
@@ -20,6 +21,7 @@ import java.util.*
 import javax.inject.Inject
 
 class FeedViewModel @Inject constructor(
+		private val feedView: FeedView,
 		private val feedRouter: FeedRouter,
 		private val feedItemsStore: FeedItemsStore,
 		private val feedItemsInteractor: Lazy<FeedItemsInteractor>,
@@ -103,8 +105,13 @@ class FeedViewModel @Inject constructor(
 	}
 
 	private fun bindStore() {
-		disposable = feedItemsStore.observe {
-			notifyChange()
+		disposable = feedItemsStore.observe { action ->
+			coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
+				notifyChange()
+				when (action) {
+					is FeedAction.RefreshingFinishedAction -> feedView.scrollToTop()
+				}
+			}
 		}
 	}
 }
