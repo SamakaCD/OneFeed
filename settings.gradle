@@ -1,1 +1,1 @@
-include ':app', ':sdk', ':domain', ':data', ':twitterApk', ':twitter', ':builtInPlugins'
+include ':app', ':sdk', ':domain', ':data', ':twitterApk', ':twitter', ':builtInPlugins', ':feedly'
