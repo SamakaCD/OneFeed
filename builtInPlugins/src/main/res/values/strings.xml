@@ -1,4 +1,5 @@
 <resources>
 	<string name="recommendations_item_title">Connect socials</string>
 	<string name="recommendations_sub_item_twitter">Twitter</string>
+	<string name="recommendations_sub_item_feedly">Feedly</string>
 </resources>
