@@ -1,7 +1,7 @@
 package com.ivansadovyi.onefeed.presentation.di
 
 import com.ivansadovyi.onefeed.presentation.screens.feed.FeedActivity
-import com.ivansadovyi.onefeed.presentation.screens.feed.di.FeedBindings
+import com.ivansadovyi.onefeed.presentation.screens.feed.di.FeedModule
 import com.ivansadovyi.onefeed.presentation.screens.pluginAuthorizaton.PluginAuthorizationActivity
 import com.ivansadovyi.onefeed.presentation.screens.pluginAuthorizaton.di.PluginAuthorizationBindings
 import dagger.Module
@@ -10,7 +10,7 @@ import dagger.android.ContributesAndroidInjector
 @Module
 abstract class ActivityBindings {
 
-	@ContributesAndroidInjector(modules = [FeedBindings::class])
+	@ContributesAndroidInjector(modules = [FeedModule::class])
 	abstract fun bindFeedActivity(): FeedActivity
 
 	@ContributesAndroidInjector(modules = [PluginAuthorizationBindings::class])

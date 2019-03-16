@@ -16,7 +16,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_feed.*
 import javax.inject.Inject
 
-class FeedActivity : AppCompatActivity(), FeedRouter {
+class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 
 	@Inject
 	lateinit var viewModel: FeedViewModel
@@ -33,6 +33,10 @@ class FeedActivity : AppCompatActivity(), FeedRouter {
 		binding.viewModel = viewModel
 		swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
 		setupRecyclerView()
+	}
+
+	override fun scrollToTop() {
+		layoutManager.scrollToPosition(0)
 	}
 
 	override fun navigateToPluginAuthorization(pluginDescriptor: OneFeedPluginDescriptor) {

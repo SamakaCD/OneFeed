@@ -27,6 +27,6 @@ class AppInitUseCase(
 		loggingInteractor.debug(this@AppInitUseCase, "Performing app init")
 		pluginDescriptorInteractor.loadPluginDescriptors()
 		pluginInteractor.restoreAuthorizations()
-		//feedItemsInteractor.refresh()
+		feedItemsInteractor.refresh()
 	}
 }
