@@ -7,6 +7,5 @@ public interface OAuthAuthorizationHandler extends AuthorizationHandler {
 	@NonNull
 	OAuthParams onRequestOAuthParams();
 
-	@NonNull
 	String processOAuthResponse(@NonNull String response);
 }
