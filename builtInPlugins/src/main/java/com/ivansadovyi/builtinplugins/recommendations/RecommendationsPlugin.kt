@@ -3,6 +3,7 @@ package com.ivansadovyi.builtinplugins.recommendations
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import com.ivansadovyi.builtinplugins.R
+import com.ivansadovyi.onefeed.plugin.feedly.FeedlyPlugin
 import com.ivansadovyi.onefeed.plugin.twitter.TwitterPlugin
 import com.ivansadovyi.sdk.FeedItem
 import com.ivansadovyi.sdk.OneFeedPlugin
@@ -48,6 +49,7 @@ class RecommendationsPlugin : OneFeedPlugin(), OneFeedPlugin.OnSubItemClickListe
 	override fun onSubItemClick(subItem: SubItem, feedItem: FeedItem) {
 		when (subItem.id) {
 			TWITTER_ID -> host.pluginManager.startAuthorization(TwitterPlugin.DESCRIPTOR)
+			FEEDLY_ID -> host.pluginManager.startAuthorization(FeedlyPlugin.DESCRIPTOR)
 		}
 	}
 
@@ -55,12 +57,13 @@ class RecommendationsPlugin : OneFeedPlugin(), OneFeedPlugin.OnSubItemClickListe
 
 		const val ITEM_ID = "com.ivansadovyi.builtinplugins.recommendations.RecommendationsItem"
 		const val TWITTER_ID = "com.ivansadovyi.builtinplugins.recommendations.RecommendationsItem.Twitter"
+		const val FEEDLY_ID = "com.ivansadovyi.builtinplugins.recommendations.RecommendationsItem.Feedly"
 
 		val DESCRIPTOR = OneFeedPluginDescriptor.Builder()
 				.setName("Plugin recommendations")
 				.setClassName(RecommendationsPlugin::class.java.name)
 				.build()
 
-		private val PLUGINS_FOR_RECOMMENDATION = listOf(TwitterPlugin.DESCRIPTOR)
+		private val PLUGINS_FOR_RECOMMENDATION = listOf(TwitterPlugin.DESCRIPTOR, FeedlyPlugin.DESCRIPTOR)
 	}
 }

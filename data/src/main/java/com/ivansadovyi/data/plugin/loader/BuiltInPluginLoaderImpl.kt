@@ -2,6 +2,7 @@ package com.ivansadovyi.data.plugin.loader
 
 import com.ivansadovyi.builtinplugins.recommendations.RecommendationsPlugin
 import com.ivansadovyi.domain.plugin.BuiltInPluginLoader
+import com.ivansadovyi.onefeed.plugin.feedly.FeedlyPlugin
 import com.ivansadovyi.onefeed.plugin.twitter.TwitterPlugin
 import com.ivansadovyi.sdk.OneFeedPlugin
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
@@ -35,6 +36,7 @@ class BuiltInPluginLoaderImpl @Inject constructor() : BuiltInPluginLoader {
 	override suspend fun instantiate(pluginDescriptor: OneFeedPluginDescriptor): OneFeedPlugin {
 		return when (pluginDescriptor) {
 			TwitterPlugin.DESCRIPTOR -> TwitterPlugin()
+			FeedlyPlugin.DESCRIPTOR -> FeedlyPlugin()
 			RecommendationsPlugin.DESCRIPTOR -> RecommendationsPlugin()
 			else -> throw IllegalArgumentException("Can not instantiate plugin with descriptor [$pluginDescriptor]")
 		}
@@ -42,7 +44,7 @@ class BuiltInPluginLoaderImpl @Inject constructor() : BuiltInPluginLoader {
 
 	companion object {
 		private val DEFAULT_DESCRIPTORS = listOf(RecommendationsPlugin.DESCRIPTOR)
-		private val AUTHORIZING_DESCRIPTORS = listOf(TwitterPlugin.DESCRIPTOR)
+		private val AUTHORIZING_DESCRIPTORS = listOf(TwitterPlugin.DESCRIPTOR, FeedlyPlugin.DESCRIPTOR)
 		private val ALL_DESCRIPTORS = DEFAULT_DESCRIPTORS + AUTHORIZING_DESCRIPTORS
 	}
 }
