@@ -3,6 +3,7 @@ package com.ivansadovyi.onefeed.plugin.feedly;
 import android.graphics.Bitmap;
 
 import com.ivansadovyi.onefeed.plugin.feedly.api.ApiService;
+import com.ivansadovyi.onefeed.plugin.feedly.api.responses.StreamContentsResponse;
 import com.ivansadovyi.onefeed.plugin.feedly.di.DaggerFeedlyComponent;
 import com.ivansadovyi.onefeed.plugin.feedly.di.FeedlyModule;
 import com.ivansadovyi.onefeed.plugin.feedly.utils.MappingIterable;
@@ -11,8 +12,6 @@ import com.ivansadovyi.sdk.OneFeedPlugin;
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor;
 import com.ivansadovyi.sdk.OneFeedPluginParams;
 import com.ivansadovyi.sdk.auth.AuthorizationHandler;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -41,6 +40,8 @@ public class FeedlyPlugin extends OneFeedPlugin {
 	@Inject
 	OneFeedItemFactory feedItemFactory;
 
+	private String continuation;
+
 	@Override
 	public void onInit(@NonNull OneFeedPluginParams params) {
 		super.onInit(params);
@@ -68,11 +69,19 @@ public class FeedlyPlugin extends OneFeedPlugin {
 
 	@Override
 	public Iterable<FeedItem> loadNextItems() throws Throwable {
-		List<FeedlyItem> streamContents = apiService.getStreamContents(
+		StreamContentsResponse streamContents = apiService.getStreamContents(
 				authTokenRepository.getAuthToken(),
-				collectionRepository.getDefaultCollection().getId()
-		).execute().body().getItems();
-		return new MappingIterable<>(streamContents, feedItemFactory::create);
+				collectionRepository.getDefaultCollection().getId(),
+				continuation
+		).execute().body();
+		this.continuation = streamContents.getContinuation();
+		return new MappingIterable<>(streamContents.getItems(), feedItemFactory::create);
+	}
+
+	@Override
+	public void reset() {
+		super.reset();
+		this.continuation = null;
 	}
 
 	private void injectDependencies() {

@@ -6,7 +6,12 @@ import java.util.List;
 
 public class StreamContentsResponse {
 
+	private String continuation;
 	private List<FeedlyItem> items;
+
+	public String getContinuation() {
+		return continuation;
+	}
 
 	public List<FeedlyItem> getItems() {
 		return items;

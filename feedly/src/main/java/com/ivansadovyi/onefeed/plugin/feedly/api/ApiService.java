@@ -29,6 +29,7 @@ public interface ApiService {
 	@GET("/v3/streams/contents")
 	Call<StreamContentsResponse> getStreamContents(
 			@Header("Authorization") String authToken,
-			@Query("streamId") String streamId
+			@Query("streamId") String streamId,
+			@Query("continuation") String continuation
 	);
 }

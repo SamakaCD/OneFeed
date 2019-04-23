@@ -20,12 +20,17 @@ public class OneFeedItemFactory {
 	}
 
 	public FeedItem create(FeedlyItem item) {
+		String content = null;
+		if (item.getContent() != null) {
+			content = item.getContent().getContent();
+		}
+
 		return new FeedItem.Builder()
 				.setId(item.getId())
 				.setPublicationDate(new Date(item.getPublished()))
 				.setAvatarImageUrl(findAvatarUrl(item))
 				.setTitle(item.getOrigin().getTitle())
-				.setContent(item.getContent().getContent())
+				.setContent(content)
 				.build();
 	}
 
@@ -35,12 +40,9 @@ public class OneFeedItemFactory {
 			for (Feed feed : collectionRepository.getDefaultCollection().getFeeds()) {
 				FeedlyItem.Origin origin = item.getOrigin();
 				if (origin.getStreamId().equals(feed.getId())) {
-					System.out.println("found avatar url " + origin.getTitle() + " " + feed.getVisualUrl());
 					return feed.getVisualUrl();
 				}
 			}
-			System.out.println("didnt found feed");
-
 		} catch (Throwable throwable) {
 			throwable.printStackTrace();
 		}
