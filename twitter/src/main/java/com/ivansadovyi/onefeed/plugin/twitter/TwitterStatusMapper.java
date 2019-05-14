@@ -21,6 +21,7 @@ public class TwitterStatusMapper {
 				.setPublicationDate(status.getCreatedAt())
 				.setAvatarImageUrl(status.getUser().getBiggerProfileImageURLHttps())
 				.setImages(getFeedImagesOfStatus(status))
+				.setLikeable(true)
 				.build();
 	}
 

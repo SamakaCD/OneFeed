@@ -16,13 +16,16 @@ object RoomFeedItemMapper {
 				.setAvatarImageUrl(item.avatarImageUrl)
 				.setImages(images.map(RoomFeedImageMapper::fromRoom))
 				.setSubItems(subItems.map(RoomSubItemMapper::fromRoom))
+				.setLikeable(item.isLikeable)
+				.setLiked(item.isLiked)
 				.build()
 				.toBundledItem(pluginClassName = item.pluginClassName)
 	}
 
 	fun toRoom(input: BundledFeedItem): RoomFeedItem {
 		return with(input) {
-			RoomFeedItem(id, title, content, publicationDate, isDateVisible, avatarImageUrl, pluginClassName)
+			RoomFeedItem(id, title, content, publicationDate, isDateVisible, avatarImageUrl,
+					pluginClassName, isLikeable, isLiked)
 		}
 	}
 }

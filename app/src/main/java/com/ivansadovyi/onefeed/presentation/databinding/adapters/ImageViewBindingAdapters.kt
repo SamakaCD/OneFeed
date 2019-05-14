@@ -1,5 +1,6 @@
 package com.ivansadovyi.onefeed.presentation.databinding.adapters
 
+import android.graphics.PorterDuff
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -14,5 +15,11 @@ object ImageViewBindingAdapters {
 				.load(srcUrl)
 				.apply(RequestOptions.circleCropTransform())
 				.into(imageView)
+	}
+
+	@JvmStatic
+	@BindingAdapter("tintColor")
+	fun setTintColor(imageView: ImageView, color: Int) {
+		imageView.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 	}
 }

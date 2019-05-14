@@ -1,10 +1,10 @@
 package com.ivansadovyi.sdk;
 
+import androidx.annotation.Nullable;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
-import androidx.annotation.Nullable;
 
 public class FeedItem {
 
@@ -20,6 +20,8 @@ public class FeedItem {
 	private String avatarImageUrl;
 	private List<FeedImage> images;
 	private List<SubItem> subItems;
+	private boolean isLikeable;
+	private boolean isLiked;
 
 	private FeedItem() {
 
@@ -34,6 +36,22 @@ public class FeedItem {
 		this.avatarImageUrl = source.avatarImageUrl;
 		this.images = source.images;
 		this.subItems = source.subItems;
+		this.isLikeable = source.isLikeable;
+		this.isLiked = source.isLiked;
+	}
+
+	public Builder getBuilder() {
+		return new Builder()
+				.setId(getId())
+				.setTitle(getTitle())
+				.setContent(getContent())
+				.setPublicationDate(getPublicationDate())
+				.setDateVisible(isDateVisible())
+				.setAvatarImageUrl(getAvatarImageUrl())
+				.setImages(getImages())
+				.setSubItems(getSubItems())
+				.setLikeable(isLikeable())
+				.setLiked(isLiked());
 	}
 
 	public String getId() {
@@ -71,6 +89,14 @@ public class FeedItem {
 		return subItems;
 	}
 
+	public boolean isLikeable() {
+		return isLikeable;
+	}
+
+	public boolean isLiked() {
+		return isLiked;
+	}
+
 	public static class Builder {
 
 		private String id;
@@ -81,6 +107,8 @@ public class FeedItem {
 		private String avatarImageUrl;
 		private List<FeedImage> images = Collections.emptyList();
 		private List<SubItem> subItems = Collections.emptyList();
+		private boolean isLikeable;
+		private boolean isLiked;
 
 		public Builder setId(String id) {
 			this.id = id;
@@ -122,6 +150,16 @@ public class FeedItem {
 			return this;
 		}
 
+		public Builder setLikeable(boolean likeable) {
+			isLikeable = likeable;
+			return this;
+		}
+
+		public Builder setLiked(boolean liked) {
+			isLiked = liked;
+			return this;
+		}
+
 		public FeedItem build() {
 			FeedItem feedItem = new FeedItem();
 			feedItem.id = id;
@@ -132,6 +170,8 @@ public class FeedItem {
 			feedItem.avatarImageUrl = avatarImageUrl;
 			feedItem.images = images;
 			feedItem.subItems = subItems;
+			feedItem.isLikeable = isLikeable;
+			feedItem.isLiked = isLiked;
 			return feedItem;
 		}
 	}

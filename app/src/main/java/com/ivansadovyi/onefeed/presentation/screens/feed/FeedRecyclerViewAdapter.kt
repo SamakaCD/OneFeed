@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.ivansadovyi.domain.plugin.PluginIconCache
 import com.ivansadovyi.onefeed.presentation.screens.feed.adapterdelegates.FeedItemAdapterDelegate
+import com.ivansadovyi.onefeed.presentation.screens.feed.adapterdelegates.OnLikeClickListener
 import com.ivansadovyi.onefeed.presentation.screens.feed.adapterdelegates.OnSubItemClickListener
 import com.ivansadovyi.onefeed.presentation.screens.feed.adapterdelegates.PaginationLoadingAdaterDelegate
 import com.ivansadovyi.onefeed.presentation.utils.recyclerview.BindableRecyclerViewAdapter
@@ -25,6 +26,10 @@ class FeedRecyclerViewAdapter @Inject constructor(
 		feedItemAdapterDelegate.setOnSubItemClickListener(listener)
 	}
 
+	fun setOnLikeClickListener(listener: OnLikeClickListener) {
+		feedItemAdapterDelegate.setOnLikeClickListener(listener)
+	}
+
 	companion object {
 
 		val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Any>() {
@@ -37,6 +42,10 @@ class FeedRecyclerViewAdapter @Inject constructor(
 			}
 
 			override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
+				if (oldItem is FeedItem && newItem is FeedItem) {
+					return oldItem.isLiked == newItem.isLiked
+				}
+
 				return true
 			}
 		}

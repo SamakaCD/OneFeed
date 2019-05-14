@@ -27,6 +27,9 @@ abstract class RoomFeedItemDao {
 		itemWithAttachments.subItems.forEach(::insertSubItem)
 	}
 
+	@Update
+	abstract fun update(item: RoomFeedItem)
+
 	@Insert(onConflict = OnConflictStrategy.REPLACE)
 	abstract fun insert(item: RoomFeedItem)
 

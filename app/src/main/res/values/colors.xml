@@ -3,6 +3,11 @@
 	<color name="colorPrimary">#EABF48</color>
 	<color name="colorPrimaryDark">#D3AC41</color>
 	<color name="colorAccent">#FF3D00</color>
+
+	<color name="colorContentSecondary">#80000000</color>
+	<color name="colorContentTertiary">#55000000</color>
+	<color name="colorDivider">#10000000</color>
+
 	<color name="colorPrimaryNonBranded">#FAFAFA</color>
 	<color name="colorPrimaryDarkNonBranded">#C7C7C7</color>
 	<color name="colorBackground">#FFFFFF</color>

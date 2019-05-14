@@ -1,6 +1,7 @@
 package com.ivansadovyi.onefeed.presentation.screens.feed.adapterdelegates
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -14,15 +15,21 @@ import com.ivansadovyi.onefeed.presentation.screens.feed.adapterdelegates.FeedIt
 import com.ivansadovyi.sdk.SubItem
 
 typealias OnSubItemClickListener = (SubItem, BundledFeedItem) -> Unit
+typealias OnLikeClickListener = (BundledFeedItem) -> Unit
 
 class FeedItemAdapterDelegate(
 		private val pluginIconCache: PluginIconCache
 ) : AbsListItemAdapterDelegate<BundledFeedItem, Any, ViewHolder>() {
 
 	private var onSubItemClickListener: OnSubItemClickListener? = null
+	private var onLikeClickListener: OnLikeClickListener? = null
 
 	fun setOnSubItemClickListener(listener: OnSubItemClickListener) {
 		onSubItemClickListener = listener
+	}
+
+	fun setOnLikeClickListener(listener: OnLikeClickListener) {
+		onLikeClickListener = listener
 	}
 
 	override fun isForViewType(item: Any, items: MutableList<Any>, position: Int): Boolean {
@@ -38,7 +45,9 @@ class FeedItemAdapterDelegate(
 	override fun onBindViewHolder(item: BundledFeedItem, holder: ViewHolder, payloads: MutableList<Any>) {
 		holder.binding.item = item
 		holder.binding.isDateVisible = item.isDateVisible && item.publicationDate != null
-		holder.binding.setPluginIcon(pluginIconCache.get(item.pluginClassName))
+		holder.binding.pluginIcon = pluginIconCache.get(item.pluginClassName)
+		holder.binding.like.tag = item
+		holder.binding.like.setOnClickListener(onLikeViewClickListener)
 
 		if (item.images.isNotEmpty()) {
 			val image = item.images.first()
@@ -73,6 +82,11 @@ class FeedItemAdapterDelegate(
 			val context = holder.itemView.context
 			Glide.with(context).clear(holder.binding.image)
 		}
+	}
+
+	private val onLikeViewClickListener = View.OnClickListener { view ->
+		val item = view.tag as BundledFeedItem
+		onLikeClickListener?.invoke(item)
 	}
 
 	class ViewHolder(val binding: ItemFeedSimpleBinding) : RecyclerView.ViewHolder(binding.root)
