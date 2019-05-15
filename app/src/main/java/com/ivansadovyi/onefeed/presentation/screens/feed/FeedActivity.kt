@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ivansadovyi.onefeed.R
 import com.ivansadovyi.onefeed.databinding.ActivityFeedBinding
+import com.ivansadovyi.onefeed.presentation.screens.feedItemDetails.FeedItemDetailsActivity
 import com.ivansadovyi.onefeed.presentation.screens.pluginAuthorizaton.PluginAuthorizationActivity
 import com.ivansadovyi.onefeed.presentation.utils.recyclerview.PaginationListener
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
@@ -45,6 +46,11 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 		startActivity(intent)
 	}
 
+	override fun navigateToFeedItemDetails(itemId: String) {
+		val intent = Intent(this, FeedItemDetailsActivity::class.java)
+		startActivity(intent)
+	}
+
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
 		menuInflater.inflate(R.menu.feed, menu)
 		return true
@@ -71,6 +77,7 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 	private fun setupRecyclerView() {
 		layoutManager = LinearLayoutManager(this)
 		layoutManager.isItemPrefetchEnabled = true
+		adapter.setOnItemClickListener(viewModel::onItemClick)
 		adapter.setOnSubItemClickListener(viewModel::onSubItemClick)
 		adapter.setOnLikeClickListener(viewModel::onLikeClick)
 		recyclerView.layoutManager = layoutManager

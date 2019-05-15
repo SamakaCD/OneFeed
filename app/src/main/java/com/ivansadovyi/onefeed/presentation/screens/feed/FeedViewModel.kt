@@ -66,6 +66,10 @@ class FeedViewModel @Inject constructor(
 		}
 	}
 
+	fun onItemClick(feedItem: BundledFeedItem) {
+		feedRouter.navigateToFeedItemDetails(feedItem.id)
+	}
+
 	fun onSubItemClick(subItem: SubItem, feedItem: BundledFeedItem) {
 		coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
 			pluginInteractor.get().handleSubItemClick(subItem, feedItem)

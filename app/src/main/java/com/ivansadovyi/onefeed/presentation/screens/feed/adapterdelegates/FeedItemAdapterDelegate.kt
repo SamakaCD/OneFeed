@@ -16,6 +16,7 @@ import com.ivansadovyi.sdk.SubItem
 
 typealias OnSubItemClickListener = (SubItem, BundledFeedItem) -> Unit
 typealias OnLikeClickListener = (BundledFeedItem) -> Unit
+typealias OnItemClickListener = (BundledFeedItem) -> Unit
 
 class FeedItemAdapterDelegate(
 		private val pluginIconCache: PluginIconCache
@@ -23,6 +24,7 @@ class FeedItemAdapterDelegate(
 
 	private var onSubItemClickListener: OnSubItemClickListener? = null
 	private var onLikeClickListener: OnLikeClickListener? = null
+	private var onItemClickListener: OnItemClickListener? = null
 
 	fun setOnSubItemClickListener(listener: OnSubItemClickListener) {
 		onSubItemClickListener = listener
@@ -30,6 +32,10 @@ class FeedItemAdapterDelegate(
 
 	fun setOnLikeClickListener(listener: OnLikeClickListener) {
 		onLikeClickListener = listener
+	}
+
+	fun setOnItemClickListener(listener: OnItemClickListener) {
+		onItemClickListener = listener
 	}
 
 	override fun isForViewType(item: Any, items: MutableList<Any>, position: Int): Boolean {
@@ -48,6 +54,8 @@ class FeedItemAdapterDelegate(
 		holder.binding.pluginIcon = pluginIconCache.get(item.pluginClassName)
 		holder.binding.like.tag = item
 		holder.binding.like.setOnClickListener(onLikeViewClickListener)
+		holder.binding.itemContent.tag = item
+		holder.binding.itemContent.setOnClickListener(onItemViewClickListener)
 
 		if (item.images.isNotEmpty()) {
 			val image = item.images.first()
@@ -87,6 +95,11 @@ class FeedItemAdapterDelegate(
 	private val onLikeViewClickListener = View.OnClickListener { view ->
 		val item = view.tag as BundledFeedItem
 		onLikeClickListener?.invoke(item)
+	}
+
+	private val onItemViewClickListener = View.OnClickListener { view ->
+		val item = view.tag as BundledFeedItem
+		onItemClickListener?.invoke(item)
 	}
 
 	class ViewHolder(val binding: ItemFeedSimpleBinding) : RecyclerView.ViewHolder(binding.root)
