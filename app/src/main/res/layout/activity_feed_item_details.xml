@@ -1,6 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="match_parent"
-	android:layout_height="match_parent">
+<layout xmlns:tools="http://schemas.android.com/tools">
 
-</LinearLayout>
+	<data>
+		<variable
+			name="viewModel"
+			type="com.ivansadovyi.onefeed.presentation.screens.feedItemDetails.FeedItemDetailsViewModel" />
+	</data>
+
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_margin="16dp"
+			android:gravity="center_vertical"
+			android:orientation="horizontal">
+
+			<ImageView
+				android:layout_width="40dp"
+				android:layout_height="40dp"
+				android:layout_marginEnd="16dp"
+				android:layout_marginRight="16dp"
+				app:srcUrl="@{viewModel.feedItem.avatarImageUrl}"
+				app:visible="@{viewModel.feedItem.avatarImageUrl != null}"
+				tools:background="#1000" />
+
+			<LinearLayout
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:orientation="vertical">
+
+				<LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:gravity="center_vertical"
+					android:orientation="horizontal">
+
+					<TextView
+						android:id="@+id/title"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:hyphenationFrequency="none"
+						android:text="@{viewModel.feedItem.title}"
+						android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+						tools:text="Title" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="8dp"
+						android:layout_marginLeft="8dp"
+						android:layout_marginEnd="8dp"
+						android:layout_marginRight="8dp"
+						android:text="@string/bullet"
+						android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+						app:visible="@{!viewModel.isDateVisible}" />
+
+					<androidx.appcompat.widget.AppCompatImageView
+						android:layout_width="16dp"
+						android:layout_height="16dp"
+						app:imageBitmap="@{viewModel.pluginIcon}"
+						app:tint="?android:textColorPrimary"
+						app:tintMode="src_in"
+						app:visible="@{!viewModel.isDateVisible}"
+						tools:background="#1000" />
+				</LinearLayout>
+
+				<LinearLayout
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:gravity="center_vertical"
+					android:orientation="horizontal"
+					app:visible="@{viewModel.isDateVisible}">
+
+					<TextView
+						android:id="@+id/date"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:fontFamily="sans-serif-medium"
+						android:hyphenationFrequency="none"
+						android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+						android:textColor="?android:textColorSecondary"
+						app:date="@{viewModel.feedItem.publicationDate}"
+						tools:text="48 minutes ago" />
+
+					<TextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:layout_marginStart="8dp"
+						android:layout_marginLeft="8dp"
+						android:layout_marginEnd="8dp"
+						android:layout_marginRight="8dp"
+						android:text="@string/bullet"
+						android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+						android:textColor="?android:textColorSecondary" />
+
+					<androidx.appcompat.widget.AppCompatImageView
+						android:layout_width="16dp"
+						android:layout_height="16dp"
+						app:imageBitmap="@{viewModel.pluginIcon}"
+						app:tint="@color/colorFeedPluginIcon"
+						app:tintMode="src_in"
+						tools:background="#1000" />
+				</LinearLayout>
+			</LinearLayout>
+		</LinearLayout>
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="16dp"
+			android:layout_marginLeft="16dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginRight="16dp"
+			android:layout_marginBottom="16dp"
+			android:autoLink="web"
+			android:clickable="false"
+			android:focusable="false"
+			android:hyphenationFrequency="none"
+			android:linksClickable="false"
+			android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+			app:asyncText="@{viewModel.feedItem.content ?? ``}"
+			app:visible="@{viewModel.feedItem.content != null}"
+			tools:text="Lorem ipsum dolor sit amet, duo mutat nemore ex, his lucilius intellegat et, vis homero quodsi expetenda at. Ne est tritani inermis platonem. Usu commune scriptorem intellegebat an. Vivendo inciderint duo ea. Eu sensibus eloquentiam pro." />
+
+		<ImageView
+			android:id="@+id/image"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="16dp"
+			android:adjustViewBounds="true"
+			android:contentDescription="@{viewModel.feedItem.content ?? viewModel.feedItem.title}"
+			app:visible="@{viewModel.feedItem.images.size() > 0}"
+			tools:background="#1000"
+			tools:layout_height="64dp"
+			tools:visibility="visible" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/subItemsRecyclerView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="-8dp"
+			android:layout_marginBottom="8dp"
+			app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+			app:visible="@{viewModel.feedItem.subItems.size() > 0}"
+			tools:layout_height="96dp"
+			tools:listitem="@layout/item_feed_sub_item" />
+
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:background="@color/colorDivider"
+			app:visible="@{viewModel.feedItem.likeable}" />
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="@android:color/transparent"
+			android:gravity="end|right"
+			android:orientation="horizontal">
+
+			<LinearLayout
+				android:id="@+id/like"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="?selectableItemBackgroundBorderless"
+				android:clickable="true"
+				android:focusable="true"
+				android:gravity="center_vertical"
+				android:paddingStart="16dp"
+				android:paddingLeft="16dp"
+				android:paddingTop="12dp"
+				android:paddingEnd="16dp"
+				android:paddingRight="16dp"
+				android:paddingBottom="12dp"
+				app:visible="@{viewModel.feedItem.likeable}">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="8dp"
+					android:layout_marginRight="8dp"
+					android:text="@{`` + viewModel.feedItem.likesCount}"
+					android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+					android:textColor="@{viewModel.feedItem.liked ? @color/colorAccent : @color/colorContentTertiary}"
+					app:visible="@{viewModel.feedItem.likesCount > 0}"
+					tools:text="123" />
+
+				<androidx.appcompat.widget.AppCompatImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/ic_like"
+					app:tintColor="@{viewModel.feedItem.liked ? @color/colorAccent : @color/colorContentTertiary}" />
+			</LinearLayout>
+		</LinearLayout>
+	</LinearLayout>
+</layout>

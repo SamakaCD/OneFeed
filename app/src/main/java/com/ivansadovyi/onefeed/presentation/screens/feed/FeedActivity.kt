@@ -48,6 +48,7 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 
 	override fun navigateToFeedItemDetails(itemId: String) {
 		val intent = Intent(this, FeedItemDetailsActivity::class.java)
+		intent.putExtras(FeedItemDetailsActivity.createExtras(itemId))
 		startActivity(intent)
 	}
 

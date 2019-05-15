@@ -18,6 +18,10 @@ class FeedItemsStore @Inject constructor(
 		observeDao()
 	}
 
+	fun getItem(itemId: String): BundledFeedItem? {
+		return items.find { it.id == itemId }
+	}
+
 	fun finishLoading() {
 		loading = false
 		notifyChange(LoadingFinishedAction)
