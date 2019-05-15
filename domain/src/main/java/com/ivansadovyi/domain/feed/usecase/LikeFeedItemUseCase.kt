@@ -11,11 +11,19 @@ class LikeFeedItemUseCase(
 ) : UseCase<Unit> {
 
 	override suspend fun execute() {
-		println("is liked = ${item.isLiked}")
 		item.builder
 				.setLiked(!item.isLiked)
+				.setLikesCount(getNewLikesCount())
 				.build()
 				.toBundledItem(item.pluginClassName)
-				.let { feedItemRepository.update(it); println("setting new state ${it.isLiked}") }
+				.let { feedItemRepository.update(it) }
+	}
+
+	private fun getNewLikesCount(): Int {
+		return if (item.isLiked) {
+			item.likesCount - 1
+		} else {
+			item.likesCount + 1
+		}
 	}
 }

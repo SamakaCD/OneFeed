@@ -16,7 +16,8 @@ class RoomFeedItem(
 		var avatarImageUrl: String?,
 		var pluginClassName: String,
 		var isLikeable: Boolean,
-		var isLiked: Boolean
+		var isLiked: Boolean,
+		var likesCount: Int
 ) {
 
 	companion object {

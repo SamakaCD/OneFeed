@@ -22,6 +22,7 @@ public class FeedItem {
 	private List<SubItem> subItems;
 	private boolean isLikeable;
 	private boolean isLiked;
+	private int likesCount;
 
 	private FeedItem() {
 
@@ -38,6 +39,7 @@ public class FeedItem {
 		this.subItems = source.subItems;
 		this.isLikeable = source.isLikeable;
 		this.isLiked = source.isLiked;
+		this.likesCount = source.likesCount;
 	}
 
 	public Builder getBuilder() {
@@ -51,7 +53,8 @@ public class FeedItem {
 				.setImages(getImages())
 				.setSubItems(getSubItems())
 				.setLikeable(isLikeable())
-				.setLiked(isLiked());
+				.setLiked(isLiked())
+				.setLikesCount(getLikesCount());
 	}
 
 	public String getId() {
@@ -97,6 +100,10 @@ public class FeedItem {
 		return isLiked;
 	}
 
+	public int getLikesCount() {
+		return likesCount;
+	}
+
 	public static class Builder {
 
 		private String id;
@@ -109,6 +116,7 @@ public class FeedItem {
 		private List<SubItem> subItems = Collections.emptyList();
 		private boolean isLikeable;
 		private boolean isLiked;
+		private int likesCount;
 
 		public Builder setId(String id) {
 			this.id = id;
@@ -160,6 +168,11 @@ public class FeedItem {
 			return this;
 		}
 
+		public Builder setLikesCount(int likesCount) {
+			this.likesCount = likesCount;
+			return this;
+		}
+
 		public FeedItem build() {
 			FeedItem feedItem = new FeedItem();
 			feedItem.id = id;
@@ -172,6 +185,7 @@ public class FeedItem {
 			feedItem.subItems = subItems;
 			feedItem.isLikeable = isLikeable;
 			feedItem.isLiked = isLiked;
+			feedItem.likesCount = likesCount;
 			return feedItem;
 		}
 	}
