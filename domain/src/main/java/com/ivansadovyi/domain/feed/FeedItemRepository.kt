@@ -10,5 +10,7 @@ interface FeedItemRepository {
 
 	suspend fun putFeedItems(items: List<BundledFeedItem>)
 
+	suspend fun update(item: BundledFeedItem)
+
 	fun observeFeedItems(invalidationConsumer: Consumer<List<BundledFeedItem>>)
 }

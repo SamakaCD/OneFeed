@@ -1,6 +1,7 @@
 package com.ivansadovyi.domain.feed
 
 import com.ivansadovyi.domain.feed.usecase.ClearFeedUseCase
+import com.ivansadovyi.domain.feed.usecase.LikeFeedItemUseCase
 import com.ivansadovyi.domain.feed.usecase.LoadMoreFeedUseCase
 import com.ivansadovyi.domain.feed.usecase.RefreshFeedUseCase
 import com.ivansadovyi.domain.log.LoggingInteractor
@@ -43,6 +44,13 @@ class FeedItemsInteractor @Inject constructor(
 				pluginStore = pluginStore.get(),
 				pluginInteractor = pluginInteractor.get(),
 				loggingInteractor = loggingInteractor.get(),
+				feedItemRepository = feedItemRepository.get()
+		).execute()
+	}
+
+	suspend fun likeItem(item: BundledFeedItem) {
+		LikeFeedItemUseCase(
+				item = item,
 				feedItemRepository = feedItemRepository.get()
 		).execute()
 	}

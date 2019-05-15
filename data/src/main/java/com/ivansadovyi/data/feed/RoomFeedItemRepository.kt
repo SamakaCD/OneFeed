@@ -25,6 +25,10 @@ class RoomFeedItemRepository(
 		feedItemDao.insert(items.map(::FeedItemWithAttachments))
 	}
 
+	override suspend fun update(item: BundledFeedItem) = withContext(Dispatchers.IO) {
+		feedItemDao.update(RoomFeedItemMapper.toRoom(item))
+	}
+
 	override fun observeFeedItems(invalidationConsumer: Consumer<List<BundledFeedItem>>) {
 		// Trigger observer with current feed contents
 		val currentItems = feedItemDao.getAll().map { RoomFeedItemMapper.fromRoom(it.item, it.images, it.subItems) }

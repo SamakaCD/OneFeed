@@ -72,6 +72,7 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 		layoutManager = LinearLayoutManager(this)
 		layoutManager.isItemPrefetchEnabled = true
 		adapter.setOnSubItemClickListener(viewModel::onSubItemClick)
+		adapter.setOnLikeClickListener(viewModel::onLikeClick)
 		recyclerView.layoutManager = layoutManager
 		recyclerView.adapter = adapter
 		recyclerView.itemAnimator = null

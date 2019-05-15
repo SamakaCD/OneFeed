@@ -14,7 +14,10 @@ class RoomFeedItem(
 		var publicationDate: Date?,
 		var isDateVisible: Boolean,
 		var avatarImageUrl: String?,
-		var pluginClassName: String
+		var pluginClassName: String,
+		var isLikeable: Boolean,
+		var isLiked: Boolean,
+		var likesCount: Int
 ) {
 
 	companion object {

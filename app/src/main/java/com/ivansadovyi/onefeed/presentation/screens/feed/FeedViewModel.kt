@@ -72,6 +72,12 @@ class FeedViewModel @Inject constructor(
 		}
 	}
 
+	fun onLikeClick(feedItem: BundledFeedItem) {
+		coroutineScope.launch(exceptionHandler.coroutineExceptionHandler) {
+			feedItemsInteractor.get().likeItem(feedItem)
+		}
+	}
+
 	fun authorizeTwitter() {
 		val twitterPluginDescriptor = pluginDescriptorStore.pluginDescriptors.find { it.name.contains("Twitter") }
 		if (twitterPluginDescriptor != null) {
