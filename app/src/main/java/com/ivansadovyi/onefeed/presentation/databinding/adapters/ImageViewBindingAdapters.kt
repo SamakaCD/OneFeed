@@ -9,11 +9,15 @@ import com.bumptech.glide.request.RequestOptions
 object ImageViewBindingAdapters {
 
 	@JvmStatic
-	@BindingAdapter("srcUrl")
-	fun setSrcUrl(imageView: ImageView, srcUrl: String?) {
+	@BindingAdapter(value = ["srcUrl", "applyRounding"], requireAll = false)
+	fun setSrcUrl(imageView: ImageView, srcUrl: String?, applyRounding: Boolean?) {
 		Glide.with(imageView)
 				.load(srcUrl)
-				.apply(RequestOptions.circleCropTransform())
+				.apply {
+					if (applyRounding == true) {
+						apply(RequestOptions.circleCropTransform())
+					}
+				}
 				.into(imageView)
 	}
 

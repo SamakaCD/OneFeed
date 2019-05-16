@@ -2,6 +2,7 @@
 <layout xmlns:tools="http://schemas.android.com/tools">
 
 	<data>
+
 		<variable
 			name="viewModel"
 			type="com.ivansadovyi.onefeed.presentation.screens.feedItemDetails.FeedItemDetailsViewModel" />
@@ -25,6 +26,7 @@
 				android:layout_height="40dp"
 				android:layout_marginEnd="16dp"
 				android:layout_marginRight="16dp"
+				app:applyRounding="@{true}"
 				app:srcUrl="@{viewModel.feedItem.avatarImageUrl}"
 				app:visible="@{viewModel.feedItem.avatarImageUrl != null}"
 				tools:background="#1000" />
@@ -136,6 +138,7 @@
 			android:layout_marginBottom="16dp"
 			android:adjustViewBounds="true"
 			android:contentDescription="@{viewModel.feedItem.content ?? viewModel.feedItem.title}"
+			app:srcUrl="@{viewModel.feedItem.images[0].url}"
 			app:visible="@{viewModel.feedItem.images.size() > 0}"
 			tools:background="#1000"
 			tools:layout_height="64dp"
