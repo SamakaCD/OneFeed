@@ -16,8 +16,10 @@ class FeedItemDetailsActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		AndroidInjection.inject(this)
+
 		val binding = DataBindingUtil.setContentView<ActivityFeedItemDetailsBinding>(this, R.layout.activity_feed_item_details)
 		binding.viewModel = viewModel
+		supportActionBar?.setDisplayShowTitleEnabled(false)
 
 		val feedItemId = intent.getStringExtra(FEED_ITEM_ID)
 		viewModel.onInit(feedItemId)
