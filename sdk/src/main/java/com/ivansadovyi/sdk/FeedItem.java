@@ -8,6 +8,10 @@ import java.util.List;
 
 public class FeedItem {
 
+	public enum LikingMode {
+		NONE, ACTION, DOUBLE_TAP_IMAGE, DOUBLE_TAP
+	}
+
 	private String id;
 	private String title;
 	private String content;
@@ -21,7 +25,7 @@ public class FeedItem {
 	private List<FeedImage> images;
 	private List<SubItem> subItems;
 	private boolean hasDetails;
-	private boolean isLikeable;
+	private LikingMode likingMode;
 	private boolean isLiked;
 	private int likesCount;
 
@@ -39,7 +43,7 @@ public class FeedItem {
 		this.images = source.images;
 		this.subItems = source.subItems;
 		this.hasDetails = source.hasDetails;
-		this.isLikeable = source.isLikeable;
+		this.likingMode = source.likingMode;
 		this.isLiked = source.isLiked;
 		this.likesCount = source.likesCount;
 	}
@@ -55,7 +59,7 @@ public class FeedItem {
 				.setImages(getImages())
 				.setSubItems(getSubItems())
 				.setHasDetails(isHasDetails())
-				.setLikeable(isLikeable())
+				.setLikingMode(getLikingMode())
 				.setLiked(isLiked())
 				.setLikesCount(getLikesCount());
 	}
@@ -95,8 +99,12 @@ public class FeedItem {
 		return subItems;
 	}
 
+	public LikingMode getLikingMode() {
+		return likingMode;
+	}
+
 	public boolean isLikeable() {
-		return isLikeable;
+		return getLikingMode() != LikingMode.NONE;
 	}
 
 	public boolean isLiked() {
@@ -122,7 +130,7 @@ public class FeedItem {
 		private List<FeedImage> images = Collections.emptyList();
 		private List<SubItem> subItems = Collections.emptyList();
 		private boolean hasDetails = true;
-		private boolean isLikeable;
+		private LikingMode likingMode = LikingMode.NONE;
 		private boolean isLiked;
 		private int likesCount;
 
@@ -171,8 +179,8 @@ public class FeedItem {
 			return this;
 		}
 
-		public Builder setLikeable(boolean likeable) {
-			isLikeable = likeable;
+		public Builder setLikingMode(LikingMode likingMode) {
+			this.likingMode = likingMode;
 			return this;
 		}
 
@@ -197,7 +205,7 @@ public class FeedItem {
 			feedItem.images = images;
 			feedItem.subItems = subItems;
 			feedItem.hasDetails = hasDetails;
-			feedItem.isLikeable = isLikeable;
+			feedItem.likingMode = likingMode;
 			feedItem.isLiked = isLiked;
 			feedItem.likesCount = likesCount;
 			return feedItem;

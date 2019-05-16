@@ -3,6 +3,7 @@ package com.ivansadovyi.data.feed
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.ivansadovyi.data.feed.RoomFeedItem.Companion.TABLE_NAME
+import com.ivansadovyi.sdk.FeedItem
 import java.util.*
 
 @Entity(tableName = TABLE_NAME)
@@ -16,7 +17,7 @@ class RoomFeedItem(
 		var avatarImageUrl: String?,
 		var pluginClassName: String,
 		var hasDetails: Boolean,
-		var isLikeable: Boolean,
+		var likingMode: FeedItem.LikingMode,
 		var isLiked: Boolean,
 		var likesCount: Int
 ) {
