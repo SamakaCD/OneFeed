@@ -40,6 +40,7 @@ class RecommendationsPlugin : OneFeedPlugin(), OneFeedPlugin.OnSubItemClickListe
 				.setTitle(context.getString(R.string.recommendations_item_title))
 				.setPublicationDate(Date())
 				.setDateVisible(false)
+				.setHasDetails(false)
 				.setSubItems(subItems)
 				.build()
 

@@ -20,6 +20,7 @@ public class FeedItem {
 	private String avatarImageUrl;
 	private List<FeedImage> images;
 	private List<SubItem> subItems;
+	private boolean hasDetails;
 	private boolean isLikeable;
 	private boolean isLiked;
 	private int likesCount;
@@ -37,6 +38,7 @@ public class FeedItem {
 		this.avatarImageUrl = source.avatarImageUrl;
 		this.images = source.images;
 		this.subItems = source.subItems;
+		this.hasDetails = source.hasDetails;
 		this.isLikeable = source.isLikeable;
 		this.isLiked = source.isLiked;
 		this.likesCount = source.likesCount;
@@ -52,6 +54,7 @@ public class FeedItem {
 				.setAvatarImageUrl(getAvatarImageUrl())
 				.setImages(getImages())
 				.setSubItems(getSubItems())
+				.setHasDetails(isHasDetails())
 				.setLikeable(isLikeable())
 				.setLiked(isLiked())
 				.setLikesCount(getLikesCount());
@@ -104,6 +107,10 @@ public class FeedItem {
 		return likesCount;
 	}
 
+	public boolean isHasDetails() {
+		return hasDetails;
+	}
+
 	public static class Builder {
 
 		private String id;
@@ -114,6 +121,7 @@ public class FeedItem {
 		private String avatarImageUrl;
 		private List<FeedImage> images = Collections.emptyList();
 		private List<SubItem> subItems = Collections.emptyList();
+		private boolean hasDetails = true;
 		private boolean isLikeable;
 		private boolean isLiked;
 		private int likesCount;
@@ -158,6 +166,11 @@ public class FeedItem {
 			return this;
 		}
 
+		public Builder setHasDetails(boolean hasDetails) {
+			this.hasDetails = hasDetails;
+			return this;
+		}
+
 		public Builder setLikeable(boolean likeable) {
 			isLikeable = likeable;
 			return this;
@@ -183,6 +196,7 @@ public class FeedItem {
 			feedItem.avatarImageUrl = avatarImageUrl;
 			feedItem.images = images;
 			feedItem.subItems = subItems;
+			feedItem.hasDetails = hasDetails;
 			feedItem.isLikeable = isLikeable;
 			feedItem.isLiked = isLiked;
 			feedItem.likesCount = likesCount;

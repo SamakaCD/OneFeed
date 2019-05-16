@@ -48,7 +48,8 @@ class FeedRecyclerViewAdapter @Inject constructor(
 
 			override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
 				if (oldItem is FeedItem && newItem is FeedItem) {
-					return oldItem.isLiked == newItem.isLiked
+					return oldItem.isLiked == newItem.isLiked &&
+							oldItem.subItems.size == newItem.subItems.size
 				}
 
 				return true
