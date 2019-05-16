@@ -28,6 +28,11 @@ class FeedItemDetailsActivity : AppCompatActivity() {
 		viewModel.onResume()
 	}
 
+	override fun onPause() {
+		super.onPause()
+		viewModel.onPause()
+	}
+
 	companion object {
 
 		private const val FEED_ITEM_ID = "feed_item_id"

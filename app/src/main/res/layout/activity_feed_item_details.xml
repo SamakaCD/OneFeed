@@ -176,6 +176,7 @@
 				android:clickable="true"
 				android:focusable="true"
 				android:gravity="center_vertical"
+				android:onClick="@{_ -> viewModel.onLike()}"
 				android:paddingStart="16dp"
 				android:paddingLeft="16dp"
 				android:paddingTop="12dp"
@@ -184,22 +185,22 @@
 				android:paddingBottom="12dp"
 				app:visible="@{viewModel.feedItem.likeable}">
 
-				<TextView
+				<androidx.appcompat.widget.AppCompatImageView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginEnd="8dp"
 					android:layout_marginRight="8dp"
+					android:src="@drawable/ic_like"
+					app:tintColor="@{viewModel.feedItem.liked ? @color/colorAccent : @color/colorContentTertiary}" />
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
 					android:text="@{`` + viewModel.feedItem.likesCount}"
 					android:textAppearance="@style/TextAppearance.AppCompat.Body2"
 					android:textColor="@{viewModel.feedItem.liked ? @color/colorAccent : @color/colorContentTertiary}"
 					app:visible="@{viewModel.feedItem.likesCount > 0}"
 					tools:text="123" />
-
-				<androidx.appcompat.widget.AppCompatImageView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:src="@drawable/ic_like"
-					app:tintColor="@{viewModel.feedItem.liked ? @color/colorAccent : @color/colorContentTertiary}" />
 			</LinearLayout>
 		</LinearLayout>
 	</LinearLayout>

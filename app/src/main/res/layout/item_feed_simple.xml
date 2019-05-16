@@ -211,22 +211,22 @@
 						android:paddingBottom="12dp"
 						app:visible="@{item.likeable}">
 
-						<TextView
+						<androidx.appcompat.widget.AppCompatImageView
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
 							android:layout_marginEnd="8dp"
 							android:layout_marginRight="8dp"
+							android:src="@drawable/ic_like"
+							app:tintColor="@{item.liked ? @color/colorAccent : @color/colorContentTertiary}" />
+
+						<TextView
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
 							android:text="@{`` + item.likesCount}"
 							android:textAppearance="@style/TextAppearance.AppCompat.Body2"
 							android:textColor="@{item.liked ? @color/colorAccent : @color/colorContentTertiary}"
 							app:visible="@{item.likesCount > 0}"
 							tools:text="123" />
-
-						<androidx.appcompat.widget.AppCompatImageView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:src="@drawable/ic_like"
-							app:tintColor="@{item.liked ? @color/colorAccent : @color/colorContentTertiary}" />
 					</LinearLayout>
 				</LinearLayout>
 			</LinearLayout>
