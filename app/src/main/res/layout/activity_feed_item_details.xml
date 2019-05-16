@@ -130,7 +130,6 @@
 				android:clickable="false"
 				android:focusable="false"
 				android:hyphenationFrequency="none"
-				android:linksClickable="false"
 				android:textAppearance="@style/TextAppearance.AppCompat.Body1"
 				app:asyncText="@{viewModel.feedItem.content ?? ``}"
 				app:visible="@{viewModel.feedItem.content != null}"
