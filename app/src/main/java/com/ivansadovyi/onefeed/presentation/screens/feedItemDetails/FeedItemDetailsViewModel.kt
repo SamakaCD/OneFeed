@@ -6,6 +6,7 @@ import androidx.databinding.Bindable
 import com.ivansadovyi.domain.feed.BundledFeedItem
 import com.ivansadovyi.domain.feed.FeedItemsInteractor
 import com.ivansadovyi.domain.feed.FeedItemsStore
+import com.ivansadovyi.domain.plugin.PluginIconCache
 import com.ivansadovyi.domain.utils.Disposable
 import com.ivansadovyi.onefeed.BR
 import com.ivansadovyi.onefeed.presentation.GenericExceptionHandler
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class FeedItemDetailsViewModel @Inject constructor(
 		private val feedItemsStore: FeedItemsStore,
 		private val feedItemsInteractor: FeedItemsInteractor,
+		private val pluginIconCache: PluginIconCache,
 		private val exceptionHandler: GenericExceptionHandler
 ) : BaseObservable() {
 
@@ -43,6 +45,7 @@ class FeedItemDetailsViewModel @Inject constructor(
 
 	fun onResume() {
 		feedItem = feedItemsStore.getItem(itemId)
+		pluginIcon = pluginIconCache.get(feedItem?.pluginClassName.orEmpty())
 		bindStore()
 	}
 
