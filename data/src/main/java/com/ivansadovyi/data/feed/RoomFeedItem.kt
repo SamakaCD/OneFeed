@@ -15,6 +15,7 @@ class RoomFeedItem(
 		var isDateVisible: Boolean,
 		var avatarImageUrl: String?,
 		var pluginClassName: String,
+		var hasDetails: Boolean,
 		var isLikeable: Boolean,
 		var isLiked: Boolean,
 		var likesCount: Int

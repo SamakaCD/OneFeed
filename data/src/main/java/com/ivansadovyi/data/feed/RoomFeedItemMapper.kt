@@ -16,6 +16,7 @@ object RoomFeedItemMapper {
 				.setAvatarImageUrl(item.avatarImageUrl)
 				.setImages(images.map(RoomFeedImageMapper::fromRoom))
 				.setSubItems(subItems.map(RoomSubItemMapper::fromRoom))
+				.setHasDetails(item.hasDetails)
 				.setLikeable(item.isLikeable)
 				.setLiked(item.isLiked)
 				.setLikesCount(item.likesCount)
@@ -26,7 +27,7 @@ object RoomFeedItemMapper {
 	fun toRoom(input: BundledFeedItem): RoomFeedItem {
 		return with(input) {
 			RoomFeedItem(id, title, content, publicationDate, isDateVisible, avatarImageUrl,
-					pluginClassName, isLikeable, isLiked, likesCount)
+					pluginClassName, isHasDetails, isLikeable, isLiked, likesCount)
 		}
 	}
 }
