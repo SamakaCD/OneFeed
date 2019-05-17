@@ -1,5 +1,6 @@
 package com.ivansadovyi.onefeed.presentation.screens.feed.adapterdelegates
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,10 @@ import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.ivansadovyi.domain.feed.BundledFeedItem
 import com.ivansadovyi.domain.plugin.PluginIconCache
 import com.ivansadovyi.onefeed.databinding.ItemFeedSimpleBinding
+import com.ivansadovyi.onefeed.presentation.extensions.setGestureListener
 import com.ivansadovyi.onefeed.presentation.screens.feed.SubItemsAdapter
 import com.ivansadovyi.onefeed.presentation.screens.feed.adapterdelegates.FeedItemAdapterDelegate.ViewHolder
+import com.ivansadovyi.sdk.FeedItem
 import com.ivansadovyi.sdk.SubItem
 
 typealias OnSubItemClickListener = (SubItem, BundledFeedItem) -> Unit
@@ -55,7 +58,7 @@ class FeedItemAdapterDelegate(
 		holder.binding.like.tag = item
 		holder.binding.like.setOnClickListener(onLikeViewClickListener)
 		holder.binding.itemContent.tag = item
-		holder.binding.itemContent.setOnClickListener(onItemViewClickListener)
+		attachClickHandling(item, holder)
 
 		if (item.images.isNotEmpty()) {
 			val image = item.images.first()
@@ -82,6 +85,7 @@ class FeedItemAdapterDelegate(
 				onSubItemClickListener?.invoke(subItem, item)
 			}
 		}
+
 	}
 
 	override fun onViewRecycled(holder: RecyclerView.ViewHolder) {
@@ -89,6 +93,31 @@ class FeedItemAdapterDelegate(
 		if (holder is ViewHolder) {
 			val context = holder.itemView.context
 			Glide.with(context).clear(holder.binding.image)
+		}
+	}
+
+	@SuppressLint("ClickableViewAccessibility")
+	private fun attachClickHandling(item: BundledFeedItem, holder: ViewHolder) {
+		holder.binding.itemContent.setOnTouchListener(null)
+		holder.binding.image.setOnTouchListener(null)
+		holder.binding.itemContent.setOnClickListener(null)
+
+		when (item.likingMode) {
+			FeedItem.LikingMode.NONE, FeedItem.LikingMode.ACTION -> {
+				holder.binding.itemContent.setOnClickListener(onItemViewClickListener)
+			}
+			FeedItem.LikingMode.DOUBLE_TAP_IMAGE -> {
+				holder.binding.image.setGestureListener(
+						onTap = { onItemViewClickListener.onClick(holder.binding.itemContent) },
+						onDoubleTap = { onLikeViewClickListener.onClick(holder.binding.like) }
+				)
+			}
+			FeedItem.LikingMode.DOUBLE_TAP -> {
+				holder.binding.itemContent.setGestureListener(
+						onTap = { onItemViewClickListener.onClick(holder.binding.itemContent) },
+						onDoubleTap = { onLikeViewClickListener.onClick(holder.binding.like) }
+				)
+			}
 		}
 	}
 

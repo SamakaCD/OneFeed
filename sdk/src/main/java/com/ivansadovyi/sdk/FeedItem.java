@@ -1,5 +1,6 @@
 package com.ivansadovyi.sdk;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.Collections;
@@ -99,6 +100,7 @@ public class FeedItem {
 		return subItems;
 	}
 
+	@NonNull
 	public LikingMode getLikingMode() {
 		return likingMode;
 	}
