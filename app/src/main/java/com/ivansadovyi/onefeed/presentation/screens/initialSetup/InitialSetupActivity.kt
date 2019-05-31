@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.ivansadovyi.onefeed.R
 import com.ivansadovyi.onefeed.databinding.ActivityInitialSetupBinding
+import com.ivansadovyi.onefeed.presentation.screens.feed.FeedActivity
 
 class InitialSetupActivity : AppCompatActivity() {
 
@@ -35,6 +36,10 @@ class InitialSetupActivity : AppCompatActivity() {
 		val intent = Intent(this, InstagramAuthorizationActivity::class.java)
 		intent.putExtra("name", "Twitter")
 		startActivityForResult(intent, 3)
+	}
+
+	fun onSkipClick(v: View) {
+		startActivity(Intent(this, FeedActivity::class.java))
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

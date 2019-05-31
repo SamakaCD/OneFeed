@@ -1,6 +1,7 @@
 package com.ivansadovyi.data.plugin.loader
 
 import com.ivansadovyi.builtinplugins.recommendations.RecommendationsPlugin
+import com.ivansadovyi.data.plugin.just.facebook.FacebookPlugin
 import com.ivansadovyi.domain.plugin.BuiltInPluginLoader
 import com.ivansadovyi.onefeed.plugin.feedly.FeedlyPlugin
 import com.ivansadovyi.onefeed.plugin.twitter.TwitterPlugin
@@ -38,13 +39,17 @@ class BuiltInPluginLoaderImpl @Inject constructor() : BuiltInPluginLoader {
 			TwitterPlugin.DESCRIPTOR -> TwitterPlugin()
 			FeedlyPlugin.DESCRIPTOR -> FeedlyPlugin()
 			RecommendationsPlugin.DESCRIPTOR -> RecommendationsPlugin()
+			FacebookPlugin.DESCRIPTOR -> FacebookPlugin()
 			else -> throw IllegalArgumentException("Can not instantiate plugin with descriptor [$pluginDescriptor]")
 		}
 	}
 
 	companion object {
-		private val DEFAULT_DESCRIPTORS = listOf(RecommendationsPlugin.DESCRIPTOR)
-		private val AUTHORIZING_DESCRIPTORS = listOf(TwitterPlugin.DESCRIPTOR, FeedlyPlugin.DESCRIPTOR)
+		private val DEFAULT_DESCRIPTORS = listOf(
+				RecommendationsPlugin.DESCRIPTOR,
+				FacebookPlugin.DESCRIPTOR
+		)
+		private val AUTHORIZING_DESCRIPTORS = listOf(TwitterPlugin.DESCRIPTOR)
 		private val ALL_DESCRIPTORS = DEFAULT_DESCRIPTORS + AUTHORIZING_DESCRIPTORS
 	}
 }
