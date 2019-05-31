@@ -60,7 +60,7 @@
 					android:clickable="true"
 					android:focusable="true"
 					android:gravity="center"
-					android:onClick="@{_ -> viewModel.chooseFacebook()}"
+					android:onClick="onChooseFacebook"
 					android:orientation="vertical"
 					android:padding="16dp">
 
@@ -90,6 +90,7 @@
 					android:clickable="true"
 					android:focusable="true"
 					android:gravity="center"
+					android:onClick="onChooseTwitter"
 					android:orientation="vertical"
 					android:padding="16dp">
 
@@ -133,8 +134,8 @@
 					android:background="?selectableItemBackgroundBorderless"
 					android:clickable="true"
 					android:focusable="true"
-					android:onClick="onChooseInstagram"
 					android:gravity="center"
+					android:onClick="onChooseInstagram"
 					android:orientation="vertical"
 					android:padding="16dp">
 

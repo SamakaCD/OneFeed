@@ -54,6 +54,7 @@
 		<activity
 			android:name=".presentation.screens.initialSetup.InstagramAuthorizationActivity"
 			android:label="@string/authorize_instagram"
+			android:theme="@style/AppTheme.NonBranded"
 			android:parentActivityName=".presentation.screens.feed.FeedActivity">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"

@@ -20,7 +20,21 @@ class InitialSetupActivity : AppCompatActivity() {
 	}
 
 	fun onChooseInstagram(v: View) {
-		startActivityForResult(Intent(this, InstagramAuthorizationActivity::class.java), 1)
+		val intent = Intent(this, InstagramAuthorizationActivity::class.java)
+		intent.putExtra("name", "Instagram")
+		startActivityForResult(intent, 1)
+	}
+
+	fun onChooseFacebook(v: View) {
+		val intent = Intent(this, InstagramAuthorizationActivity::class.java)
+		intent.putExtra("name", "Facebook")
+		startActivityForResult(intent, 2)
+	}
+
+	fun onChooseTwitter(v: View) {
+		val intent = Intent(this, InstagramAuthorizationActivity::class.java)
+		intent.putExtra("name", "Twitter")
+		startActivityForResult(intent, 3)
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -29,6 +43,8 @@ class InitialSetupActivity : AppCompatActivity() {
 		if (resultCode == Activity.RESULT_OK) {
 			when (requestCode) {
 				1 -> viewModel.chooseInstagram()
+				2 -> viewModel.chooseFacebook()
+				3 -> viewModel.chooseTwitter()
 			}
 		}
 	}
