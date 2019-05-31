@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.google.dagger:dagger-android-support:2.16'
     implementation 'com.hannesdorfmann:adapterdelegates4:4.0.0'
     implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'com.google.android.material:material:1.0.0'
     kapt 'com.google.dagger:dagger-compiler:2.16'
     kapt 'com.google.dagger:dagger-android-processor:2.16'
     testImplementation 'junit:junit:4.12'

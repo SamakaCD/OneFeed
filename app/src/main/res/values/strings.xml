@@ -13,4 +13,12 @@
 	<string name="plugin_authorization_screen_title">Authorize</string>
 	<string name="plugin_authorization_screen_title_with_name">Authorize %1$s</string>
 	<string name="plugin_authorization_ouath_connecting">Connecting with %1$s</string>
+	<string name="initial_setup_welcome">Welcome!</string>
+	<string name="initial_setup_description">Choose and connect social medias which you want.</string>
+	<string name="skip">Skip</string>
+	<string name="general_continue">Continue</string>
+	<string name="general_sign_in">Sign in</string>
+	<string name="auth_email">Email</string>
+	<string name="auth_password">Password</string>
+	<string name="authorize_instagram">Authorize Instagram</string>
 </resources>
