@@ -1,225 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
-	<data>
+    <data>
 
-		<variable
-			name="viewModel"
-			type="com.ivansadovyi.onefeed.presentation.screens.initialSetup.InitialSetupViewModel" />
-	</data>
+        <variable
+            name="viewModel"
+            type="com.ivansadovyi.onefeed.presentation.screens.initialSetup.InitialSetupViewModel" />
+    </data>
 
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:clipChildren="false"
-		android:clipToPadding="false"
-		android:orientation="vertical"
-		android:paddingStart="16dp"
-		android:paddingLeft="16dp"
-		android:paddingTop="32dp"
-		android:paddingEnd="16dp"
-		android:paddingRight="16dp"
-		android:paddingBottom="16dp">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="32dp"
+        android:paddingEnd="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp">
 
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="@string/initial_setup_welcome"
-			android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/initial_setup_welcome"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="4dp"
-			android:text="@string/initial_setup_description"
-			android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-			android:textColor="?android:textColorSecondary" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/initial_setup_description"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="?android:textColorSecondary" />
 
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="256dp"
-			android:layout_marginTop="24dp"
-			android:gravity="center"
-			android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:onClick="onChooseFacebook"
+            android:orientation="horizontal"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
-			<LinearLayout
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_facebook"
+                app:tint="#3c5a95" />
 
-				<View
-					android:layout_width="0dp"
-					android:layout_height="0dp"
-					android:layout_weight="1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:text="Facebook"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
-				<LinearLayout
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:background="?selectableItemBackgroundBorderless"
-					android:clickable="true"
-					android:focusable="true"
-					android:gravity="center"
-					android:onClick="onChooseFacebook"
-					android:orientation="vertical"
-					android:padding="16dp">
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
 
-					<androidx.appcompat.widget.AppCompatImageView
-						android:layout_width="48dp"
-						android:layout_height="48dp"
-						app:srcCompat="@drawable/ic_facebook"
-						app:tint="#3c5a95" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                app:visible="@{viewModel.facebookChoosed}"
+                app:srcCompat="@drawable/ic_check_black_24dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="8dp"
-						android:text="Facebook"
-						android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-				</LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
 
-				<View
-					android:layout_width="0dp"
-					android:layout_height="0dp"
-					android:layout_weight="1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:onClick="onChooseInstagram"
+            android:orientation="horizontal"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
-				<LinearLayout
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:background="?selectableItemBackgroundBorderless"
-					android:clickable="true"
-					android:focusable="true"
-					android:gravity="center"
-					android:onClick="onChooseTwitter"
-					android:orientation="vertical"
-					android:padding="16dp">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_instagram"
+                app:tint="#e5004b" />
 
-					<androidx.appcompat.widget.AppCompatImageView
-						android:layout_width="48dp"
-						android:layout_height="48dp"
-						app:srcCompat="@drawable/twitter"
-						app:tint="@color/colorTwitter" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:text="Instagram"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="8dp"
-						android:text="Twitter"
-						android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-				</LinearLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
 
-				<View
-					android:layout_width="0dp"
-					android:layout_height="0dp"
-					android:layout_weight="1" />
-			</LinearLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                app:visible="@{viewModel.instagramChoosed}"
+                app:srcCompat="@drawable/ic_check_black_24dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-			<View
-				android:layout_width="32dp"
-				android:layout_height="wrap_content" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
 
-			<LinearLayout
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:onClick="onChooseTwitter"
+            android:orientation="horizontal"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
-				<View
-					android:layout_width="0dp"
-					android:layout_height="0dp"
-					android:layout_weight="1" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:srcCompat="@drawable/ic_twitter"
+                app:tint="@color/colorTwitter" />
 
-				<LinearLayout
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:background="?selectableItemBackgroundBorderless"
-					android:clickable="true"
-					android:focusable="true"
-					android:gravity="center"
-					android:onClick="onChooseInstagram"
-					android:orientation="vertical"
-					android:padding="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:text="Twitter"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
-					<androidx.appcompat.widget.AppCompatImageView
-						android:layout_width="48dp"
-						android:layout_height="48dp"
-						app:srcCompat="@drawable/ic_instagram"
-						app:tint="#e5004b" />
+            <View
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="0dp" />
 
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="8dp"
-						android:text="Instagram"
-						android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-				</LinearLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                app:visible="@{viewModel.twitterChoosed}"
+                app:srcCompat="@drawable/ic_check_black_24dp"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-				<View
-					android:layout_width="0dp"
-					android:layout_height="0dp"
-					android:layout_weight="1" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
 
-				<LinearLayout
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:background="?selectableItemBackgroundBorderless"
-					android:clickable="true"
-					android:focusable="true"
-					android:gravity="center"
-					android:orientation="vertical"
-					android:padding="16dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
-					<androidx.appcompat.widget.AppCompatImageView
-						android:layout_width="48dp"
-						android:layout_height="48dp"
-						app:srcCompat="@drawable/ic_package"
-						app:tint="@color/colorContentSecondary" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_package"
+                app:tint="@color/colorContentSecondary" />
 
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginTop="8dp"
-						android:text="Choose APK"
-						android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-				</LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginLeft="32dp"
+                android:orientation="vertical">
 
-				<View
-					android:layout_width="0dp"
-					android:layout_height="0dp"
-					android:layout_weight="1" />
-			</LinearLayout>
-		</LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choose_apk"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
 
-		<View
-			android:layout_width="wrap_content"
-			android:layout_height="0dp"
-			android:layout_weight="1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/choose_apk_description"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="?android:textColorSecondary" />
+            </LinearLayout>
+        </LinearLayout>
 
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="horizontal">
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-			<Button
-				style="@style/Widget.AppCompat.Button.Borderless.Colored"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:onClick="onSkipClick"
-				android:text="@string/skip"
-				android:textAllCaps="false" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-			<View
-				android:layout_width="0dp"
-				android:layout_height="0dp"
-				android:layout_weight="1" />
+            <Button
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onSkipClick"
+                android:text="@string/skip"
+                android:textAllCaps="false" />
 
-			<Button
-				style="@style/Widget.AppCompat.Button.Colored"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:enabled="@{viewModel.continueEnabled}"
-				android:onClick="onSkipClick"
-				android:text="@string/general_continue"
-				android:textAllCaps="false" />
-		</LinearLayout>
-	</LinearLayout>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="@{viewModel.continueEnabled}"
+                android:onClick="onSkipClick"
+                android:text="@string/general_continue"
+                android:textAllCaps="false" />
+        </LinearLayout>
+    </LinearLayout>
 </layout>

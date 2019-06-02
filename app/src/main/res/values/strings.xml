@@ -22,4 +22,7 @@
 	<string name="auth_password">Password</string>
 	<string name="authorize_instagram">Authorize Instagram</string>
 	<string name="please_wait">Please, wait</string>
+    <string name="choose_apk">Choose APK</string>
+    <string name="choose_apk_description">Use custom social media extensions</string>
+    <string name="add_a_comment_hint">Add a comment</string>
 </resources>

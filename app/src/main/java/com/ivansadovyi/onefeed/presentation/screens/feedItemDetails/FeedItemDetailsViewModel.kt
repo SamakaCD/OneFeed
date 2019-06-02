@@ -30,6 +30,12 @@ class FeedItemDetailsViewModel @Inject constructor(
 	@get:Bindable
 	var pluginIcon: Bitmap? by ObservableField(fieldId = BR.pluginIcon, value = null)
 
+	@get:Bindable
+	var pendingComment: String by ObservableField(fieldId = BR.pendingComment, value = "")
+
+	@get:Bindable
+	var newComment: String? by ObservableField(fieldId = BR.newComment, value = null)
+
 	@Bindable("feedItem")
 	fun isDateVisible(): Boolean {
 		return feedItem?.isDateVisible == true && feedItem?.publicationDate != null
@@ -59,6 +65,11 @@ class FeedItemDetailsViewModel @Inject constructor(
 				feedItemsInteractor.likeItem(feedItem)
 			}
 		}
+	}
+
+	fun onSendNewComment() {
+		newComment = pendingComment
+		pendingComment = ""
 	}
 
 	private fun bindStore() {

@@ -1,11 +1,15 @@
 package com.ivansadovyi.onefeed.presentation.screens.feedItemDetails
 
+import android.app.Activity
+import android.app.ProgressDialog
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.ivansadovyi.onefeed.R
 import com.ivansadovyi.onefeed.databinding.ActivityFeedItemDetailsBinding
 import dagger.android.AndroidInjection
+import kotlinx.android.synthetic.main.activity_feed_item_details.*
 import javax.inject.Inject
 
 class FeedItemDetailsActivity : AppCompatActivity() {
@@ -33,6 +37,18 @@ class FeedItemDetailsActivity : AppCompatActivity() {
 	override fun onPause() {
 		super.onPause()
 		viewModel.onPause()
+	}
+
+	fun onAddCommentClick(v: View) {
+		val d = ProgressDialog(this)
+		d.setMessage(getString(R.string.please_wait))
+		d.show()
+
+		window.decorView.postDelayed({
+			newCommentInput.clearFocus()
+			viewModel.onSendNewComment()
+		}, (Math.random() * 3000).toLong() + 1000)
+
 	}
 
 	companion object {

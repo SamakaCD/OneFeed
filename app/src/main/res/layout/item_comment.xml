@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="userName"
+            type="String" />
+
+        <variable
+            name="avatarUrl"
+            type="String" />
+
+        <variable
+            name="dateAgo"
+            type="String" />
+
+        <variable
+            name="text"
+            type="String" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            app:applyRounding="@{true}"
+            app:srcUrl="@{avatarUrl}"
+            tools:background="#1000" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{userName}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    tools:text="RedLatinos" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:text="@string/bullet"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="?android:textColorSecondary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{dateAgo}"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="?android:textColorSecondary"
+                    tools:text="6 seconds ago" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{text}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="?android:textColorSecondary"
+                tools:text="Which is slow compared to a $120k electric sedan made by a certain American car company and slower still when compared to their forthcoming Roadster. 🤭. Why is the media still championing cars made using legacy tech very few people can afford?  Does Ferrari need these articles?" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

@@ -1,212 +1,308 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools">
 
-	<data>
+    <data>
 
-		<variable
-			name="viewModel"
-			type="com.ivansadovyi.onefeed.presentation.screens.feedItemDetails.FeedItemDetailsViewModel" />
-	</data>
+        <variable
+            name="viewModel"
+            type="com.ivansadovyi.onefeed.presentation.screens.feedItemDetails.FeedItemDetailsViewModel" />
+    </data>
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-	<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-		xmlns:app="http://schemas.android.com/apk/res-auto"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp">
 
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_margin="16dp"
-				android:gravity="center_vertical"
-				android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-				<ImageView
-					android:layout_width="40dp"
-					android:layout_height="40dp"
-					android:layout_marginEnd="16dp"
-					android:layout_marginRight="16dp"
-					app:applyRounding="@{true}"
-					app:srcUrl="@{viewModel.feedItem.avatarImageUrl}"
-					app:visible="@{viewModel.feedItem.avatarImageUrl != null}"
-					tools:background="#1000" />
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
+                        app:applyRounding="@{true}"
+                        app:srcUrl="@{viewModel.feedItem.avatarImageUrl}"
+                        app:visible="@{viewModel.feedItem.avatarImageUrl != null}"
+                        tools:background="#1000" />
 
-				<LinearLayout
-					android:layout_width="0dp"
-					android:layout_height="wrap_content"
-					android:layout_weight="1"
-					android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-					<LinearLayout
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:gravity="center_vertical"
-						android:orientation="horizontal">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
 
-						<TextView
-							android:id="@+id/title"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:hyphenationFrequency="none"
-							android:text="@{viewModel.feedItem.title}"
-							android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-							tools:text="Title" />
+                            <TextView
+                                android:id="@+id/title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hyphenationFrequency="none"
+                                android:text="@{viewModel.feedItem.title}"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                                tools:text="Title" />
 
-						<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_marginStart="8dp"
-							android:layout_marginLeft="8dp"
-							android:layout_marginEnd="8dp"
-							android:layout_marginRight="8dp"
-							android:text="@string/bullet"
-							android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-							app:visible="@{!viewModel.isDateVisible}" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginRight="8dp"
+                                android:text="@string/bullet"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                                app:visible="@{!viewModel.isDateVisible}" />
 
-						<androidx.appcompat.widget.AppCompatImageView
-							android:layout_width="16dp"
-							android:layout_height="16dp"
-							app:imageBitmap="@{viewModel.pluginIcon}"
-							app:tint="?android:textColorPrimary"
-							app:tintMode="src_in"
-							app:visible="@{!viewModel.isDateVisible}"
-							tools:background="#1000" />
-					</LinearLayout>
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                app:imageBitmap="@{viewModel.pluginIcon}"
+                                app:tint="?android:textColorPrimary"
+                                app:tintMode="src_in"
+                                app:visible="@{!viewModel.isDateVisible}"
+                                tools:background="#1000" />
+                        </LinearLayout>
 
-					<LinearLayout
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:gravity="center_vertical"
-						android:orientation="horizontal"
-						app:visible="@{viewModel.isDateVisible}">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:visible="@{viewModel.isDateVisible}">
 
-						<TextView
-							android:id="@+id/date"
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:fontFamily="sans-serif-medium"
-							android:hyphenationFrequency="none"
-							android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-							android:textColor="?android:textColorSecondary"
-							app:date="@{viewModel.feedItem.publicationDate}"
-							tools:text="48 minutes ago" />
+                            <TextView
+                                android:id="@+id/date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-medium"
+                                android:hyphenationFrequency="none"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                android:textColor="?android:textColorSecondary"
+                                app:date="@{viewModel.feedItem.publicationDate}"
+                                tools:text="48 minutes ago" />
 
-						<TextView
-							android:layout_width="wrap_content"
-							android:layout_height="wrap_content"
-							android:layout_marginStart="8dp"
-							android:layout_marginLeft="8dp"
-							android:layout_marginEnd="8dp"
-							android:layout_marginRight="8dp"
-							android:text="@string/bullet"
-							android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-							android:textColor="?android:textColorSecondary" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginRight="8dp"
+                                android:text="@string/bullet"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                android:textColor="?android:textColorSecondary" />
 
-						<androidx.appcompat.widget.AppCompatImageView
-							android:layout_width="16dp"
-							android:layout_height="16dp"
-							app:imageBitmap="@{viewModel.pluginIcon}"
-							app:tint="@color/colorFeedPluginIcon"
-							app:tintMode="src_in"
-							tools:background="#1000" />
-					</LinearLayout>
-				</LinearLayout>
-			</LinearLayout>
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                app:imageBitmap="@{viewModel.pluginIcon}"
+                                app:tint="@color/colorFeedPluginIcon"
+                                app:tintMode="src_in"
+                                tools:background="#1000" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
 
-			<androidx.appcompat.widget.AppCompatTextView
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="16dp"
-				android:layout_marginLeft="16dp"
-				android:layout_marginEnd="16dp"
-				android:layout_marginRight="16dp"
-				android:layout_marginBottom="16dp"
-				android:autoLink="web"
-				android:clickable="false"
-				android:focusable="false"
-				android:hyphenationFrequency="none"
-				android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-				app:asyncText="@{viewModel.feedItem.content ?? ``}"
-				app:visible="@{viewModel.feedItem.content != null}"
-				tools:text="Lorem ipsum dolor sit amet, duo mutat nemore ex, his lucilius intellegat et, vis homero quodsi expetenda at. Ne est tritani inermis platonem. Usu commune scriptorem intellegebat an. Vivendo inciderint duo ea. Eu sensibus eloquentiam pro." />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:autoLink="web"
+                    android:clickable="false"
+                    android:focusable="false"
+                    android:hyphenationFrequency="none"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    app:asyncText="@{viewModel.feedItem.content ?? ``}"
+                    app:visible="@{viewModel.feedItem.content != null}"
+                    tools:text="Lorem ipsum dolor sit amet, duo mutat nemore ex, his lucilius intellegat et, vis homero quodsi expetenda at. Ne est tritani inermis platonem. Usu commune scriptorem intellegebat an. Vivendo inciderint duo ea. Eu sensibus eloquentiam pro." />
 
-			<ImageView
-				android:id="@+id/image"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginBottom="16dp"
-				android:adjustViewBounds="true"
-				android:contentDescription="@{viewModel.feedItem.content ?? viewModel.feedItem.title}"
-				app:srcUrl="@{viewModel.feedItem.images[0].url}"
-				app:visible="@{viewModel.feedItem.images.size() > 0}"
-				tools:background="#1000"
-				tools:layout_height="64dp"
-				tools:visibility="visible" />
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@{viewModel.feedItem.content ?? viewModel.feedItem.title}"
+                    app:srcUrl="@{viewModel.feedItem.images[0].url}"
+                    app:visible="@{viewModel.feedItem.images.size() > 0}"
+                    tools:background="#1000"
+                    tools:layout_height="64dp"
+                    tools:visibility="visible" />
 
-			<androidx.recyclerview.widget.RecyclerView
-				android:id="@+id/subItemsRecyclerView"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="-8dp"
-				android:layout_marginBottom="8dp"
-				app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-				app:visible="@{viewModel.feedItem.subItems.size() > 0}"
-				tools:layout_height="96dp"
-				tools:listitem="@layout/item_feed_sub_item" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/subItemsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:visible="@{viewModel.feedItem.subItems.size() > 0}"
+                    tools:layout_height="96dp"
+                    tools:listitem="@layout/item_feed_sub_item" />
 
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="4dp"
-				android:background="@drawable/line_dotted"
-				android:layerType="software" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:gravity="end|right"
+                    android:orientation="horizontal">
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:background="@android:color/transparent"
-				android:gravity="end|right"
-				android:orientation="horizontal">
+                    <LinearLayout
+                        android:id="@+id/like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:onClick="@{_ -> viewModel.onLike()}"
+                        android:paddingStart="16dp"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="12dp"
+                        android:paddingEnd="16dp"
+                        android:paddingRight="16dp"
+                        android:paddingBottom="12dp"
+                        app:visible="@{viewModel.feedItem.likeable}">
 
-				<LinearLayout
-					android:id="@+id/like"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:background="?selectableItemBackgroundBorderless"
-					android:clickable="true"
-					android:focusable="true"
-					android:gravity="center_vertical"
-					android:onClick="@{_ -> viewModel.onLike()}"
-					android:paddingStart="16dp"
-					android:paddingLeft="16dp"
-					android:paddingTop="12dp"
-					android:paddingEnd="16dp"
-					android:paddingRight="16dp"
-					android:paddingBottom="12dp"
-					app:visible="@{viewModel.feedItem.likeable}">
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginRight="8dp"
+                            android:src="@drawable/ic_like"
+                            app:tintColor="@{viewModel.feedItem.liked ? @color/colorAccent : @color/colorContentTertiary}" />
 
-					<androidx.appcompat.widget.AppCompatImageView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginEnd="8dp"
-						android:layout_marginRight="8dp"
-						android:src="@drawable/ic_like"
-						app:tintColor="@{viewModel.feedItem.liked ? @color/colorAccent : @color/colorContentTertiary}" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{`` + viewModel.feedItem.likesCount}"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                            android:textColor="@{viewModel.feedItem.liked ? @color/colorAccent : @color/colorContentTertiary}"
+                            app:visible="@{viewModel.feedItem.likesCount > 0}"
+                            tools:text="123" />
+                    </LinearLayout>
+                </LinearLayout>
 
-					<TextView
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:text="@{`` + viewModel.feedItem.likesCount}"
-						android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-						android:textColor="@{viewModel.feedItem.liked ? @color/colorAccent : @color/colorContentTertiary}"
-						app:visible="@{viewModel.feedItem.likesCount > 0}"
-						tools:text="123" />
-				</LinearLayout>
-			</LinearLayout>
-		</LinearLayout>
-	</ScrollView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@drawable/line_dotted"
+                    android:layerType="software" />
+
+                <include
+                    layout="@layout/item_comment"
+                    app:avatarUrl="@{`https://pbs.twimg.com/profile_images/981772715970281472/Abqspn1D_bigger.jpg`}"
+                    app:dateAgo="@{`1h`}"
+                    app:text="@{`Only @Ferrari can make a hybrid seem so cool.`}"
+                    app:userName="@{`RedLatinos`}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginLeft="72dp"
+                    android:background="@color/colorDivider" />
+
+                <include
+                    layout="@layout/item_comment"
+                    app:avatarUrl="@{`https://pbs.twimg.com/profile_images/1066754280051359744/rZkLsA0s_bigger.jpg`}"
+                    app:dateAgo="@{`1h`}"
+                    app:text="@{`Which is slow compared to a $120k electric sedan made by a certain American car company and slower still when compared to their forthcoming Roadster. 🤭. Why is the media still championing cars made using legacy tech very few people can afford?  Does Ferrari need these articles?`}"
+                    app:userName="@{`RedLatinos`}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginLeft="72dp"
+                    android:background="@color/colorDivider" />
+
+                <include
+                    layout="@layout/item_comment"
+                    app:avatarUrl="@{`https://pbs.twimg.com/profile_images/981772715970281472/Abqspn1D_bigger.jpg`}"
+                    app:dateAgo="@{`1h`}"
+                    app:text="@{`Oooooo an overpriced sports car that's slower than a Tesla Model S.... nothing new.`}"
+                    app:userName="@{`RedLatinos`}" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="72dp"
+                    android:layout_marginLeft="72dp"
+                    app:visible="@{viewModel.newComment != null}"
+                    android:background="@color/colorDivider" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    app:visible="@{viewModel.newComment != null}"
+                    android:layout_height="wrap_content">
+
+                    <include
+                        layout="@layout/item_comment"
+                        app:avatarUrl="@{`https://pbs.twimg.com/profile_images/919642484329910274/cLx8m1PZ_400x400.jpg`}"
+                        app:dateAgo="@{`1s`}"
+                        app:text="@{viewModel.newComment}"
+                        app:userName="@{`Ivan Sadovyi`}" />
+                </FrameLayout>
+            </LinearLayout>
+        </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/newCommentInput"
+                android:background="@android:color/transparent"
+                android:layout_width="0dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:text="@={viewModel.newComment}"
+                android:hint="@string/add_a_comment_hint"
+                android:layout_weight="1"
+                android:layout_height="48dp" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:layout_width="wrap_content"
+                android:paddingRight="9dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingLeft="8dp"
+                android:tint="@color/colorAccent"
+                android:onClick="onAddCommentClick"
+                android:background="?selectableItemBackgroundBorderless"
+                app:srcCompat="@drawable/ic_send_black_24dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
 </layout>
