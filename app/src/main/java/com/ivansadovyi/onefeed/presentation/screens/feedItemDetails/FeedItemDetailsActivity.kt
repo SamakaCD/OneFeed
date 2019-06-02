@@ -1,6 +1,5 @@
 package com.ivansadovyi.onefeed.presentation.screens.feedItemDetails
 
-import android.app.Activity
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
@@ -46,6 +45,7 @@ class FeedItemDetailsActivity : AppCompatActivity() {
 
 		window.decorView.postDelayed({
 			newCommentInput.clearFocus()
+			d.dismiss()
 			viewModel.onSendNewComment()
 		}, (Math.random() * 3000).toLong() + 1000)
 

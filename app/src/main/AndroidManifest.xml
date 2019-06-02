@@ -54,11 +54,15 @@
 		<activity
 			android:name=".presentation.screens.initialSetup.InstagramAuthorizationActivity"
 			android:label="@string/authorize_instagram"
-			android:theme="@style/AppTheme.NonBranded"
-			android:parentActivityName=".presentation.screens.feed.FeedActivity">
+			android:parentActivityName=".presentation.screens.feed.FeedActivity"
+			android:theme="@style/AppTheme.NonBranded">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value=".presentation.screens.feed.FeedActivity" />
 		</activity>
+
+		<activity
+			android:name=".presentation.screens.likedItems.LikedItemsActivity"
+			android:label="@string/liked_title" />
 	</application>
 </manifest>

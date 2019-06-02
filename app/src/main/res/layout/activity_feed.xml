@@ -8,40 +8,55 @@
 			type="com.ivansadovyi.onefeed.presentation.screens.feed.FeedViewModel" />
 	</data>
 
-	<ViewFlipper android:id="@+id/viewFlipper"
-		xmlns:android="http://schemas.android.com/apk/res/android"
+	<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		xmlns:app="http://schemas.android.com/apk/res-auto"
 		android:layout_width="match_parent"
+		android:id="@+id/drawerLayout"
 		android:layout_height="match_parent"
-		android:inAnimation="@anim/fade_in"
-		android:outAnimation="@anim/fade_out"
-		app:displayedChild="@{viewModel.feedState.ordinal}">
+		android:fitsSystemWindows="true">
 
-		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-			android:id="@+id/swipeRefreshLayout"
+		<ViewFlipper
+			android:id="@+id/viewFlipper"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			app:onRefreshListener="@{() -> viewModel.refresh()}"
-			app:refreshing="@{viewModel.refreshing}">
+			android:inAnimation="@anim/fade_in"
+			android:outAnimation="@anim/fade_out"
+			app:displayedChild="@{viewModel.feedState.ordinal}">
 
-			<androidx.recyclerview.widget.RecyclerView
-				android:id="@+id/recyclerView"
+			<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+				android:id="@+id/swipeRefreshLayout"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
-				app:items="@{viewModel.items}" />
-		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+				app:onRefreshListener="@{() -> viewModel.refresh()}"
+				app:refreshing="@{viewModel.refreshing}">
 
-		<ProgressBar
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center" />
+				<androidx.recyclerview.widget.RecyclerView
+					android:id="@+id/recyclerView"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					app:items="@{viewModel.items}" />
+			</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-		<TextView
+			<ProgressBar
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center" />
+
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:text="@string/feed_empty_state"
+				android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+				android:textColor="?android:textColorSecondary" />
+		</ViewFlipper>
+
+		<com.google.android.material.navigation.NavigationView
+			android:id="@+id/navigationView"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center"
-			android:text="@string/feed_empty_state"
-			android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-			android:textColor="?android:textColorSecondary" />
-	</ViewFlipper>
+			android:layout_height="match_parent"
+			android:layout_gravity="start"
+			android:fitsSystemWindows="true"
+			app:menu="@menu/feed_drawer" />
+	</androidx.drawerlayout.widget.DrawerLayout>
 </layout>

@@ -70,6 +70,7 @@ class FeedItemDetailsViewModel @Inject constructor(
 	fun onSendNewComment() {
 		newComment = pendingComment
 		pendingComment = ""
+		notifyChange()
 	}
 
 	private fun bindStore() {

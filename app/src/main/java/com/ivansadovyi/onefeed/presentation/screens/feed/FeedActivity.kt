@@ -4,12 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.navigation.NavigationView
 import com.ivansadovyi.onefeed.R
 import com.ivansadovyi.onefeed.databinding.ActivityFeedBinding
 import com.ivansadovyi.onefeed.presentation.screens.feedItemDetails.FeedItemDetailsActivity
+import com.ivansadovyi.onefeed.presentation.screens.likedItems.LikedItemsActivity
 import com.ivansadovyi.onefeed.presentation.screens.pluginAuthorizaton.PluginAuthorizationActivity
 import com.ivansadovyi.onefeed.presentation.utils.recyclerview.PaginationListener
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
@@ -17,7 +20,8 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_feed.*
 import javax.inject.Inject
 
-class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
+
+class FeedActivity : AppCompatActivity(), FeedView, FeedRouter, NavigationView.OnNavigationItemSelectedListener {
 
 	@Inject
 	lateinit var viewModel: FeedViewModel
@@ -32,8 +36,14 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 		AndroidInjection.inject(this)
 		val binding = DataBindingUtil.setContentView<ActivityFeedBinding>(this, R.layout.activity_feed)
 		binding.viewModel = viewModel
-		swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary)
+		swipeRefreshLayout.setColorSchemeResources(com.ivansadovyi.onefeed.R.color.colorPrimary)
 		setupRecyclerView()
+		setupDrawerLayout()
+	}
+
+	override fun onPostCreate(savedInstanceState: Bundle?) {
+		super.onPostCreate(savedInstanceState)
+		toggle.syncState()
 	}
 
 	override fun scrollToTop() {
@@ -53,27 +63,38 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
-		menuInflater.inflate(R.menu.feed, menu)
+		menuInflater.inflate(com.ivansadovyi.onefeed.R.menu.feed, menu)
 		return true
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		return when (item.itemId) {
-			R.id.authorizeTwitter -> {
+			com.ivansadovyi.onefeed.R.id.authorizeTwitter -> {
 				viewModel.authorizeTwitter()
 				return true
 			}
-			R.id.authorizePluginRecommendations -> {
+			com.ivansadovyi.onefeed.R.id.authorizePluginRecommendations -> {
 				viewModel.authorizePluginRecommendations()
 				return true
 			}
-			R.id.resetAuthorizations -> {
+			com.ivansadovyi.onefeed.R.id.resetAuthorizations -> {
 				viewModel.resetAuthorizations()
 				return true
 			}
 			else -> super.onOptionsItemSelected(item)
 		}
 	}
+
+	override fun onNavigationItemSelected(item: MenuItem): Boolean {
+		return when (item.itemId) {
+			R.id.liked -> {
+				startActivity(Intent(this, LikedItemsActivity::class.java))
+				true
+			}
+			else -> false
+		}
+	}
+
 
 	private fun setupRecyclerView() {
 		layoutManager = LinearLayoutManager(this)
@@ -85,6 +106,16 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter {
 		recyclerView.adapter = adapter
 		recyclerView.itemAnimator = null
 		setupPagination()
+	}
+
+	lateinit var toggle: ActionBarDrawerToggle
+
+	private fun setupDrawerLayout() {
+		toggle = ActionBarDrawerToggle(this, drawerLayout, R.string.skip, R.string.skip)
+		drawerLayout.addDrawerListener(toggle)
+		supportActionBar?.setDisplayHomeAsUpEnabled(true)
+		supportActionBar?.setHomeButtonEnabled(true)
+		navigationView.setNavigationItemSelectedListener(this)
 	}
 
 	private fun setupPagination() {

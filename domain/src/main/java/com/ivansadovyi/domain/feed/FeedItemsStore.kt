@@ -22,6 +22,10 @@ class FeedItemsStore @Inject constructor(
 		return items.find { it.id == itemId }
 	}
 
+	fun getLikedItems(): List<BundledFeedItem> {
+		return items.filter { it.isLiked }
+	}
+
 	fun finishLoading() {
 		loading = false
 		notifyChange(LoadingFinishedAction)
