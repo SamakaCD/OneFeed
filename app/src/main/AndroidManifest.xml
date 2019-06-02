@@ -67,5 +67,8 @@
 
 		<activity android:name=".presentation.screens.accounts.AccountsActivity"
 			android:label="@string/accounts_title" />
+
+		<activity android:name=".presentation.screens.settings.SettingsActivity"
+			android:label="@string/settings_title" />
 	</application>
 </manifest>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="colorPrimary">#212121</color>
+	<color name="colorPrimaryDark">#212121</color>
+	<color name="colorAccent">#FF856B</color>
+
+	<color name="colorContentSecondary">#80ffffff</color>
+	<color name="colorContentTertiary">#80ffffff</color>
+	<color name="colorDivider">#30ffffff</color>
+
+	<color name="colorPrimaryNonBranded">#000</color>
+	<color name="colorPrimaryDarkNonBranded">#000</color>
+	<color name="colorBackground">#000</color>
+	<color name="colorFeedPluginIcon">#80ffffff</color>
+</resources>

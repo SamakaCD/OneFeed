@@ -30,4 +30,10 @@
 	<string name="liked_title">Liked</string>
 	<string name="account_log_out_confirm">Do you want log out this account?</string>
 	<string name="accounts_title">Accounts</string>
+	<string name="settings_app_theme">App theme</string>
+	<string name="settings_title">Settings</string>
+	<string-array name="themes">
+		<item>Light</item>
+		<item>Dark</item>
+	</string-array>
 </resources>

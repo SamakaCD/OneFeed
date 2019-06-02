@@ -15,6 +15,7 @@ import com.ivansadovyi.onefeed.presentation.screens.accounts.AccountsActivity
 import com.ivansadovyi.onefeed.presentation.screens.feedItemDetails.FeedItemDetailsActivity
 import com.ivansadovyi.onefeed.presentation.screens.likedItems.LikedItemsActivity
 import com.ivansadovyi.onefeed.presentation.screens.pluginAuthorizaton.PluginAuthorizationActivity
+import com.ivansadovyi.onefeed.presentation.screens.settings.SettingsActivity
 import com.ivansadovyi.onefeed.presentation.utils.recyclerview.PaginationListener
 import com.ivansadovyi.sdk.OneFeedPluginDescriptor
 import dagger.android.AndroidInjection
@@ -70,15 +71,15 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter, NavigationView.O
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		return when (item.itemId) {
-			com.ivansadovyi.onefeed.R.id.authorizeTwitter -> {
+			R.id.authorizeTwitter -> {
 				viewModel.authorizeTwitter()
 				return true
 			}
-			com.ivansadovyi.onefeed.R.id.authorizePluginRecommendations -> {
+			R.id.authorizePluginRecommendations -> {
 				viewModel.authorizePluginRecommendations()
 				return true
 			}
-			com.ivansadovyi.onefeed.R.id.resetAuthorizations -> {
+			R.id.resetAuthorizations -> {
 				viewModel.resetAuthorizations()
 				return true
 			}
@@ -87,6 +88,7 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter, NavigationView.O
 	}
 
 	override fun onNavigationItemSelected(item: MenuItem): Boolean {
+		drawerLayout.closeDrawers()
 		return when (item.itemId) {
 			R.id.liked -> {
 				startActivity(Intent(this, LikedItemsActivity::class.java))
@@ -94,6 +96,10 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter, NavigationView.O
 			}
 			R.id.accounts -> {
 				startActivity(Intent(this, AccountsActivity::class.java))
+				true
+			}
+			R.id.settings -> {
+				startActivity(Intent(this, SettingsActivity::class.java))
 				true
 			}
 			else -> false
