@@ -1,5 +1,6 @@
 package com.ivansadovyi.onefeed.presentation.di
 
+import com.ivansadovyi.onefeed.presentation.screens.accounts.AccountsActivity
 import com.ivansadovyi.onefeed.presentation.screens.feed.FeedActivity
 import com.ivansadovyi.onefeed.presentation.screens.feed.di.FeedModule
 import com.ivansadovyi.onefeed.presentation.screens.feedItemDetails.FeedItemDetailsActivity
@@ -25,4 +26,7 @@ abstract class ActivityBindings {
 
 	@ContributesAndroidInjector(modules = [LikedItemsModule::class])
 	abstract fun bindLikedItemsActivity(): LikedItemsActivity
+
+	@ContributesAndroidInjector
+	abstract fun bindAccountsActivity(): AccountsActivity
 }

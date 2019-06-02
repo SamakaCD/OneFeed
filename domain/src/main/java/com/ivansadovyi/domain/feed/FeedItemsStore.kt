@@ -14,6 +14,8 @@ class FeedItemsStore @Inject constructor(
 	var loading = false
 	var refreshing = false
 
+	private var socialFilter: String? = null
+
 	init {
 		observeDao()
 	}
@@ -48,9 +50,24 @@ class FeedItemsStore @Inject constructor(
 		notifyChange(RefreshingStartedAction)
 	}
 
+	fun setSocialFilter(filter: String) {
+		socialFilter = filter
+		items = items.filter { !it.pluginClassName.contains(filter) }
+		notifyChange(FeedAction.RepositoryUpdateAction)
+	}
+
 	private fun observeDao() {
 		feedItemRepository.observeFeedItems {
 			items = it
+					.let {
+						val sf = socialFilter
+						if (sf != null) {
+							it.filter { !it.pluginClassName.contains(sf) }
+						} else {
+							it
+						}
+					}
+
 			notifyChange(RepositoryUpdateAction)
 		}
 	}

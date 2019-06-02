@@ -64,5 +64,8 @@
 		<activity
 			android:name=".presentation.screens.likedItems.LikedItemsActivity"
 			android:label="@string/liked_title" />
+
+		<activity android:name=".presentation.screens.accounts.AccountsActivity"
+			android:label="@string/accounts_title" />
 	</application>
 </manifest>

@@ -6,6 +6,11 @@
 		android:title="@string/feed_side_menu_liked" />
 
 	<item
+		android:id="@+id/accounts"
+		android:icon="@drawable/ic_people_black_24dp"
+		android:title="@string/accounts_title" />
+
+	<item
 		android:id="@+id/settings"
 		android:icon="@drawable/ic_settings_black_24dp"
 		android:title="@string/feed_side_menu_settings"/>

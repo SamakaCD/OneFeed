@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import com.ivansadovyi.onefeed.R
 import com.ivansadovyi.onefeed.databinding.ActivityFeedBinding
+import com.ivansadovyi.onefeed.presentation.screens.accounts.AccountsActivity
 import com.ivansadovyi.onefeed.presentation.screens.feedItemDetails.FeedItemDetailsActivity
 import com.ivansadovyi.onefeed.presentation.screens.likedItems.LikedItemsActivity
 import com.ivansadovyi.onefeed.presentation.screens.pluginAuthorizaton.PluginAuthorizationActivity
@@ -89,6 +90,10 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter, NavigationView.O
 		return when (item.itemId) {
 			R.id.liked -> {
 				startActivity(Intent(this, LikedItemsActivity::class.java))
+				true
+			}
+			R.id.accounts -> {
+				startActivity(Intent(this, AccountsActivity::class.java))
 				true
 			}
 			else -> false
