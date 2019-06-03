@@ -3,6 +3,8 @@ package com.ivansadovyi.onefeed.plugin.twitter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import androidx.annotation.NonNull;
+
 import com.ivansadovyi.onefeed.plugin.twitter.utils.MappingIterable;
 import com.ivansadovyi.sdk.FeedItem;
 import com.ivansadovyi.sdk.OneFeedPlugin;
@@ -14,7 +16,6 @@ import com.ivansadovyi.sdk.auth.AuthorizationState;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import twitter4j.Paging;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -87,9 +88,9 @@ public class TwitterPlugin extends OneFeedPlugin {
 
 	private Paging getNextPaging() {
 		if (lastLoadedStatusId == NO_ID) {
-			return new Paging();
+			return new Paging().count(100);
 		} else {
-			return new Paging().maxId(lastLoadedStatusId);
+			return new Paging().count(100).maxId(lastLoadedStatusId);
 		}
 	}
 

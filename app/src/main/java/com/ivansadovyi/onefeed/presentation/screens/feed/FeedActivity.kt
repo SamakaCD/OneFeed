@@ -65,7 +65,7 @@ class FeedActivity : AppCompatActivity(), FeedView, FeedRouter, NavigationView.O
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
-		menuInflater.inflate(com.ivansadovyi.onefeed.R.menu.feed, menu)
+		//menuInflater.inflate(com.ivansadovyi.onefeed.R.menu.feed, menu)
 		return true
 	}
 

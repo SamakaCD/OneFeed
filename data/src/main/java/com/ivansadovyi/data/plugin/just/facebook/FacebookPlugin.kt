@@ -13,26 +13,35 @@ class FacebookPlugin : OneFeedPlugin() {
 	val items = listOf(
 			FeedItem.Builder()
 					.setId("rkjgrwiogrgj3riogiwrgjiowjgoqijgijiorwgjiorwghwrijo")
-					.setTitle("Igor Gorneckiy")
-					.setPublicationDate(Date())
+					.setTitle("Temz Gordonas")
+					.setPublicationDate(
+							Calendar.getInstance()
+									.apply {
+										set(Calendar.HOUR_OF_DAY, 11)
+										set(Calendar.MINUTE, 45)
+									}
+									.time
+					)
 					.setLikeable(true)
 					.setLikesCount(5)
-					.setAvatarImageUrl("https://scontent.flwo1-1.fna.fbcdn.net/v/t1.0-1/p50x50/52816978_795779360791171_4061494050610479104_n.jpg?_nc_cat=107&_nc_ht=scontent.flwo1-1.fna&oh=582d1dbcd61e13aa0a949f2192e09d40&oe=5D9499FE")
-					.setImages(listOf(
-							FeedImage.Builder()
-									.setId("rjtjeroit jeiroteoir tert")
-									.setWidth(100)
-									.setHeight(100)
-									.setUrl("https://scontent.flwo1-1.fna.fbcdn.net/v/t1.0-9/49508022_367514420726723_1129039068374499328_n.jpg?_nc_cat=109&_nc_ht=scontent.flwo1-1.fna&oh=a3b1448fe99b7eb064281724dc7db315&oe=5D53B155")
-									.build()
-					))
+					.setContent("Let’s confuse kids nowadays \uD83D\uDE0B\n" +
+							"\n" +
+							"(syempre ‘di na nila alam rich-kid na eh)")
+					.setAvatarImageUrl("https://scontent.fiev21-1.fna.fbcdn.net/v/t1.0-1/p50x50/60120625_10205673454431048_8362277290675011584_n.jpg?_nc_cat=101&_nc_ht=scontent.fiev21-1.fna&oh=5f894e03847f10b394d7314d26714c9f&oe=5D534504")
 					.build(),
 			FeedItem.Builder()
 					.setId("wopktwrykrwtykorwpkyopwyr")
 					.setTitle("Bohdan Shlikhutka")
 					.setLikeable(true)
 					.setContent("От так от...)\nОмелян відповів Зеленському на закиди щодо цифрових технологій та електрокарів: \"Не треба жонглювати термінами, які Ви не розумієте\"\nhttps://espreso.tv/news/2019/05/25/omelyan_rozgornuto_vidpoviv_zelenskomu_na_zakydy_schodo_cyfrovykh_tekhnologiy_ta_elektrokariv_quotne_treba_zhonglyuvaty_terminamy_yaki_vy_ne_rozumiyetequot")
-					.setPublicationDate(Date())
+					.setPublicationDate(
+							Calendar.getInstance()
+									.apply {
+										set(Calendar.HOUR_OF_DAY, 11)
+										set(Calendar.MINUTE, 10)
+									}
+									.time
+					)
 					.setLikesCount(1)
 					.setAvatarImageUrl("https://scontent.flwo1-1.fna.fbcdn.net/v/t1.0-1/p50x50/59445096_2269626456594765_7583790420753121280_n.jpg?_nc_cat=107&_nc_ht=scontent.flwo1-1.fna&oh=2d4b34eaf2c227e0caa6294aa30b473e&oe=5D9494D0")
 					.setImages(listOf(
@@ -47,7 +56,14 @@ class FacebookPlugin : OneFeedPlugin() {
 					.setLikeable(true)
 					.setLikesCount(17)
 					.setTitle("Богдан Фидрик")
-					.setPublicationDate(Date())
+					.setPublicationDate(
+							Calendar.getInstance()
+									.apply {
+										set(Calendar.HOUR_OF_DAY, 10)
+										set(Calendar.MINUTE, 5)
+									}
+									.time
+					)
 					.setImages(listOf(
 							FeedImage.Builder()
 									.setId("gorwoyrw")
@@ -62,6 +78,27 @@ class FacebookPlugin : OneFeedPlugin() {
 							".\n" +
 							"Життя ЗАНАДТО коротке...")
 					.setAvatarImageUrl("https://scontent.flwo1-1.fna.fbcdn.net/v/t1.0-1/p50x50/60746260_1338584142963743_5495075213991215104_n.jpg?_nc_cat=111&_nc_ht=scontent.flwo1-1.fna&oh=dbc244af780713451e0a4e5c8906658b&oe=5D5A4A72")
+					.build(),
+			FeedItem.Builder()
+					.setId("Wrywrywwry")
+					.setLikeable(true)
+					.setLikesCount(64)
+					.setPublicationDate(
+							Calendar.getInstance()
+									.apply {
+										set(Calendar.HOUR_OF_DAY, 9)
+										set(Calendar.MINUTE, 45)
+									}
+									.time
+					)
+					.setTitle("Pavlo Bakunets")
+					.setAvatarImageUrl("https://scontent.fiev21-2.fna.fbcdn.net/v/t1.0-1/p50x50/11137155_10153190595207591_7512419263568266697_n.jpg?_nc_cat=106&_nc_ht=scontent.fiev21-2.fna&oh=4437ddd4d524da5cd27020b92aa79b2a&oe=5D5C5A91")
+					.setImages(listOf(
+							FeedImage.Builder()
+									.setId("eyetutute")
+									.setUrl("https://scontent.fiev21-1.fna.fbcdn.net/v/t1.0-9/61698990_930984393950290_7865536568813944832_o.jpg?_nc_cat=105&_nc_ht=scontent.fiev21-1.fna&oh=e891df057cd7e47d14676db26423a8d1&oe=5D9BEC58")
+									.build()
+					))
 					.build()
 	)
 
