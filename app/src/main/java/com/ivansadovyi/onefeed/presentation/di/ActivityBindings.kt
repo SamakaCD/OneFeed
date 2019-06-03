@@ -9,6 +9,7 @@ import com.ivansadovyi.onefeed.presentation.screens.likedItems.LikedItemsActivit
 import com.ivansadovyi.onefeed.presentation.screens.likedItems.di.LikedItemsModule
 import com.ivansadovyi.onefeed.presentation.screens.pluginAuthorizaton.PluginAuthorizationActivity
 import com.ivansadovyi.onefeed.presentation.screens.pluginAuthorizaton.di.PluginAuthorizationBindings
+import com.ivansadovyi.onefeed.presentation.screens.userDetails.UserDetailsActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -29,4 +30,7 @@ abstract class ActivityBindings {
 
 	@ContributesAndroidInjector
 	abstract fun bindAccountsActivity(): AccountsActivity
+
+	@ContributesAndroidInjector
+	abstract fun bindUserDetailsActivity(): UserDetailsActivity
 }

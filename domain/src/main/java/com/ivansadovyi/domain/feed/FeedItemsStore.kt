@@ -28,6 +28,10 @@ class FeedItemsStore @Inject constructor(
 		return items.filter { it.isLiked }
 	}
 
+	fun getItemsOfUser(userId: String): List<BundledFeedItem> {
+		return items.filter { it.title == userId }
+	}
+
 	fun finishLoading() {
 		loading = false
 		notifyChange(LoadingFinishedAction)

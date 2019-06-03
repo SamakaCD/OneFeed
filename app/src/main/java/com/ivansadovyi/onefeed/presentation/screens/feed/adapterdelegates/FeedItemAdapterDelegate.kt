@@ -1,5 +1,6 @@
 package com.ivansadovyi.onefeed.presentation.screens.feed.adapterdelegates
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import com.ivansadovyi.domain.plugin.PluginIconCache
 import com.ivansadovyi.onefeed.databinding.ItemFeedSimpleBinding
 import com.ivansadovyi.onefeed.presentation.screens.feed.SubItemsAdapter
 import com.ivansadovyi.onefeed.presentation.screens.feed.adapterdelegates.FeedItemAdapterDelegate.ViewHolder
+import com.ivansadovyi.onefeed.presentation.screens.userDetails.UserDetailsActivity
 import com.ivansadovyi.sdk.SubItem
 
 typealias OnSubItemClickListener = (SubItem, BundledFeedItem) -> Unit
@@ -81,6 +83,12 @@ class FeedItemAdapterDelegate(
 			subItemsAdapter.setOnSubItemCLickListener { subItem ->
 				onSubItemClickListener?.invoke(subItem, item)
 			}
+		}
+
+		holder.binding.feedItemAvatar.setOnClickListener {
+			val intent = Intent(holder.itemView.context, UserDetailsActivity::class.java)
+			intent.putExtras(UserDetailsActivity.createExtras(item.title, item.title))
+			holder.itemView.context.startActivity(intent)
 		}
 	}
 
