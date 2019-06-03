@@ -13,6 +13,7 @@ import com.ivansadovyi.domain.plugin.PluginIconCache
 import com.ivansadovyi.onefeed.databinding.ItemFeedSimpleBinding
 import com.ivansadovyi.onefeed.presentation.screens.feed.SubItemsAdapter
 import com.ivansadovyi.onefeed.presentation.screens.feed.adapterdelegates.FeedItemAdapterDelegate.ViewHolder
+import com.ivansadovyi.onefeed.presentation.screens.imageViewer.ImageViewerActivity
 import com.ivansadovyi.onefeed.presentation.screens.userDetails.UserDetailsActivity
 import com.ivansadovyi.sdk.SubItem
 
@@ -88,6 +89,12 @@ class FeedItemAdapterDelegate(
 		holder.binding.feedItemAvatar.setOnClickListener {
 			val intent = Intent(holder.itemView.context, UserDetailsActivity::class.java)
 			intent.putExtras(UserDetailsActivity.createExtras(item.title, item.title))
+			holder.itemView.context.startActivity(intent)
+		}
+
+		holder.binding.image.setOnClickListener {
+			val intent = Intent(holder.itemView.context, ImageViewerActivity::class.java)
+			intent.putExtra("url", item.images.first().url)
 			holder.itemView.context.startActivity(intent)
 		}
 	}

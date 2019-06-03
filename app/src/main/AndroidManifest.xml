@@ -74,5 +74,7 @@
 			android:label="@string/settings_title" />
 
 		<activity android:name=".presentation.screens.userDetails.UserDetailsActivity" />
+
+		<activity android:name=".presentation.screens.imageViewer.ImageViewerActivity" />
 	</application>
 </manifest>
