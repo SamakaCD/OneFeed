@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">OneFeed</string>
+	<string name="account_log_out_confirm">Ви дійсно хочете вийти з цього облікового запису?</string>
+	<string name="accounts_title">Облікові записи</string>
+	<string name="add_a_comment_hint">Додайте коментар</string>
+	<string name="auth_email">Email</string>
+	<string name="auth_password">Пароль</string>
+	<string name="authorize_instagram">Авторизація Instagram</string>
+	<string name="feed_empty_state">Немає дописів для показу.</string>
+	<string name="feed_menu_authorize_twitter">Авторизація Twitter</string>
+	<string name="feed_plugin_error_title">Щось пішло не так</string>
+	<string name="feed_side_menu_liked">Вподобайки</string>
+	<string name="feed_rate_limit_error_message">Плагін %1$s досягнув ліміту запитів.</string>
+	<string name="feed_side_menu_settings">Налаштування</string>
+	<string name="general_continue">Далі</string>
+	<string name="general_sign_in">Увійти</string>
+	<string name="got_it">Ясненько</string>
+	<string name="initial_setup_description">Обирайте соціальні мережі для користування</string>
+	<string name="initial_setup_welcome">Ласкаво просимо!</string>
+	<string name="liked_title">Вподобайки</string>
+	<string name="please_wait">Будь ласка, зачекайте</string>
+	<string name="plugin_authorization_loading_plugin">Завантаження плагіну</string>
+	<string name="plugin_authorization_ouath_connecting">З\'єднання з %1$s</string>
+	<string name="plugin_authorization_screen_title">Авторизація</string>
+	<string name="plugin_authorization_screen_title_with_name">Авторизація %1$s</string>
+	<string name="settings_app_theme">Тема додатку</string>
+	<string name="settings_title">Налаштування</string>
+	<string name="skip">Пропустити</string>
+	<string name="unexpected_error_title">Сталася неочікувана помилка 🌚</string>
+	<string-array name="themes">
+		<item>Світла</item>
+		<item>Темна</item>
+	</string-array>
+</resources>

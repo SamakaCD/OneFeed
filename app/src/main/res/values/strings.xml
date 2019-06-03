@@ -7,7 +7,7 @@
 	<string name="feed_rate_limit_error_message">%1$s plugin exceeded rate limit.</string>
 	<string name="unexpected_error_title">Unexpected error occurred 🌚</string>
 	<string name="got_it">Got it</string>
-	<string name="bullet">•</string>
+	<string name="bullet" translatable="false">•</string>
 	<string name="plugin_authorization_not_supported">This authorization method is not supported</string>
 	<string name="plugin_authorization_loading_plugin">Loading plugin</string>
 	<string name="plugin_authorization_screen_title">Authorize</string>
