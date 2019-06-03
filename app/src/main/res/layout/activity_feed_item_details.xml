@@ -215,10 +215,10 @@
 
 				<include
 					layout="@layout/item_comment"
-					app:avatarUrl="@{`https://pbs.twimg.com/profile_images/981772715970281472/Abqspn1D_bigger.jpg`}"
-					app:dateAgo="@{`1h`}"
-					app:text="@{`Only @Ferrari can make a hybrid seem so cool.`}"
-					app:userName="@{`RedLatinos`}" />
+					app:avatarUrl="@{`https://pbs.twimg.com/profile_images/1135361893651103746/mVFvLF8O_bigger.png`}"
+					app:dateAgo="@{`2h`}"
+					app:text="@{`AHHHHHHHHHHHHHHHHHHHHH`}"
+					app:userName="@{`Canoopsy`}" />
 
 				<View
 					android:layout_width="match_parent"
@@ -229,10 +229,10 @@
 
 				<include
 					layout="@layout/item_comment"
-					app:avatarUrl="@{`https://pbs.twimg.com/profile_images/1066754280051359744/rZkLsA0s_bigger.jpg`}"
-					app:dateAgo="@{`1h`}"
-					app:text="@{`Which is slow compared to a $120k electric sedan made by a certain American car company and slower still when compared to their forthcoming Roadster. 🤭. Why is the media still championing cars made using legacy tech very few people can afford?  Does Ferrari need these articles?`}"
-					app:userName="@{`RedLatinos`}" />
+					app:avatarUrl="@{`https://pbs.twimg.com/profile_images/1003804929465520128/iQHRjohm_bigger.jpg`}"
+					app:dateAgo="@{`2h`}"
+					app:text="@{`MacBook Bruh.....`}"
+					app:userName="@{`Quinn Nelson`}" />
 
 				<View
 					android:layout_width="match_parent"
@@ -243,10 +243,10 @@
 
 				<include
 					layout="@layout/item_comment"
-					app:avatarUrl="@{`https://pbs.twimg.com/profile_images/1133995271648624640/0mQk64u4_bigger.jpg`}"
+					app:avatarUrl="@{`https://pbs.twimg.com/profile_images/1058321785286995969/vGPPQE3O_bigger.jpg`}"
 					app:dateAgo="@{`1h`}"
-					app:text="@{`Oooooo an overpriced sports car that's slower than a Tesla Model S.... nothing new.`}"
-					app:userName="@{`north`}" />
+					app:text="@{`That headline is perfect`}"
+					app:userName="@{`J. Gabriel`}" />
 
 				<View
 					android:layout_width="match_parent"
