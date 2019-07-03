@@ -19,6 +19,11 @@
 			android:name=".presentation.screens.feed.FeedActivity"
 			android:launchMode="singleTask">
 
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
 		</activity>
 
 		<activity
@@ -44,16 +49,13 @@
 		<activity
 			android:name=".presentation.screens.initialSetup.InitialSetupActivity"
 			android:theme="@style/AppTheme.InitialSetup">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
 
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
 		</activity>
 
 		<activity
 			android:name=".presentation.screens.initialSetup.InstagramAuthorizationActivity"
 			android:label="@string/authorize_instagram"
+			android:windowSoftInputMode="adjustResize"
 			android:parentActivityName=".presentation.screens.feed.FeedActivity"
 			android:theme="@style/AppTheme.NonBranded">
 			<meta-data

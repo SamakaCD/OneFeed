@@ -48,9 +48,7 @@ class BuiltInPluginLoaderImpl @Inject constructor() : BuiltInPluginLoader {
 
 	companion object {
 		private val DEFAULT_DESCRIPTORS = listOf(
-				RecommendationsPlugin.DESCRIPTOR,
-				FacebookPlugin.DESCRIPTOR,
-				InstagramPlugin.DESCRIPTOR
+				RecommendationsPlugin.DESCRIPTOR
 		)
 		private val AUTHORIZING_DESCRIPTORS = listOf(TwitterPlugin.DESCRIPTOR)
 		private val ALL_DESCRIPTORS = DEFAULT_DESCRIPTORS + AUTHORIZING_DESCRIPTORS

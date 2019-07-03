@@ -213,49 +213,6 @@
 					android:background="@drawable/line_dotted"
 					android:layerType="software" />
 
-				<include
-					layout="@layout/item_comment"
-					app:avatarUrl="@{`https://pbs.twimg.com/profile_images/1135361893651103746/mVFvLF8O_bigger.png`}"
-					app:dateAgo="@{`2h`}"
-					app:text="@{`AHHHHHHHHHHHHHHHHHHHHH`}"
-					app:userName="@{`Canoopsy`}" />
-
-				<View
-					android:layout_width="match_parent"
-					android:layout_height="1dp"
-					android:layout_marginStart="72dp"
-					android:layout_marginLeft="72dp"
-					android:background="@color/colorDivider" />
-
-				<include
-					layout="@layout/item_comment"
-					app:avatarUrl="@{`https://pbs.twimg.com/profile_images/1003804929465520128/iQHRjohm_bigger.jpg`}"
-					app:dateAgo="@{`2h`}"
-					app:text="@{`MacBook Bruh.....`}"
-					app:userName="@{`Quinn Nelson`}" />
-
-				<View
-					android:layout_width="match_parent"
-					android:layout_height="1dp"
-					android:layout_marginStart="72dp"
-					android:layout_marginLeft="72dp"
-					android:background="@color/colorDivider" />
-
-				<include
-					layout="@layout/item_comment"
-					app:avatarUrl="@{`https://pbs.twimg.com/profile_images/1058321785286995969/vGPPQE3O_bigger.jpg`}"
-					app:dateAgo="@{`1h`}"
-					app:text="@{`That headline is perfect`}"
-					app:userName="@{`J. Gabriel`}" />
-
-				<View
-					android:layout_width="match_parent"
-					android:layout_height="1dp"
-					android:layout_marginStart="72dp"
-					android:layout_marginLeft="72dp"
-					android:background="@color/colorDivider"
-					app:visible="@{viewModel.newComment != null}" />
-
 				<FrameLayout
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"

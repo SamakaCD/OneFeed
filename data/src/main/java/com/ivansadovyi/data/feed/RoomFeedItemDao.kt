@@ -6,7 +6,7 @@ import androidx.room.*
 abstract class RoomFeedItemDao {
 
 	@Transaction
-	@Query("SELECT * FROM feedItems")
+	@Query("SELECT * FROM feedItems ORDER BY publicationDate DESC")
 	abstract fun getAll(): List<FeedItemWithAttachments>
 
 	@Transaction

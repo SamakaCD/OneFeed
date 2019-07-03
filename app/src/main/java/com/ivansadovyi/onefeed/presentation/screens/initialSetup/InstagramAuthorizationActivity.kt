@@ -4,22 +4,25 @@ import android.app.Activity
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import com.ivansadovyi.onefeed.R
 
 class InstagramAuthorizationActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_auth)
+		setContentView(com.ivansadovyi.onefeed.R.layout.activity_auth)
 		supportActionBar?.setDisplayHomeAsUpEnabled(true)
-		supportActionBar?.title = getString(R.string.plugin_authorization_screen_title_with_name,
+		supportActionBar?.title = getString(com.ivansadovyi.onefeed.R.string.plugin_authorization_screen_title_with_name,
 				intent.getStringExtra("name"))
 	}
 
 	fun onSignInClick(v: View) {
+		val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+		imm.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+
 		val d = ProgressDialog(this)
-		d.setMessage(getString(R.string.please_wait))
+		d.setMessage(getString(com.ivansadovyi.onefeed.R.string.please_wait))
 		d.show()
 
 		window.decorView.postDelayed({
